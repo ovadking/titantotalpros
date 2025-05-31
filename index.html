@@ -8,9 +8,9 @@
     body {
       font-family: sans-serif;
       background: #f3f4f6;
-      color: #1f2937;
       margin: 0;
       padding: 0;
+      color: #1f2937;
     }
     header {
       background: #059669;
@@ -19,53 +19,28 @@
       text-align: center;
     }
     .container {
-      max-width: 600px;
+      max-width: 900px;
       margin: 20px auto;
       background: white;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px #ccc;
     }
-    h2 {
-      color: #059669;
+    .banner {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
-    label {
-      display: block;
-      margin-top: 10px;
+    .banner img {
+      width: 32%;
+      border-radius: 10px;
     }
-    input, select, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-    }
-    .radio-group {
-      margin-top: 10px;
-    }
-    .radio-group label {
-      display: inline-block;
-      margin-right: 15px;
-    }
-    .submit {
-      background: #059669;
-      color: white;
-      padding: 10px;
+    iframe {
       border: none;
-      margin-top: 15px;
-      cursor: pointer;
-    }
-    table {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: #059669;
-      color: white;
+      height: 1100px;
+      border-radius: 10px;
     }
     footer {
       text-align: center;
@@ -83,68 +58,19 @@
   </header>
 
   <div class="container">
-
-    <!-- 🖼️ Banner with Images -->
-    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-      <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/fruit-1238278_1280.jpg" alt="Fresh Fruits" style="width: 32%; border-radius: 10px;" referrerpolicy="no-referrer">
-      <img src="https://cdn.pixabay.com/photo/2020/06/25/03/37/fish-5338704_1280.jpg" alt="Fresh Fish" style="width: 32%; border-radius: 10px;" referrerpolicy="no-referrer">
-      <img src="https://cdn.pixabay.com/photo/2018/03/19/10/01/vegetables-3239008_1280.jpg" alt="Vegetables" style="width: 32%; border-radius: 10px;" referrerpolicy="no-referrer">
+    <!-- 🖼️ Top Banner Images -->
+    <div class="banner">
+      <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/fruit-1238278_1280.jpg" alt="Fresh Fruits" referrerpolicy="no-referrer">
+      <img src="https://cdn.pixabay.com/photo/2020/06/25/03/37/fish-5338704_1280.jpg" alt="Fresh Fish" referrerpolicy="no-referrer">
+      <img src="https://cdn.pixabay.com/photo/2018/03/19/10/01/vegetables-3239008_1280.jpg" alt="Vegetables" referrerpolicy="no-referrer">
     </div>
 
-    <h2>Place Your Order</h2>
-    <form action="https://formspree.io/f/manjwdkn" method="POST">
-      <label for="name">Full Name</label>
-      <input type="text" name="name" required>
-
-      <label for="email">Email</label>
-      <input type="email" name="email" required>
-
-      <label for="phone">Phone Number</label>
-      <input type="tel" name="phone" required>
-
-      <label for="address">Delivery Address (Clarksville only)</label>
-      <textarea name="address" rows="2" required></textarea>
-
-      <label for="payment">Preferred Payment Method</label>
-      <div class="radio-group">
-        <label><input type="radio" name="payment" value="CashApp" required> CashApp</label>
-        <label><input type="radio" name="payment" value="Zelle"> Zelle</label>
-        <label><input type="radio" name="payment" value="PayPal"> PayPal</label>
-      </div>
-
-      <label for="groceries">Grocery List (Minimum $50)</label>
-      <textarea name="groceries" rows="5" required></textarea>
-
-      <input type="hidden" name="delivery_fee" value="$20 Flat Rate">
-      <button type="submit" class="submit">Submit Order</button>
-    </form>
-
-    <!-- 💵 Pricing Table -->
-    <h2>Pricing</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Service</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Delivery Fee</td>
-          <td>$20 Flat Rate</td>
-        </tr>
-        <tr>
-          <td>Grocery Minimum</td>
-          <td>$50</td>
-        </tr>
-        <tr>
-          <td>Tip (Optional)</td>
-          <td>Customer’s Choice</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p><strong>Delivery Days:</strong> Sunday, Monday, Tuesday evenings</p>
+    <!-- 📝 Embedded Google Form -->
+    <iframe 
+      src="https://docs.google.com/forms/d/e/1FAIpQLSf8lMG4H65T9XCLGc9i1U5k-mEPn2js9RHCP_8Yj6S6Q9rAfg/viewform?embedded=true" 
+      allowfullscreen>
+      Loading…
+    </iframe>
   </div>
 
   <footer>
