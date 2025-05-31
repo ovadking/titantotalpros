@@ -53,6 +53,20 @@
       margin-top: 15px;
       cursor: pointer;
     }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #059669;
+      color: white;
+    }
     footer {
       text-align: center;
       margin-top: 30px;
@@ -70,48 +84,7 @@
 
   <div class="container">
 
-    <!-- 🖼️ Fixed Banner: Fruits, Fish, and Vegetables -->
+    <!-- 🖼️ Banner with Images -->
     <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
       <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/fruit-1238278_1280.jpg" alt="Fresh Fruits" style="width: 32%; border-radius: 10px;" referrerpolicy="no-referrer">
-      <img src="https://cdn.pixabay.com/photo/2020/06/25/03/37/fish-5338704_1280.jpg" alt="Fresh Fish" style="width: 32%; border-radius: 10px;" referrerpolicy="no-referrer">
-      <img src="https://cdn.pixabay.com/photo/2018/03/19/10/01/vegetables-3239008_1280.jpg" alt="Vegetables" style="width: 32%; border-radius: 10px;" referrerpolicy="no-referrer">
-    </div>
-
-    <h2>Place Your Order</h2>
-    <form action="https://formspree.io/f/yourcodehere" method="POST">
-      <label for="name">Full Name</label>
-      <input type="text" name="name" required>
-
-      <label for="email">Email</label>
-      <input type="email" name="email" required>
-
-      <label for="phone">Phone Number</label>
-      <input type="tel" name="phone" required>
-
-      <label for="address">Delivery Address (Clarksville only)</label>
-      <textarea name="address" rows="2" required></textarea>
-
-      <label for="payment">Preferred Payment Method</label>
-      <div class="radio-group">
-        <label><input type="radio" name="payment" value="CashApp" required> CashApp</label>
-        <label><input type="radio" name="payment" value="Zelle"> Zelle</label>
-        <label><input type="radio" name="payment" value="PayPal"> PayPal</label>
-      </div>
-
-      <label for="groceries">Grocery List (Minimum $50)</label>
-      <textarea name="groceries" rows="5" required></textarea>
-
-      <input type="hidden" name="delivery_fee" value="$20 Flat Rate">
-      <button type="submit" class="submit">Submit Order</button>
-    </form>
-
-    <p><strong>Delivery Days:</strong> Sunday, Monday, Tuesday evenings</p>
-    <p><strong>Service Fee:</strong> $20 flat rate, minimum $50 grocery spend</p>
-  </div>
-
-  <footer>
-    &copy; 2025 Titan Total Pros LLC · Clarksville, TN · <a href="mailto:jbenjamin@titantotalpros.com">Contact Us</a>
-  </footer>
-
-</body>
-</html>
+      <img src="https://cdn.pixabay.com/photo/2020/06/25/03/37/fish-5338704_1280.jpg" alt="F_
