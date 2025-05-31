@@ -1,88 +1,115 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Titan Total Pros – Grocery Delivery</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f8f8f8; color: #333; margin: 0; padding: 0; }
-        header, footer { background: #004d66; color: #fff; padding: 20px; text-align: center; }
-        main { padding: 20px; }
-        section { margin-bottom: 30px; }
-        h1, h2 { color: #004d66; }
-        ul { padding-left: 20px; }
-        .box { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        label, input, textarea { display: block; width: 100%; margin-bottom: 10px; }
-        input, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        .button { background: #004d66; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
-        .button:hover { background: #006080; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Titan Total Pros - Asian Grocery Delivery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #059669;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    h2 {
+      color: #059669;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    .radio-group {
+      margin-top: 10px;
+    }
+    .radio-group label {
+      display: inline-block;
+      margin-right: 15px;
+    }
+    .submit {
+      background: #059669;
+      color: white;
+      padding: 10px;
+      border: none;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+    .banner {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Titan Total Pros – Grocery Delivery</h1>
-        <p>From Asian Markets in Bowling Green to Your Doorstep in Clarksville</p>
-        <p><strong>Delivery Days:</strong> Sunday, Monday, Tuesday (Evenings Only)</p>
-    </header>
-    <main>
-        <section class="box">
-            <h2>Step 1: Browse & Select Items</h2>
-            <p>Common requests include:</p>
-            <ul>
-                <li>Jasmine rice (25lb)</li>
-                <li>Soy sauce, chili oil</li>
-                <li>Frozen dumplings</li>
-                <li>Fresh produce: bok choy, napa cabbage</li>
-                <li>Instant noodles, snacks, sauces</li>
-            </ul>
-            <p>Enter your grocery list in the form below. You can also upload a photo or share a link to the item.</p>
-        </section>
-        <section class="box">
-            <h2>Step 2: Prepay</h2>
-            <ul>
-                <li><strong>Flat Delivery Fee:</strong> $20</li>
-                <li><strong>Service Charges:</strong>
-                    <ul>
-                        <li>$50–$75: +$5</li>
-                        <li>$76–$100: +$8</li>
-                        <li>$101–$150: +$10</li>
-                        <li>$150+: 12% of order total</li>
-                    </ul>
-                </li>
-                <li><strong>Payment Options:</strong>
-                    <ul>
-                        <li>Cash App: $TitanTotalPros</li>
-                        <li>Zelle: jbenjamin@titantotalpros.com</li>
-                        <li>PayPal: paypal.me/titantotalpros</li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
-        <section class="box">
-            <h2>Step 3: Submit Order</h2>
-            <form>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Your Full Name">
 
-                <label for="address">Delivery Address:</label>
-                <input type="text" id="address" name="address" placeholder="Street, City, ZIP">
+  <header>
+    <h1>Titan Total Pros</h1>
+    <p>Asian Grocery Delivery from Bowling Green to Clarksville</p>
+  </header>
 
-                <label for="groceries">Grocery List:</label>
-                <textarea id="groceries" name="groceries" rows="6" placeholder="Item, brand, size, quantity..."></textarea>
+  <div class="container">
+    <img src="https://cdn.pixabay.com/photo/2020/03/18/06/01/asian-food-4941577_960_720.jpg" alt="Grocery Banner" class="banner">
+    <h2>Place Your Order</h2>
+    <form action="https://formspree.io/f/yourcodehere" method="POST">
+      <label for="name">Full Name</label>
+      <input type="text" name="name" required>
 
-                <label for="notes">Additional Notes or Links:</label>
-                <textarea id="notes" name="notes" rows="3" placeholder="Optional notes..."></textarea>
+      <label for="email">Email</label>
+      <input type="email" name="email" required>
 
-                <button type="submit" class="button">Submit Order</button>
-            </form>
-        </section>
-        <section class="box">
-            <h2>Need Help?</h2>
-            <p>Text or Call: <strong>931-367-7327</strong><br>Email: <strong>orders@titantotalpros.com</strong></p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Titan Total Pros LLC. All rights reserved.</p>
-    </footer>
+      <label for="phone">Phone Number</label>
+      <input type="tel" name="phone" required>
+
+      <label for="address">Delivery Address (Clarksville only)</label>
+      <textarea name="address" rows="2" required></textarea>
+
+      <label for="payment">Preferred Payment Method</label>
+      <div class="radio-group">
+        <label><input type="radio" name="payment" value="CashApp" required> CashApp</label>
+        <label><input type="radio" name="payment" value="Zelle"> Zelle</label>
+        <label><input type="radio" name="payment" value="PayPal"> PayPal</label>
+      </div>
+
+      <label for="groceries">Grocery List (Minimum $50)</label>
+      <textarea name="groceries" rows="5" required></textarea>
+
+      <input type="hidden" name="delivery_fee" value="$20 Flat Rate">
+      <button type="submit" class="submit">Submit Order</button>
+    </form>
+
+    <p><strong>Delivery Days:</strong> Sunday, Monday, Tuesday evenings</p>
+    <p><strong>Service Fee:</strong> $20 flat rate, minimum $50 grocery spend</p>
+  </div>
+
+  <footer>
+    &copy; 2025 Titan Total Pros LLC · Clarksville, TN · <a href="mailto:jbenjamin@titantotalpros.com">Contact Us</a>
+  </footer>
+
 </body>
 </html>
