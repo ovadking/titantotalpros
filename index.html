@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Titan Grocery Delivery</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Titan Grocery Delivery</h1>
+        <p>From Bowling Green Asian Stores to Clarksville | $20 Flat Delivery Fee</p>
+    </header>
+
+    <main>
+        <section id="items">
+            <h2>Select Your Items</h2>
+            <div class="item">
+                <span>Rice (25lb bag)</span>
+                <button onclick="addToCart('Rice (25lb bag)', 30)">Add ($30)</button>
+            </div>
+            <div class="item">
+                <span>Frozen Dumplings</span>
+                <button onclick="addToCart('Frozen Dumplings', 10)">Add ($10)</button>
+            </div>
+            <div class="item">
+                <span>Ramen Variety Pack</span>
+                <button onclick="addToCart('Ramen Variety Pack', 15)">Add ($15)</button>
+            </div>
+        </section>
+
+        <section id="cart">
+            <h2>Your Cart</h2>
+            <ul id="cart-items"></ul>
+            <p><strong>Total: $<span id="total">0</span> + $20 Delivery Fee</strong></p>
+        </section>
+
+        <section id="checkout">
+            <h2>Checkout</h2>
+            <form id="checkout-form">
+                <label>Full Name: <input type="text" name="name" required></label><br>
+                <label>Delivery Address: <input type="text" name="address" required></label><br>
+                <label>Payment Method:
+                    <select name="payment-method" required onchange="togglePaymentFields(this.value)">
+                        <option value="">Select</option>
+                        <option value="CashApp">CashApp</option>
+                        <option value="Zelle">Zelle</option>
+                        <option value="PayPal">PayPal</option>
+                    </select>
+                </label><br>
+                <label id="handle-label" style="display:none;">Payment Username: <input type="text" name="payment-id"></label><br>
+                <label id="amount-label" style="display:none;">Amount Sent: <input type="number" name="amount"></label><br>
+                <button type="submit">Submit Order</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
