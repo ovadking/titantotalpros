@@ -687,82 +687,24 @@
     </section>
 
     <!-- Booking Section -->
-    <section class="booking-section" id="booking">
-        <div class="container booking-container">
-            <div class="booking-info">
-                <h2>Book Your Appointment</h2>
-                <p>Schedule a professional installation at your convenience. Our technicians will arrive with all necessary equipment and complete the job efficiently.</p>
-                
-                <div class="availability">
-                    <h3>Available Days</h3>
-                    <p>We offer appointments on the following days:</p>
-                    <ul>
-                        <li>Sundays</li>
-                        <li>Mondays</li>
-                        <li>Tuesdays</li>
-                    </ul>
-                    <p>Time slots are available from 9:00 AM to 5:00 PM</p>
-                </div>
-                
-                <div class="form-status" id="formStatus"></div>
-            </div>
-            
-            <div class="booking-form">
-                <h3 style="text-align: center; margin-bottom: 25px; color: var(--primary-light);">Request Appointment</h3>
-                <form id="appointmentForm">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="service">Service Type</label>
-                        <select id="service" class="form-control" required>
-                            <option value="">Select a service</option>
-                            <option value="TV Mounting">TV Mounting</option>
-                            <option value="Cable Runs & Concealment">Cable Runs & Concealment</option>
-                            <option value="Smart Home Installations">Smart Home Installations</option>
-                            <option value="Camera Setup & WiFi Devices">Camera Setup & WiFi Devices</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="date">Preferred Date</label>
-                        <input type="date" id="date" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="time">Preferred Time</label>
-                        <select id="time" class="form-control" required>
-                            <option value="">Select a time</option>
-                            <option value="9:00 AM">9:00 AM</option>
-                            <option value="10:00 AM">10:00 AM</option>
-                            <option value="11:00 AM">11:00 AM</option>
-                            <option value="12:00 PM">12:00 PM</option>
-                            <option value="1:00 PM">1:00 PM</option>
-                            <option value="2:00 PM">2:00 PM</option>
-                            <option value="3:00 PM">3:00 PM</option>
-                            <option value="4:00 PM">4:00 PM</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Service Address</label>
-                        <textarea id="address" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="notes">Additional Notes</label>
-                        <textarea id="notes" class="form-control" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn" style="width: 100%;">Book Appointment</button>
-                </form>
-            </div>
+    <!-- Replace your booking form with this iframe -->
+<div class="booking-section" id="booking">
+    <div class="container">
+        <div class="section-title">
+            <h2>Book Your Appointment</h2>
+            <p>Schedule your service directly through our booking system</p>
         </div>
-    </section>
+        <div style="background-color: #333; border-radius: 10px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+            <iframe 
+                src="https://clienthub.getjobber.com/booking/d45b31b7-85d5-4fbd-ad24-d6f2cdb5516b" 
+                width="100%" 
+                height="800" 
+                frameborder="0" 
+                style="border-radius: 8px;">
+            </iframe>
+        </div>
+    </div>
+</div>
 
     <!-- Testimonials -->
     <section class="section testimonials">
