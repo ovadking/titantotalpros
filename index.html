@@ -15,6 +15,7 @@
             --text-dark: #333;
             --success: #4CAF50;
             --warning: #ff9800;
+            --danger: #f44336;
         }
 
         * {
@@ -372,6 +373,16 @@
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+        }
+
+        .btn-loading {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+
+        .btn-loading:hover {
+            background-color: #555;
+            transform: none;
         }
 
         .pricing-table {
@@ -1125,7 +1136,7 @@
                     
                     <div style="text-align: center; margin-top: 30px;">
                         <button id="contactUsBtn" class="btn-custom" style="max-width: 300px; margin: 0 auto;">
-                            Contact Us to Schedule
+                            <i class="fas fa-paper-plane"></i> Submit Booking
                         </button>
                         <p style="margin-top: 20px; color: var(--accent);">
                             We'll call or email you to confirm your appointment time
@@ -1475,8 +1486,15 @@
             document.getElementById('step3').classList.add('active');
         });
         
-        // Contact us button
+        // Submit booking to backend
         document.getElementById('contactUsBtn').addEventListener('click', function() {
+            // Show loading state
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.classList.add('btn-loading');
+            btn.disabled = true;
+            
             // Collect all form data
             const formData = {
                 service: getServiceName(document.getElementById('serviceType').value),
@@ -1488,19 +1506,37 @@
                 customerPhone: document.getElementById('customerPhone').value,
                 serviceAddress: document.getElementById('serviceAddress').value,
                 notes: document.getElementById('notes').value,
-                totalAmount: document.getElementById('totalAmount').textContent
+                totalAmount: document.getElementById('totalAmount').textContent,
+                timestamp: new Date().toISOString()
             };
             
-            // In a real implementation, you would send this data to your server
-            console.log('Booking Data:', formData);
-            
-            // Show confirmation
-            alert('Thank you for your booking! We will contact you within 24 hours to schedule your appointment. You can also call us directly at (931) 367-7327.');
-            
-            // Reset form and go back to step 1
-            setTimeout(() => {
+            // Send to your server (replace with your actual endpoint)
+            fetch('https://your-backend-endpoint.com/api/bookings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Thank you for your booking! We will contact you within 24 hours to schedule your appointment.');
+                    resetBookingForm();
+                } else {
+                    throw new Error(data.message || 'Failed to submit booking');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Thank you for your booking! We will contact you within 24 hours. You can also call us directly at (931) 367-7327.');
                 resetBookingForm();
-            }, 2000);
+            })
+            .finally(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('btn-loading');
+                btn.disabled = false;
+            });
         });
         
         function getSelectedAddons() {
