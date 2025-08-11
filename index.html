@@ -905,43 +905,59 @@
                         <div id="step3-content" class="form-section hidden">
                             <h3 style="color: var(--primary-light); margin-bottom: 20px;">Your Information</h3>
 
-                            <form id="customerForm">
-                                <div class="form-group">
-                                    <label for="customerName">Full Name *</label>
-                                    <input type="text" id="customerName" class="form-control" required>
-                                </div>
+                             <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="first_name" class="form-control" placeholder="Enter your first name" required>
+            </div>
 
-                                <div class="form-group">
-                                    <label for="customerEmail">Email Address *</label>
-                                    <input type="email" id="customerEmail" class="form-control" required>
-                                </div>
+            <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="last_name" class="form-control" placeholder="Enter your last name" required>
+            </div>
 
-                                <div class="form-group">
-                                    <label for="customerPhone">Phone Number *</label>
-                                    <input type="tel" id="customerPhone" class="form-control" required>
-                                </div>
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+            </div>
 
-                                <div class="form-group">
-                                    <label for="serviceAddress">Service Address *</label>
-                                    <textarea id="serviceAddress" class="form-control" rows="3" required></textarea>
-                                </div>
+            <div class="form-group">
+                <label for="mobilePhone">Mobile Phone *</label>
+                <input type="tel" id="mobilePhone" name="mobile_phone" class="form-control" placeholder="Enter your mobile phone number" required>
+            </div>
 
-                                <div class="form-group">
-                                    <label for="serviceZip">Service Zip Code *</label>
-                                    <input type="text" id="serviceZip" class="form-control" maxlength="5" required>
-                                    <small style="color: var(--accent);">For verification (must match the zip code you entered)</small>
-                                </div>
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company" class="form-control" placeholder="Enter your company name (if applicable)">
+            </div>
 
-                                <div class="form-group">
-                                    <label for="notes">Additional Notes</label>
-                                    <textarea id="notes" class="form-control" rows="3" placeholder="Any special instructions or details..."></textarea>
-                                </div>
+            <div class="form-group">
+                <label for="displayName">Display Name (shown on invoices)</label>
+                <input type="text" id="displayName" name="display_name" class="form-control" placeholder="Enter the display name for invoices">
+            </div>
 
-                                <button type="button" id="submitInfo" class="btn-custom">Submit Booking Request</button>
-                            </form>
+            <div class="form-group">
+                <label for="homePhone">Home Phone</label>
+                <input type="tel" id="homePhone" name="home_phone" class="form-control" placeholder="Enter your home phone number">
+            </div>
 
-                            <button class="back-btn" id="backToDetails"><i class="fas fa-arrow-left"></i> Back to Details</button>
-                        </div>
+            <div class="form-group">
+                <label for="workPhone">Work Phone</label>
+                <input type="tel" id="workPhone" name="work_phone" class="form-control" placeholder="Enter your work phone number">
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" id="role-homeowner" name="role" value="Homeowner" checked>
+                        Homeowner
+                    </label>
+                    <label>
+                        <input type="radio" id="role-business" name="role" value="Business">
+                        Business
+                    </label>
+                </div>
+            </div>
 
                          <!-- Step 4: Confirmation -->
                          <div id="step4-content" class="form-section hidden">
