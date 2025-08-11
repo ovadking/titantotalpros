@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titan Total Pros - Smart Home Installation Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #003366;
+            --primary-light: #0099cc;
+            --accent: #c0c0c0;
+            --dark-bg: #1a1a1a;
+            --text-light: #f0f0f0;
+            --text-dark: #333;
+            --success: #4CAF50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        /* Header Styles */
+        .header-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        .header-background {
+            background-color: #222;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #222;
+        }
+        header {
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo-img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            margin-right: 15px;
+        }
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+        .logo-text span {
+            color: var(--primary-light);
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        nav ul li {
+            margin-left: 25px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+            position: relative;
+            z-index: 2;
+        }
+        nav ul li a:hover {
+            color: var(--primary-light);
+            background-color: rgba(0, 153, 204, 0.1);
+            transform: translateY(-2px);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 2;
+            position: relative;
+        }
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.9));
+            z-index: 2;
+        }
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 3;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        /* Book Now Button */
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background-color: var(--primary-light);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--primary-light);
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        /* Services Section */
+        .section {
+            padding: 80px 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-light);
+            margin-bottom: 15px;
+        }
+        .section-title p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--accent);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            padding: 30px 20px;
+            border: 1px solid rgba(0, 153, 204, 0.2);
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-light);
+        }
+        .service-icon {
+            font-size: 3.5rem;
+            color: var(--primary-light);
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        /* Booking Section */
+        .booking-section {
+            background-color: #222;
+            padding: 80px 0;
+        }
+        /* Custom Booking Styles */
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: #2a2a2a;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        @media (max-width: 992px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .booking-form-section {
+            padding: 30px;
+            background: #333;
+        }
+        .pricing-section {
+            padding: 30px;
+            background: #222;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-light);
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #2a2a2a;
+            color: white;
+            font-size: 1rem;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 2px rgba(0, 153, 204, 0.3);
+        }
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+        }
+        .btn-custom {
+            display: inline-block;
+            padding: 15px 35px;
+            background-color: var(--primary-light);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        .btn-custom:hover {
+            background-color: #0077a3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .btn-custom:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn-loading {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        .btn-loading:hover {
+            background-color: #555;
+            transform: none;
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .pricing-table th {
+            background: var(--primary-dark);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .pricing-table td {
+            padding: 12px;
+            border-bottom: 1px solid #444;
+        }
+        .pricing-table tr:nth-child(even) {
+            background: #2a2a2a;
+        }
+        .pricing-table tr:hover {
+            background: rgba(0, 153, 204, 0.1);
+        }
+        .service-options {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 153, 204, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-light);
+        }
+        .addon-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .addon-option input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        .total-display {
+            background: var(--primary-dark);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        .total-display h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary-light);
+        }
+        .total-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-light);
+            margin: 10px 0;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #444;
+            z-index: 1;
+        }
+        .step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #444;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+        .step.active .step-number {
+            background: var(--primary-light);
+        }
+        .step.completed .step-number {
+            background: var(--success);
+        }
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+        .step.active .step-label {
+            color: var(--primary-light);
+        }
+        .service-summary {
+            background: rgba(0, 153, 204, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+        .back-btn {
+            background: none;
+            border: 1px solid var(--primary-light);
+            color: var(--primary-light);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            width: auto;
+        }
+        .back-btn:hover {
+            background: rgba(0, 153, 204, 0.1);
+        }
+        .form-section {
+            display: block;
+        }
+        .form-section.hidden {
+            display: none;
+        }
+        .confirmation-message {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .service-icon-custom {
+            font-size: 2rem;
+            color: var(--primary-light);
+            margin-bottom: 15px;
+        }
+        /* Testimonials */
+        .testimonials {
+            background-color: #2a2a2a;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .testimonial-card {
+            background-color: #333;
+            padding: 25px;
+            border-radius: 10px;
+            position: relative;
+            border: 1px solid rgba(192, 192, 192, 0.1);
+        }
+        .testimonial-card:hover {
+            border-color: var(--primary-light);
+        }
+        .testimonial-card:before {
+            content: """;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 5rem;
+            color: var(--primary-light);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        .testimonial-content {
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .client-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        .client-details h4 {
+            margin-bottom: 5px;
+        }
+        .client-details p {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            padding: 50px 0 20px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--primary-light);
+        }
+        .footer-column p, .footer-column a {
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-column a:hover {
+            color: white;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .header-content {
+                position: relative;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-dark);
+                padding: 20px;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease;
+            }
+            nav.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            .hero {
+                height: 70vh;
+            }
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            .btn {
+                display: block;
+                margin: 15px auto;
+                width: 80%;
+            }
+            .btn-outline {
+                margin-left: 0;
+            }
+        }
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .section {
+                padding: 60px 0;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header-wrapper">
+        <div class="header-background">
+            <div class="header-overlay"></div>
+        </div>
+        <header>
+            <div class="container header-content">
+                <div class="logo-container">
+                    <img src="https://titantotalpros.com/logo.png" alt="Titan Total Pros Logo" class="logo-img">
+                </div>
+                <button class="mobile-menu-btn" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#booking">Book Appointment</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <img src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Smart Home Technology" class="hero-image">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container hero-content">
+            <h1>Your Local Tech Pros</h1>
+            <p>Expert Solutions for Smart Installations</p>
+            <a href="#booking" class="btn">Book Now</a>
+        </div>
+    </section>
+    <!-- Services Section -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Professional installation and setup for all your smart home needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3>TV Mounting & Installation</h3>
+                    <p>Professional TV mounting on walls, installation of soundbars, and cable management for a clean look.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security Systems</h3>
+                    <p>Installation of security cameras, doorbell cameras, and monitoring systems for complete home protection.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Smart Lighting</h3>
+                    <p>Setup of smart bulbs, switches, and lighting control systems for convenience and energy savings.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <h3>Smart Thermostats</h3>
+                    <p>Installation and programming of smart thermostats for optimal climate control and energy efficiency.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3>Audio Systems</h3>
+                    <p>Whole home audio setup, speaker installation, and sound system configuration.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Networking Solutions</h3>
+                    <p>WiFi setup, network optimization, and wired network installations for reliable connectivity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Booking Section (Replaced Calendly with Custom Form) -->
+    <div class="booking-section" id="booking">
+        <div class="container">
+            <div class="section-title">
+                <h2>Book Your Appointment</h2>
+                <p>Get a quick estimate and schedule your service</p>
+            </div>
+
+            <div class="step-indicator">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Service Selection</div>
+                </div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Details & Pricing</div>
+                </div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Your Information</div>
+                </div>
+                <div class="step" id="step4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Confirmation</div>
+                </div>
+            </div>
+
+            <div class="booking-container">
+                <!-- Booking Form Section -->
+                <div class="booking-form-section">
+                    <!-- Step 1: Service Selection -->
+                    <div id="step1-content" class="form-section">
+                        <h3 style="color: var(--primary-light); margin-bottom: 20px;">Select Service Type</h3>
+
+                        <div class="form-group">
+                            <label for="serviceType">Choose a Service</label>
+                            <select id="serviceType" class="form-control" required>
+                                <option value="">Select a service...</option>
+                                <option value="tv-mounting">TV Mounting</option>
+                                <option value="security">Security Camera Installation</option>
+                                <option value="smart-home">Smart Home Setup</option>
+                                <option value="networking">Networking Solutions</option>
+                                <option value="lighting">Smart Lighting</option>
+                            </select>
+                        </div>
+
+                        <div id="serviceDescription" style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; display: none;">
+                            <div class="service-icon-custom" id="serviceIcon"></div>
+                            <h4 id="serviceName"></h4>
+                            <p id="serviceDesc"></p>
+                        </div>
+
+                        <button id="selectServiceBtn" class="btn-custom" disabled>Select Service</button>
+                    </div>
+
+                    <!-- Step 2: Service Details -->
+                    <div id="step2-content" class="form-section hidden">
+                        <h3 style="color: var(--primary-light); margin-bottom: 20px;">Service Details</h3>
+
+                        <div id="tvOptions" class="service-options">
+                            <h4>TV Mounting Options</h4>
+
+                            <div class="form-group">
+                                <label for="mountType">Mount Type</label>
+                                <select id="mountType" class="form-control">
+                                    <option value="mount-only">Mount Only (You provide mount)</option>
+                                    <option value="with-mount">With Mount Included</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tvSize">TV Size</label>
+                                <select id="tvSize" class="form-control">
+                                    <option value="">Select TV size...</option>
+                                    <option value="under-55">Under 55"</option>
+                                    <option value="55-75">55" - 75"</option>
+                                    <option value="75-plus">75" and above</option>
+                                </select>
+                            </div>
+
+                            <h4 style="margin-top: 20px;">Add-ons</h4>
+                            <div class="addon-option">
+                                <input type="checkbox" id="stone-install" value="60">
+                                <label for="stone-install">Stone Installation (+$60)</label>
+                            </div>
+                            <div class="addon-option">
+                                <input type="checkbox" id="additional-tv" value="60">
+                                <label for="additional-tv">Additional TV Same Day (+$60)</label>
+                            </div>
+                            <div class="addon-option">
+                                <input type="checkbox" id="sound-bar" value="30">
+                                <label for="sound-bar">Sound Bar Mounting (+$30)</label>
+                            </div>
+                            <div class="addon-option">
+                                <input type="checkbox" id="wire-conceal" value="70">
+                                <label for="wire-conceal">In-wall Wire Concealment (+$70)</label>
+                            </div>
+                        </div>
+
+                        <div id="otherServiceOptions" class="service-options">
+                            <h4>Service Details</h4>
+                            <div class="form-group">
+                                <label for="serviceDetails">Describe your project (optional)</label>
+                                <textarea id="serviceDetails" class="form-control" rows="4" placeholder="Tell us about your specific needs..."></textarea>
+                            </div>
+                        </div>
+
+                        <button id="calculateBtn" class="btn-custom">Calculate Price</button>
+
+                        <div class="total-display" id="totalDisplay">
+                            <h3>Estimated Total</h3>
+                            <div class="total-amount" id="totalAmount">$0</div>
+                            <div class="service-summary" id="serviceSummary"></div>
+                            <button id="continueToInfo" class="btn-custom">Continue</button>
+                        </div>
+
+                        <button class="back-btn" id="backToServices"><i class="fas fa-arrow-left"></i> Back to Services</button>
+                    </div>
+
+                    <!-- Step 3: Customer Information -->
+                    <div id="step3-content" class="form-section hidden">
+                        <h3 style="color: var(--primary-light); margin-bottom: 20px;">Your Information</h3>
+
+                        <form id="customerForm">
+                            <div class="form-group">
+                                <label for="customerName">Full Name *</label>
+                                <input type="text" id="customerName" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="customerEmail">Email Address *</label>
+                                <input type="email" id="customerEmail" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="customerPhone">Phone Number *</label>
+                                <input type="tel" id="customerPhone" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="serviceAddress">Service Address *</label>
+                                <textarea id="serviceAddress" class="form-control" rows="3" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="notes">Additional Notes</label>
+                                <textarea id="notes" class="form-control" rows="3" placeholder="Any special instructions or details..."></textarea>
+                            </div>
+
+                            <button type="button" id="submitInfo" class="btn-custom">Submit Booking Request</button>
+                        </form>
+
+                        <button class="back-btn" id="backToDetails"><i class="fas fa-arrow-left"></i> Back to Details</button>
+                    </div>
+
+                     <!-- Step 4: Confirmation -->
+                     <div id="step4-content" class="form-section hidden">
+                        <div class="confirmation-message">
+                            <h3><i class="fas fa-check-circle"></i> Booking Request Submitted!</h3>
+                            <p id="confirmationSummary"></p>
+                            <p style="margin-top: 15px;">We will contact you within 24 hours to confirm details and schedule your appointment.</p>
+                        </div>
+
+                        <div style="background: rgba(0, 153, 204, 0.1); padding: 20px; border-radius: 8px; margin-top: 20px;">
+                            <h4 style="color: var(--primary-light); margin-top: 0;">Next Steps</h4>
+                            <ul style="padding-left: 20px;">
+                                <li>We'll call or email you to confirm your appointment</li>
+                                <li>A technician will contact you before arriving</li>
+                                <li>Have your service address ready for the technician</li>
+                            </ul>
+                            <p style="margin-top: 15px; margin-bottom: 0;"><strong>Questions?</strong> Call us at <a href="tel:9313677327" style="color: var(--primary-light);">(931) 367-7327</a></p>
+                        </div>
+
+                        <button class="back-btn" id="backToInfo"><i class="fas fa-arrow-left"></i> Back to Information</button>
+                        <button class="btn-custom" id="newBookingBtn" style="margin-top: 15px;">Request Another Booking</button>
+                    </div>
+                </div>
+
+                <!-- Pricing Section -->
+                <div class="pricing-section">
+                    <h3>Service Pricing</h3>
+
+                    <div id="tvPricing">
+                        <h4>TV Mounting Only (Mount Not Included)</h4>
+                        <table class="pricing-table">
+                            <tr>
+                                <th>TV Size</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                <td>Under 55"</td>
+                                <td>$65</td>
+                            </tr>
+                            <tr>
+                                <td>55" - 75"</td>
+                                <td>$75</td>
+                            </tr>
+                            <tr>
+                                <td>75" and above</td>
+                                <td>$75</td>
+                            </tr>
+                        </table>
+
+                        <h4 style="margin-top: 20px;">TV Mounting With Mount Included</h4>
+                        <table class="pricing-table">
+                            <tr>
+                                <th>TV Size</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                <td>Under 55"</td>
+                                <td>$130</td>
+                            </tr>
+                            <tr>
+                                <td>55" - 70"</td>
+                                <td>$145</td>
+                            </tr>
+                            <tr>
+                                <td>75" and above</td>
+                                <td>$165</td>
+                            </tr>
+                        </table>
+
+                        <h4 style="margin-top: 20px;">Add-ons</h4>
+                        <table class="pricing-table">
+                            <tr>
+                                <th>Add-on</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                <td>Stone Installation</td>
+                                <td>+$60</td>
+                            </tr>
+                            <tr>
+                                <td>Additional TV Same Day</td>
+                                <td>+$60</td>
+                            </tr>
+                            <tr>
+                                <td>Sound Bar Mounting</td>
+                                <td>+$30</td>
+                            </tr>
+                            <tr>
+                                <td>In-wall Wire Concealment</td>
+                                <td>+$70</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="otherPricing" style="display: none;">
+                        <p>Pricing for other services is customized based on your specific needs. Our technician will provide a detailed quote after assessing your project.</p>
+                        <p style="margin-top: 15px;"><strong>Typical price ranges:</strong></p>
+                        <ul style="padding-left: 20px; margin-top: 10px;">
+                            <li>Security Camera Installation: $150-$300 per camera</li>
+                            <li>Smart Home Setup: $200-$500</li>
+                            <li>Networking Solutions: $150-$400</li>
+                            <li>Smart Lighting: $100-$300</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <section class="section testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Customers Say</h2>
+                <p>Hear from satisfied clients who've experienced our professional service</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "The team installed my smart home system flawlessly. Everything works perfectly and they explained how to use all features. Highly recommend!"
+                    </div>
+                    <div class="client-info">
+                        <div class="client-avatar">MR</div>
+                        <div class="client-details">
+                            <h4>Michael Roberts</h4>
+                            <p>Clarksville, TN</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Professional, punctual, and knowledgeable. They mounted my TV perfectly and ran all cables through the wall for a clean look. Worth every penny!"
+                    </div>
+                    <div class="client-info">
+                        <div class="client-avatar">SJ</div>
+                        <div class="client-details">
+                            <h4>Sarah Johnson</h4>
+                            <p>Clarksville, TN</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Installed security cameras around my property and set up the monitoring system. The technician was friendly and made sure I understood everything."
+                    </div>
+                    <div class="client-info">
+                        <div class="client-avatar">DW</div>
+                        <div class="client-details">
+                            <h4>David Wilson</h4>
+                            <p>Clarksville, TN</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Titan Total Pros</h3>
+                    <p>Your trusted local experts for all smart installation needs. Professional, reliable, and efficient service.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-user"></i> Jeffrey Benjamin</p>
+                    <p><i class="fas fa-phone"></i> (931) 367-7327</p>
+                    <p><i class="fas fa-envelope"></i> jbenjamin@titantotalpros.com</p>
+                    <p><i class="fas fa-globe"></i> www.TitanTotalPros.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Clarksville, TN</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <a href="#home">Home</a>
+                    <a href="#services">Services</a>
+                    <a href="#booking">Book Appointment</a>
+                    <a href="#about">About Us</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Business Hours</h3>
+                    <p>Sunday: 9:00 AM - 5:00 PM</p>
+                    <p>Monday: 9:00 AM - 5:00 PM</p>
+                    <p>Tuesday: 9:00 AM - 5:00 PM</p>
+                    <p>Wednesday - Saturday: Closed</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Titan Total Pros. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+        // Close menu when clicking a link
+        document.querySelectorAll('#mainNav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mainNav').classList.remove('active');
+            });
+        });
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        // Service selection logic
+        document.getElementById('serviceType').addEventListener('change', function() {
+            const serviceType = this.value;
+            const selectBtn = document.getElementById('selectServiceBtn');
+
+            if (serviceType) {
+                selectBtn.disabled = false;
+
+                // Show service description
+                const serviceInfo = {
+                    'tv-mounting': {
+                        icon: '<i class="fas fa-tv"></i>',
+                        name: 'TV Mounting',
+                        desc: 'Professional TV mounting on walls with cable management. Choose from mount-only or with mount included options.'
+                    },
+                    'security': {
+                        icon: '<i class="fas fa-shield-alt"></i>',
+                        name: 'Security Camera Installation',
+                        desc: 'Installation of security cameras, doorbell cameras, and monitoring systems for complete home protection.'
+                    },
+                    'smart-home': {
+                        icon: '<i class="fas fa-home"></i>',
+                        name: 'Smart Home Setup',
+                        desc: 'Complete smart home automation including thermostats, lighting, hubs, and integrated systems.'
+                    },
+                    'networking': {
+                        icon: '<i class="fas fa-wifi"></i>',
+                        name: 'Networking Solutions',
+                        desc: 'WiFi setup, network optimization, and wired network installations for reliable connectivity.'
+                    },
+                    'lighting': {
+                        icon: '<i class="fas fa-lightbulb"></i>',
+                        name: 'Smart Lighting',
+                        desc: 'Installation of smart bulbs, switches, and lighting control systems for convenience and energy savings.'
+                    }
+                };
+
+                const info = serviceInfo[serviceType];
+                if (info) {
+                    document.getElementById('serviceIcon').innerHTML = info.icon;
+                    document.getElementById('serviceName').textContent = info.name;
+                    document.getElementById('serviceDesc').textContent = info.desc;
+                    document.getElementById('serviceDescription').style.display = 'block';
+                }
+            } else {
+                selectBtn.disabled = true;
+                document.getElementById('serviceDescription').style.display = 'none';
+            }
+        });
+
+        // Select service button
+        document.getElementById('selectServiceBtn').addEventListener('click', function() {
+            const serviceType = document.getElementById('serviceType').value;
+
+            // Hide step 1, show step 2
+            document.getElementById('step1-content').classList.add('hidden');
+            document.getElementById('step2-content').classList.remove('hidden');
+
+            // Update step indicators
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step2').classList.add('active');
+
+            // Show relevant options
+            if (serviceType === 'tv-mounting') {
+                document.getElementById('tvOptions').style.display = 'block';
+                document.getElementById('tvPricing').style.display = 'block';
+                document.getElementById('otherPricing').style.display = 'none';
+            } else if (serviceType) {
+                document.getElementById('otherServiceOptions').style.display = 'block';
+                document.getElementById('tvPricing').style.display = 'none';
+                document.getElementById('otherPricing').style.display = 'block';
+            }
+        });
+
+        // Back to services
+        document.getElementById('backToServices').addEventListener('click', function() {
+            document.getElementById('step2-content').classList.add('hidden');
+            document.getElementById('step1-content').classList.remove('hidden');
+
+            // Update step indicators
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step1').classList.add('active');
+        });
+
+        // Calculate price
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const serviceType = document.getElementById('serviceType').value;
+
+            if (!serviceType) {
+                alert('Please select a service type');
+                return;
+            }
+
+            let total = 0;
+            let summary = '';
+
+            if (serviceType === 'tv-mounting') {
+                const mountType = document.getElementById('mountType').value;
+                const tvSize = document.getElementById('tvSize').value;
+
+                if (!tvSize) {
+                    alert('Please select a TV size');
+                    return;
+                }
+
+                // Base pricing
+                if (mountType === 'mount-only') {
+                    if (tvSize === 'under-55') total = 65;
+                    else if (tvSize === '55-75' || tvSize === '75-plus') total = 75;
+                    summary = 'TV Mounting Only';
+                } else {
+                    if (tvSize === 'under-55') total = 130;
+                    else if (tvSize === '55-75') total = 145;
+                    else if (tvSize === '75-plus') total = 165;
+                    summary = 'TV Mounting with Mount Included';
+                }
+
+                // Add-ons
+                const addons = [];
+                if (document.getElementById('stone-install').checked) {
+                    total += 60;
+                    addons.push('Stone Installation');
+                }
+                if (document.getElementById('additional-tv').checked) {
+                    total += 60;
+                    addons.push('Additional TV');
+                }
+                if (document.getElementById('sound-bar').checked) {
+                    total += 30;
+                    addons.push('Sound Bar Mounting');
+                }
+                if (document.getElementById('wire-conceal').checked) {
+                    total += 70;
+                    addons.push('Wire Concealment');
+                }
+
+                if (addons.length > 0) {
+                    summary += ' + ' + addons.join(', ');
+                }
+
+            } else {
+                // For other services, show custom pricing message
+                summary = getServiceName(serviceType);
+                total = 0; // Will be quoted after assessment
+            }
+
+            // Display total and summary
+            document.getElementById('totalAmount').textContent = total > 0 ? '$' + total : 'Quote After Assessment';
+            document.getElementById('serviceSummary').textContent = summary;
+            document.getElementById('totalDisplay').style.display = 'block';
+        });
+
+        // Continue to customer info
+        document.getElementById('continueToInfo').addEventListener('click', function() {
+            document.getElementById('step2-content').classList.add('hidden');
+            document.getElementById('step3-content').classList.remove('hidden');
+
+            // Update step indicators
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step3').classList.add('active');
+        });
+
+        // Back to details
+        document.getElementById('backToDetails').addEventListener('click', function() {
+            document.getElementById('step3-content').classList.add('hidden');
+            document.getElementById('step2-content').classList.remove('hidden');
+
+            // Update step indicators
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step2').classList.add('active');
+        });
+
+        // Submit customer info
+        document.getElementById('submitInfo').addEventListener('click', function() {
+            const name = document.getElementById('customerName').value;
+            const email = document.getElementById('customerEmail').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('serviceAddress').value;
+
+            if (!name || !email || !phone || !address) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Show confirmation summary
+            const serviceType = document.getElementById('serviceType').value;
+            const serviceName = getServiceName(serviceType);
+            const totalAmount = document.getElementById('totalAmount').textContent;
+
+            let confirmationText = `Service: ${serviceName}`;
+            if (totalAmount !== '$0') {
+                confirmationText += ` | Estimated Total: ${totalAmount}`;
+            }
+            confirmationText += ` | Customer: ${name}`;
+
+            document.getElementById('confirmationSummary').textContent = confirmationText;
+
+            // Hide step 3, show step 4
+            document.getElementById('step3-content').classList.add('hidden');
+            document.getElementById('step4-content').classList.remove('hidden');
+
+            // Update step indicators
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step4').classList.add('active');
+
+            // Here you would typically send the data to your backend or Formspree
+            // For now, we'll just log it
+            console.log("Booking Data Submitted:", {
+                service: serviceName,
+                customerName: name,
+                customerEmail: email,
+                customerPhone: phone,
+                serviceAddress: address,
+                totalAmount: totalAmount,
+                notes: document.getElementById('notes').value
+            });
+            // Example Formspree submission (uncomment and replace YOUR_FORM_ID):
+            /*
+            const formData = new FormData();
+            formData.append('service', serviceName);
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('address', address);
+            formData.append('total', totalAmount);
+            formData.append('notes', document.getElementById('notes').value);
+
+            fetch('https://formspree.io/f/YOUR_FORM_ID', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Formspree submission successful');
+                } else {
+                    console.error('Formspree submission failed');
+                }
+            }).catch(error => {
+                console.error('Formspree submission error:', error);
+            });
+            */
+        });
+
+        // Back to info
+        document.getElementById('backToInfo').addEventListener('click', function() {
+            document.getElementById('step4-content').classList.add('hidden');
+            document.getElementById('step3-content').classList.remove('hidden');
+
+            // Update step indicators
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step3').classList.add('active');
+        });
+
+         // New Booking Button
+         document.getElementById('newBookingBtn').addEventListener('click', function() {
+            // Reset the entire form
+            document.getElementById('serviceType').value = '';
+            document.getElementById('mountType').value = 'mount-only';
+            document.getElementById('tvSize').value = '';
+            document.getElementById('customerForm').reset();
+
+            // Uncheck all addons
+            document.getElementById('stone-install').checked = false;
+            document.getElementById('additional-tv').checked = false;
+            document.getElementById('sound-bar').checked = false;
+            document.getElementById('wire-conceal').checked = false;
+
+            // Hide all service options
+            document.getElementById('tvOptions').style.display = 'none';
+            document.getElementById('otherServiceOptions').style.display = 'none';
+            document.getElementById('serviceDescription').style.display = 'none';
+            document.getElementById('totalDisplay').style.display = 'none';
+
+            // Reset step indicators
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active', 'completed'));
+            document.getElementById('step1').classList.add('active');
+
+            // Show step 1, hide others
+            document.getElementById('step1-content').classList.remove('hidden');
+            document.getElementById('step2-content').classList.add('hidden');
+            document.getElementById('step3-content').classList.add('hidden');
+            document.getElementById('step4-content').classList.add('hidden');
+
+            // Show TV pricing by default
+            document.getElementById('tvPricing').style.display = 'block';
+            document.getElementById('otherPricing').style.display = 'none';
+        });
+
+        function getServiceName(serviceKey) {
+            const services = {
+                'tv-mounting': 'TV Mounting',
+                'security': 'Security Camera Installation',
+                'smart-home': 'Smart Home Setup',
+                'networking': 'Networking Solutions',
+                'lighting': 'Smart Lighting'
+            };
+            return services[serviceKey] || 'Service';
+        }
+
+    </script>
+</body>
+</html>
