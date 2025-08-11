@@ -1,0 +1,234 @@
+<!-- Booking Section -->
+<div class="booking-section" id="booking">
+    <div class="container">
+        <div class="section-title">
+            <h2>Book Your Appointment</h2>
+            <p>Get a quick estimate and schedule your service</p>
+        </div>
+        
+        <div class="booking-container">
+            <!-- Booking Form Section -->
+            <div class="booking-form-section">
+                <!-- Zip Code Validation Section -->
+                <div id="zipCheckSection" class="zip-check-section">
+                    <h3 style="color: var(--primary-light); margin-bottom: 20px; text-align: center;">Service Area Check</h3>
+                    <p style="text-align: center; margin-bottom: 20px;">Please enter your zip code to check availability</p>
+                    
+                    <div class="form-group">
+                        <label for="customerZip">Your Zip Code *</label>
+                        <input type="text" id="customerZip" class="form-control" placeholder="e.g., 37042" maxlength="5" required>
+                    </div>
+                    <button id="checkZipBtn" class="btn-custom">Check Service Area</button>
+                    <div id="zipErrorMessage" class="error-message"></div>
+                    <div id="zipSuccessMessage" class="success-message"></div>
+                </div>
+
+                <!-- Main Booking Form (Initially Hidden) -->
+                <div id="mainBookingForm" style="display: none;">
+                    <!-- Housecall Pro Booking Button -->
+                    <div style="text-align: center; padding: 30px 20px;">
+                        <h3 style="color: var(--primary-light); margin-bottom: 20px;">Online Booking</h3>
+                        <p style="margin-bottom: 25px;">Click below to book your appointment directly through our online scheduling system</p>
+                        
+                        <!-- Start of Housecallpro Online booking button -->
+                        <button 
+                            data-token="91f5c1b6d60f4b088e93952ce3909c82" 
+                            data-orgname="Titan-Total-Pros" 
+                            class="hcp-button" 
+                            onclick="HCPWidget.openModal()"
+                            style="
+                                background-color: var(--primary-light);
+                                color: white;
+                                border: none;
+                                padding: 15px 30px;
+                                font-size: 1.1rem;
+                                font-weight: 600;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                            ">
+                            Book Online Now
+                        </button>
+                        <script async src="https://online-booking.housecallpro.com/script.js?token=91f5c1b6d60f4b088e93952ce3909c82&orgName=Titan-Total-Pros"></script>
+                        <!-- End of Housecallpro Online booking button -->
+                        
+                        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #444;">
+                            <p style="font-size: 0.9rem; color: var(--accent);">
+                                <i class="fas fa-info-circle"></i> 
+                                After clicking, you'll be able to select your service and preferred appointment time
+                            </p>
+                            <button class="back-btn" id="backToZipCheckBtn" style="margin-top: 15px;">
+                                <i class="fas fa-arrow-left"></i> Back to Zip Check
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Section -->
+            <div class="pricing-section">
+                <h3>Service Pricing</h3>
+
+                <div id="tvPricing">
+                    <h4>TV Mounting Only (Mount Not Included)</h4>
+                    <table class="pricing-table">
+                        <tr>
+                            <th>TV Size</th>
+                            <th>Price</th>
+                        </tr>
+                        <tr>
+                            <td>Under 55"</td>
+                            <td>$65</td>
+                        </tr>
+                        <tr>
+                            <td>55" - 75"</td>
+                            <td>$75</td>
+                        </tr>
+                        <tr>
+                            <td>75" and above</td>
+                            <td>$75</td>
+                        </tr>
+                    </table>
+
+                    <h4 style="margin-top: 20px;">TV Mounting With Mount Included</h4>
+                    <table class="pricing-table">
+                        <tr>
+                            <th>TV Size</th>
+                            <th>Price</th>
+                        </tr>
+                        <tr>
+                            <td>Under 55"</td>
+                            <td>$130</td>
+                        </tr>
+                        <tr>
+                            <td>55" - 70"</td>
+                            <td>$145</td>
+                        </tr>
+                        <tr>
+                            <td>75" and above</td>
+                            <td>$165</td>
+                        </tr>
+                    </table>
+
+                    <h4 style="margin-top: 20px;">Add-ons</h4>
+                    <table class="pricing-table">
+                        <tr>
+                            <th>Add-on</th>
+                            <th>Price</th>
+                        </tr>
+                        <tr>
+                            <td>Stone Installation</td>
+                            <td>+$60</td>
+                        </tr>
+                        <tr>
+                            <td>Additional TV Same Day</td>
+                            <td>+$60</td>
+                        </tr>
+                        <tr>
+                            <td>Sound Bar Mounting</td>
+                            <td>+$30</td>
+                        </tr>
+                        <tr>
+                            <td>In-wall Wire Concealment</td>
+                            <td>$70</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="otherPricing" style="display: none;">
+                    <p>Pricing for other services is customized based on your specific needs. Our technician will provide a detailed quote after assessing your project.</p>
+                    <p style="margin-top: 15px;"><strong>Typical price ranges:</strong></p>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>Security Camera Installation: $150-$300 per camera</li>
+                        <li>Smart Home Setup: $200-$500</li>
+                        <li>Networking Solutions: $150-$400</li>
+                        <li>Smart Lighting: $100-$300</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add this CSS to your existing styles -->
+<style>
+    /* Housecall Pro Button Styles */
+    .hcp-button:hover {
+        background-color: #0077a3 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .hcp-button:active {
+        transform: translateY(-1px);
+    }
+</style>
+
+<!-- Add this JavaScript to your existing scripts -->
+<script>
+    // List of approved zip codes (same as in your existing code)
+    const approvedZipCodes = [
+        "37040", "37041", "37042", "37043", "37044",
+        "37073", "37074", "37075", "37076", "37077",
+        "37078", "37079", "37080", "37082", "37083",
+        "37085", "37086", "37087", "37090", "37091",
+        "37095", "37097", "37098", "37101", "37110",
+        "37115", "37118", "37122", "37127", "37128",
+        "37129", "37130", "37134", "37135", "37136",
+        "37137", "37138", "37140", "37141", "37142",
+        "37143", "37144", "37145", "37146", "37147",
+        "37148", "37149", "37150", "37151", "37152",
+        "37153", "37160", "37166", "37167", "37171",
+        "37172", "37174", "37178", "37179", "37180",
+        "37181", "37183", "37184", "37185", "37186",
+        "37187", "37188", "37189", "37190", "37191"
+    ];
+
+    // Zip Code Check Logic
+    document.getElementById('checkZipBtn').addEventListener('click', function() {
+        const zipCode = document.getElementById('customerZip').value.trim();
+        
+        // Reset messages
+        document.getElementById('zipErrorMessage').style.display = 'none';
+        document.getElementById('zipSuccessMessage').style.display = 'none';
+        
+        // Validate input
+        if (!zipCode) {
+            document.getElementById('zipErrorMessage').textContent = 'Please enter a zip code.';
+            document.getElementById('zipErrorMessage').style.display = 'block';
+            return;
+        }
+        
+        if (zipCode.length !== 5 || isNaN(zipCode)) {
+            document.getElementById('zipErrorMessage').textContent = 'Please enter a valid 5-digit zip code.';
+            document.getElementById('zipErrorMessage').style.display = 'block';
+            return;
+        }
+        
+        // Check if zip code is approved
+        if (approvedZipCodes.includes(zipCode)) {
+            document.getElementById('zipSuccessMessage').textContent = `Great! We service the ${zipCode} area. Please proceed with your booking.`;
+            document.getElementById('zipSuccessMessage').style.display = 'block';
+            
+            // Show booking form and hide zip check after a short delay
+            setTimeout(() => {
+                document.getElementById('zipCheckSection').style.display = 'none';
+                document.getElementById('mainBookingForm').style.display = 'block';
+            }, 1500);
+        } else {
+            document.getElementById('zipErrorMessage').textContent = `Sorry, we currently do not service the ${zipCode} area. Please contact us for more information.`;
+            document.getElementById('zipErrorMessage').style.display = 'block';
+        }
+    });
+
+    // Back to zip check
+    document.getElementById('backToZipCheckBtn').addEventListener('click', function() {
+        document.getElementById('mainBookingForm').style.display = 'none';
+        document.getElementById('zipCheckSection').style.display = 'block';
+        // Reset zip code input
+        document.getElementById('customerZip').value = '';
+        document.getElementById('zipErrorMessage').style.display = 'none';
+        document.getElementById('zipSuccessMessage').style.display = 'none';
+    });
+</script>
