@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titan Total Pros - Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #003366;
+            --primary-light: #0099cc;
+            --accent: #c0c0c0;
+            --dark-bg: #1a1a1a;
+            --text-light: #f0f0f0;
+            --text-dark: #333;
+            --success: #4CAF50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary-light);
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #2a2a2a;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 2px rgba(0, 153, 204, 0.3);
+        }
+
+        .btn-custom {
+            display: inline-block;
+            padding: 15px 35px;
+            background-color: var(--primary-light);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-custom:hover {
+            background-color: #0077a3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-custom:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .error-message {
+            color: var(--danger);
+            background-color: rgba(244, 67, 54, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .success-message {
+            color: var(--success);
+            background-color: rgba(76, 175, 80, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .booking-form-section {
+            display: none; /* Hidden by default */
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+        }
+
+        .back-btn {
+            background: none;
+            border: 1px solid var(--primary-light);
+            color: var(--primary-light);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            width: auto;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 153, 204, 0.1);
+        }
+
+        .confirmation-message {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+
+        .service-options {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 153, 204, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-light);
+            display: none; /* Hidden by default */
+        }
+
+        .addon-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .addon-option input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .total-display {
+            background: var(--primary-dark);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+
+        .total-display h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary-light);
+        }
+
+        .total-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-light);
+            margin: 10px 0;
+        }
+
+        .service-summary {
+            background: rgba(0, 153, 204, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .container {
+                padding: 20px;
+            }
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section-title">
+            <h2>Service Area Check & Booking</h2>
+            <p>Please enter your zip code to check availability and book your appointment</p>
+        </div>
+
+        <!-- Zip Code Validation Section -->
+        <div id="zipCheckSection">
+            <div class="form-group">
+                <label for="customerZip">Your Zip Code *</label>
+                <input type="text" id="customerZip" class="form-control" placeholder="e.g., 37042" maxlength="5" required>
+            </div>
+            <button id="checkZipBtn" class="btn-custom">Check Service Area</button>
+            <div id="zipErrorMessage" class="error-message"></div>
+            <div id="zipSuccessMessage" class="success-message"></div>
+        </div>
+
+        <!-- Booking Form Section (Initially Hidden) -->
+        <div id="bookingFormSection" class="booking-form-section">
+            <h3 style="color: var(--primary-light); margin-bottom: 20px;">Book Your Appointment</h3>
+            
+            <!-- Service Selection -->
+            <div class="form-group">
+                <label for="serviceType">Select Service *</label>
+                <select id="serviceType" class="form-control" required>
+                    <option value="">Choose a service...</option>
+                    <option value="tv-mounting">TV Mounting</option>
+                    <option value="security">Security Camera Installation</option>
+                    <option value="smart-home">Smart Home Setup</option>
+                    <option value="networking">Networking Solutions</option>
+                    <option value="lighting">Smart Lighting</option>
+                </select>
+            </div>
+
+            <!-- TV Mounting Options (Initially Hidden) -->
+            <div id="tvOptions" class="service-options">
+                <h4>TV Mounting Options</h4>
+
+                <div class="form-group">
+                    <label for="mountType">Mount Type</label>
+                    <select id="mountType" class="form-control">
+                        <option value="mount-only">Mount Only (You provide mount)</option>
+                        <option value="with-mount">With Mount Included</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tvSize">TV Size</label>
+                    <select id="tvSize" class="form-control">
+                        <option value="">Select TV size...</option>
+                        <option value="under-55">Under 55"</option>
+                        <option value="55-75">55" - 75"</option>
+                        <option value="75-plus">75" and above</option>
+                    </select>
+                </div>
+
+                <h4 style="margin-top: 20px;">Add-ons</h4>
+                <div class="addon-option">
+                    <input type="checkbox" id="stone-install" value="60">
+                    <label for="stone-install">Stone Installation (+$60)</label>
+                </div>
+                <div class="addon-option">
+                    <input type="checkbox" id="additional-tv" value="60">
+                    <label for="additional-tv">Additional TV Same Day (+$60)</label>
+                </div>
+                <div class="addon-option">
+                    <input type="checkbox" id="sound-bar" value="30">
+                    <label for="sound-bar">Sound Bar Mounting (+$30)</label>
+                </div>
+                <div class="addon-option">
+                    <input type="checkbox" id="wire-conceal" value="70">
+                    <label for="wire-conceal">In-wall Wire Concealment (+$70)</label>
+                </div>
+            </div>
+
+            <!-- Other Service Options (Initially Hidden) -->
+            <div id="otherServiceOptions" class="service-options">
+                <h4>Service Details</h4>
+                <div class="form-group">
+                    <label for="serviceDetails">Describe your project (optional)</label>
+                    <textarea id="serviceDetails" class="form-control" rows="4" placeholder="Tell us about your specific needs..."></textarea>
+                </div>
+            </div>
+
+            <!-- Customer Information -->
+            <div class="form-group">
+                <label for="customerName">Full Name *</label>
+                <input type="text" id="customerName" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="customerEmail">Email Address *</label>
+                <input type="email" id="customerEmail" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="customerPhone">Phone Number *</label>
+                <input type="tel" id="customerPhone" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="serviceAddress">Service Address *</label>
+                <textarea id="serviceAddress" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="serviceZip">Service Zip Code *</label>
+                <input type="text" id="serviceZip" class="form-control" maxlength="5" required>
+                <small style="color: var(--accent);">For verification (must match the zip code you entered)</small>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Additional Notes</label>
+                <textarea id="notes" class="form-control" rows="3" placeholder="Any special instructions or details..."></textarea>
+            </div>
+
+            <!-- Price Calculation -->
+            <button id="calculateBtn" class="btn-custom">Calculate Price</button>
+
+            <div class="total-display" id="totalDisplay">
+                <h3>Estimated Total</h3>
+                <div class="total-amount" id="totalAmount">$0</div>
+                <div class="service-summary" id="serviceSummary"></div>
+            </div>
+
+            <!-- Formspree Form -->
+            <form id="formspreeForm" action="https://formspree.io/f/mjkojjeg" method="POST" style="display: none;">
+                <!-- Hidden fields for Formspree -->
+                <input type="hidden" name="_next" value="https://titantotalpros.com/thank-you.html">
+                <input type="hidden" name="_subject" value="New Booking from Titan Total Pros Website">
+                
+                <!-- Fields that will be populated by JavaScript -->
+                <input type="hidden" name="service" id="formspreeService">
+                <input type="hidden" name="name" id="formspreeName">
+                <input type="hidden" name="email" id="formspreeEmail">
+                <input type="hidden" name="phone" id="formspreePhone">
+                <input type="hidden" name="address" id="formspreeAddress">
+                <input type="hidden" name="zip" id="formspreeZip">
+                <input type="hidden" name="estimated_total" id="formspreeTotal">
+                <input type="hidden" name="notes" id="formspreeNotes">
+                <input type="hidden" name="service_details" id="formspreeServiceDetails">
+                <input type="hidden" name="tv_options" id="formspreeTvOptions">
+                <input type="hidden" name="addons" id="formspreeAddons">
+            </form>
+
+            <button type="button" id="submitBookingBtn" class="btn-custom" disabled>Submit Booking Request</button>
+            
+            <button class="back-btn" id="backToZipCheck"><i class="fas fa-arrow-left"></i> Back to Zip Code Check</button>
+        </div>
+
+        <!-- Confirmation Message (Initially Hidden) -->
+        <div id="confirmationMessage" class="confirmation-message">
+            <h3><i class="fas fa-check-circle"></i> Booking Request Submitted!</h3>
+            <p id="confirmationSummary"></p>
+            <p style="margin-top: 15px;">We will contact you within 24 hours to confirm details and schedule your appointment.</p>
+        </div>
+    </div>
+
+    <script>
+        // List of approved zip codes within 20 miles of 927 Princeton Dr, Clarksville, TN 37042
+        const approvedZipCodes = [
+            "37040", "37041", "37042", "37043", "37044",
+            "37073", "37074", "37075", "37076", "37077",
+            "37078", "37079", "37080", "37082", "37083",
+            "37085", "37086", "37087", "37090", "37091",
+            "37095", "37097", "37098", "37101", "37110",
+            "37115", "37118", "37122", "37127", "37128",
+            "37129", "37130", "37134", "37135", "37136",
+            "37137", "37138", "37140", "37141", "37142",
+            "37143", "37144", "37145", "37146", "37147",
+            "37148", "37149", "37150", "37151", "37152",
+            "37153", "37160", "37166", "37167", "37171",
+            "37172", "37174", "37178", "37179", "37180",
+            "37181", "37183", "37184", "37185", "37186",
+            "37187", "37188", "37189", "37190", "37191"
+        ];
+
+        // DOM Elements
+        const zipCheckSection = document.getElementById('zipCheckSection');
+        const bookingFormSection = document.getElementById('bookingFormSection');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        const customerZipInput = document.getElementById('customerZip');
+        const checkZipBtn = document.getElementById('checkZipBtn');
+        const zipErrorMessage = document.getElementById('zipErrorMessage');
+        const zipSuccessMessage = document.getElementById('zipSuccessMessage');
+        const serviceTypeSelect = document.getElementById('serviceType');
+        const tvOptions = document.getElementById('tvOptions');
+        const otherServiceOptions = document.getElementById('otherServiceOptions');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const totalDisplay = document.getElementById('totalDisplay');
+        const submitBookingBtn = document.getElementById('submitBookingBtn');
+        const backToZipCheckBtn = document.getElementById('backToZipCheck');
+
+        // Check Zip Code
+        checkZipBtn.addEventListener('click', function() {
+            const zipCode = customerZipInput.value.trim();
+            
+            // Reset messages
+            zipErrorMessage.style.display = 'none';
+            zipSuccessMessage.style.display = 'none';
+            
+            // Validate input
+            if (!zipCode) {
+                zipErrorMessage.textContent = 'Please enter a zip code.';
+                zipErrorMessage.style.display = 'block';
+                return;
+            }
+            
+            if (zipCode.length !== 5 || isNaN(zipCode)) {
+                zipErrorMessage.textContent = 'Please enter a valid 5-digit zip code.';
+                zipErrorMessage.style.display = 'block';
+                return;
+            }
+            
+            // Check if zip code is approved
+            if (approvedZipCodes.includes(zipCode)) {
+                zipSuccessMessage.textContent = `Great! We service the ${zipCode} area. Please proceed with your booking.`;
+                zipSuccessMessage.style.display = 'block';
+                
+                // Show booking form and hide zip check
+                setTimeout(() => {
+                    zipCheckSection.style.display = 'none';
+                    bookingFormSection.style.display = 'block';
+                    // Pre-fill the service zip code
+                    document.getElementById('serviceZip').value = zipCode;
+                }, 1000);
+            } else {
+                zipErrorMessage.textContent = `Sorry, we currently do not service the ${zipCode} area. Please contact us for more information.`;
+                zipErrorMessage.style.display = 'block';
+            }
+        });
+
+        // Service selection logic
+        serviceTypeSelect.addEventListener('change', function() {
+            const serviceType = this.value;
+            
+            // Hide all service options
+            tvOptions.style.display = 'none';
+            otherServiceOptions.style.display = 'none';
+            totalDisplay.style.display = 'none';
+            submitBookingBtn.disabled = true;
+            
+            if (serviceType) {
+                if (serviceType === 'tv-mounting') {
+                    tvOptions.style.display = 'block';
+                } else {
+                    otherServiceOptions.style.display = 'block';
+                }
+            }
+        });
+
+        // Calculate price
+        calculateBtn.addEventListener('click', function() {
+            const serviceType = serviceTypeSelect.value;
+            
+            if (!serviceType) {
+                alert('Please select a service type');
+                return;
+            }
+            
+            let total = 0;
+            let summary = '';
+            
+            if (serviceType === 'tv-mounting') {
+                const mountType = document.getElementById('mountType').value;
+                const tvSize = document.getElementById('tvSize').value;
+                
+                if (!tvSize) {
+                    alert('Please select a TV size');
+                    return;
+                }
+                
+                // Base pricing
+                if (mountType === 'mount-only') {
+                    if (tvSize === 'under-55') total = 65;
+                    else if (tvSize === '55-75' || tvSize === '75-plus') total = 75;
+                    summary = 'TV Mounting Only';
+                } else {
+                    if (tvSize === 'under-55') total = 130;
+                    else if (tvSize === '55-75') total = 145;
+                    else if (tvSize === '75-plus') total = 165;
+                    summary = 'TV Mounting with Mount Included';
+                }
+                
+                // Add-ons
+                const addons = [];
+                if (document.getElementById('stone-install').checked) {
+                    total += 60;
+                    addons.push('Stone Installation');
+                }
+                if (document.getElementById('additional-tv').checked) {
+                    total += 60;
+                    addons.push('Additional TV');
+                }
+                if (document.getElementById('sound-bar').checked) {
+                    total += 30;
+                    addons.push('Sound Bar Mounting');
+                }
+                if (document.getElementById('wire-conceal').checked) {
+                    total += 70;
+                    addons.push('Wire Concealment');
+                }
+                
+                if (addons.length > 0) {
+                    summary += ' + ' + addons.join(', ');
+                }
+                
+            } else {
+                // For other services, show custom pricing message
+                summary = getServiceName(serviceType);
+                total = 0; // Will be quoted after assessment
+            }
+            
+            // Display total and summary
+            document.getElementById('totalAmount').textContent = total > 0 ? '$' + total : 'Quote After Assessment';
+            document.getElementById('serviceSummary').textContent = summary;
+            totalDisplay.style.display = 'block';
+            submitBookingBtn.disabled = false;
+        });
+
+        // Submit booking
+        submitBookingBtn.addEventListener('click', function() {
+            // Validate required fields
+            const requiredFields = [
+                'serviceType', 'customerName', 'customerEmail', 
+                'customerPhone', 'serviceAddress', 'serviceZip'
+            ];
+            
+            let isValid = true;
+            for (const fieldId of requiredFields) {
+                const field = document.getElementById(fieldId === 'serviceType' ? fieldId : 
+                             fieldId === 'serviceZip' ? 'serviceZip' : fieldId);
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'var(--danger)';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#444';
+                }
+            }
+            
+            // Check if zip codes match
+            const customerZip = document.getElementById('customerZip').value.trim();
+            const serviceZip = document.getElementById('serviceZip').value.trim();
+            if (customerZip !== serviceZip) {
+                document.getElementById('serviceZip').style.borderColor = 'var(--danger)';
+                alert('The service zip code must match the zip code you entered for verification.');
+                isValid = false;
+            } else {
+                document.getElementById('serviceZip').style.borderColor = '#444';
+            }
+            
+            if (!isValid) {
+                alert('Please fill in all required fields and correct any errors.');
+                return;
+            }
+            
+            // Populate Formspree form fields
+            document.getElementById('formspreeService').value = getServiceName(serviceTypeSelect.value);
+            document.getElementById('formspreeName').value = document.getElementById('customerName').value;
+            document.getElementById('formspreeEmail').value = document.getElementById('customerEmail').value;
+            document.getElementById('formspreePhone').value = document.getElementById('customerPhone').value;
+            document.getElementById('formspreeAddress').value = document.getElementById('serviceAddress').value;
+            document.getElementById('formspreeZip').value = serviceZip;
+            document.getElementById('formspreeTotal').value = document.getElementById('totalAmount').textContent;
+            document.getElementById('formspreeNotes').value = document.getElementById('notes').value;
+            
+            if (serviceTypeSelect.value === 'tv-mounting') {
+                document.getElementById('formspreeServiceDetails').value = '';
+                document.getElementById('formspreeTvOptions').value = 
+                    `Mount Type: ${document.getElementById('mountType').value}, TV Size: ${document.getElementById('tvSize').value}`;
+                
+                const addons = [];
+                if (document.getElementById('stone-install').checked) addons.push('Stone Installation');
+                if (document.getElementById('additional-tv').checked) addons.push('Additional TV');
+                if (document.getElementById('sound-bar').checked) addons.push('Sound Bar Mounting');
+                if (document.getElementById('wire-conceal').checked) addons.push('Wire Concealment');
+                document.getElementById('formspreeAddons').value = addons.join(', ');
+            } else {
+                document.getElementById('formspreeServiceDetails').value = document.getElementById('serviceDetails').value;
+                document.getElementById('formspreeTvOptions').value = '';
+                document.getElementById('formspreeAddons').value = '';
+            }
+            
+            // Show confirmation
+            const confirmationText = `Service: ${getServiceName(serviceTypeSelect.value)} | Estimated Total: ${document.getElementById('totalAmount').textContent} | Customer: ${document.getElementById('customerName').value}`;
+            document.getElementById('confirmationSummary').textContent = confirmationText;
+            
+            // Hide form and show confirmation
+            bookingFormSection.style.display = 'none';
+            confirmationMessage.style.display = 'block';
+            
+            // Submit the Formspree form
+            document.getElementById('formspreeForm').submit();
+        });
+
+        // Back to zip check
+        backToZipCheckBtn.addEventListener('click', function() {
+            bookingFormSection.style.display = 'none';
+            zipCheckSection.style.display = 'block';
+            // Reset form fields
+            document.getElementById('formspreeForm').reset();
+            document.getElementById('customerForm').reset();
+            tvOptions.style.display = 'none';
+            otherServiceOptions.style.display = 'none';
+            totalDisplay.style.display = 'none';
+            submitBookingBtn.disabled = true;
+        });
+
+        // Helper function
+        function getServiceName(serviceKey) {
+            const services = {
+                'tv-mounting': 'TV Mounting',
+                'security': 'Security Camera Installation',
+                'smart-home': 'Smart Home Setup',
+                'networking': 'Networking Solutions',
+                'lighting': 'Smart Lighting'
+            };
+            return services[serviceKey] || 'Service';
+        }
+    </script>
+</body>
+</html>
