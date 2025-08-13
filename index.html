@@ -501,31 +501,22 @@
             margin-top: 10px;
             display: none;
         }
-        /* Housecall Pro Button Styles */
-        .hcp-booking-section {
-            text-align: center;
-            padding: 30px 20px;
+        /* Bundles and Tiers Section */
+        .bundles-section {
+            background: rgba(0, 153, 204, 0.1);
+            border-left: 4px solid var(--primary-light);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
         }
-        .hcp-button {
-            background-color: var(--primary-light) !important;
-            color: white !important;
-            border: none !important;
-            padding: 15px 30px !important;
-            font-size: 1.1rem !important;
-            font-weight: 600 !important;
-            border-radius: 5px !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-            width: 100% !important;
-            max-width: 300px !important;
-            margin: 20px auto !important;
-            display: block !important;
-        }
-        .hcp-button:hover {
-            background-color: #0077a3 !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+        .tier-badge {
+            background: var(--primary-light);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
         }
         /* Testimonials */
         .testimonials {
@@ -818,114 +809,245 @@
                         <div id="zipSuccessMessage" class="success-message"></div>
                     </div>
 
-                    <!-- Housecall Pro Booking Section (Initially Hidden) -->
-                    <div id="hcpBookingSection" class="hcp-booking-section" style="display: none;">
-                        <h3 style="color: var(--primary-light); margin-bottom: 20px;">Online Booking</h3>
-                        <p style="margin-bottom: 25px;">Click below to book your appointment directly through our online scheduling system</p>
-                        
-                        <!-- Start of Housecallpro Online booking button -->
-                        <button 
-                            data-token="91f5c1b6d60f4b088e93952ce3909c82" 
-                            data-orgname="Titan-Total-Pros" 
-                            class="hcp-button" 
-                            onclick="HCPWidget.openModal()">
-                            Book Online Now
-                        </button>
-                        <script async src="https://online-booking.housecallpro.com/script.js?token=91f5c1b6d60f4b088e93952ce3909c82&orgName=Titan-Total-Pros"></script>
-                        <!-- End of Housecallpro Online booking button -->
-                        
-                        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #444;">
-                            <p style="font-size: 0.9rem; color: var(--accent);">
-                                <i class="fas fa-info-circle"></i> 
-                                After clicking, you'll be able to select your service and preferred appointment time
-                            </p>
-                            <button class="back-btn" id="backToZipCheckBtn" style="margin-top: 15px;">
-                                <i class="fas fa-arrow-left"></i> Back to Zip Check
+                    <!-- Main Booking Form (Initially Hidden) -->
+                    <div id="mainBookingForm" style="display: none;">
+                        <!-- Housecall Pro Booking Section -->
+                        <div class="hcp-booking-section">
+                            <h3 style="color: var(--primary-light); margin-bottom: 20px; text-align: center;">Online Booking</h3>
+                            <p style="text-align: center; margin-bottom: 25px;">Click below to book your appointment directly through our online scheduling system</p>
+                            
+                            <!-- Start of Housecallpro Online booking button -->
+                            <button 
+                                data-token="91f5c1b6d60f4b088e93952ce3909c82" 
+                                data-orgname="Titan-Total-Pros" 
+                                class="hcp-button" 
+                                onclick="HCPWidget.openModal()"
+                                style="
+                                    background-color: var(--primary-light);
+                                    color: white;
+                                    border: none;
+                                    padding: 15px 30px;
+                                    font-size: 1.1rem;
+                                    font-weight: 600;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                                    width: 100%;
+                                    max-width: 300px;
+                                    margin: 0 auto 25px;
+                                    display: block;
+                                ">
+                                Book Online Now
                             </button>
+                            <script async src="https://online-booking.housecallpro.com/script.js?token=91f5c1b6d60f4b088e93952ce3909c82&orgName=Titan-Total-Pros"></script>
+                            <!-- End of Housecallpro Online booking button -->
+                            
+                            <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #444;">
+                                <p style="font-size: 0.9rem; color: var(--accent); text-align: center;">
+                                    <i class="fas fa-info-circle"></i> 
+                                    After clicking, you'll be able to select your service and preferred appointment time
+                                </p>
+                                <button class="back-btn" id="backToZipCheckBtn" style="margin-top: 15px; width: 100%; max-width: 300px; margin-left: auto; margin-right: auto;">
+                                    <i class="fas fa-arrow-left"></i> Back to Zip Check
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Pricing Section -->
                 <div class="pricing-section">
-                    <h3>Service Pricing</h3>
-
-                    <div id="tvPricing">
-                        <h4>TV Mounting Only (Mount Not Included)</h4>
-                        <table class="pricing-table">
-                            <tr>
-                                <th>TV Size</th>
-                                <th>Price</th>
-                            </tr>
-                            <tr>
-                                <td>Under 55"</td>
-                                <td>$80</td>
-                            </tr>
-                            <tr>
-                                <td>55" - 70"</td>
-                                <td>$90</td>
-                            </tr>
-                            <tr>
-                                <td>70" and above</td>
-                                <td>$90</td>
-                            </tr>
-                        </table>
-
-                        <h4 style="margin-top: 20px;">TV Mounting With Mount Included</h4>
-                        <table class="pricing-table">
-                            <tr>
-                                <th>TV Size</th>
-                                <th>Price</th>
-                            </tr>
-                            <tr>
-                                <td>Under 55"</td>
-                                <td>$140</td>
-                            </tr>
-                            <tr>
-                                <td>55" - 70"</td>
-                                <td>$155</td>
-                            </tr>
-                            <tr>
-                                <td>70" and above</td>
-                                <td>$175</td>
-                            </tr>
-                        </table>
-
-                        <h4 style="margin-top: 20px;">Add-ons</h4>
-                        <table class="pricing-table">
-                            <tr>
-                                <th>Add-on</th>
-                                <th>Price</th>
-                            </tr>
-                            <tr>
-                                <td>Stone Installation</td>
-                                <td>+$60</td>
-                            </tr>
-                            <tr>
-                                <td>Additional TV Same Day</td>
-                                <td>+$60</td>
-                            </tr>
-                            <tr>
-                                <td>Sound Bar Mounting</td>
-                                <td>+$30</td>
-                            </tr>
-                            <tr>
-                                <td>In-wall Wire Concealment</td>
-                                <td>+$70</td>
-                            </tr>
-                        </table>
+                    <!-- Bundles and Premium Tiers Section -->
+                    <div class="bundles-section">
+                        <h3 style="color: var(--primary-light); margin-top: 0; margin-bottom: 15px;"><i class="fas fa-gift"></i> Value-Added Bundles</h3>
+                        <p><strong>Complete Entertainment Package:</strong> TV Mount + Sound Bar Mount = $25 discount</p>
+                        <p><strong>Security Starter Kit:</strong> 2 Cameras + Video Doorbell = $50 discount</p>
+                        <p><strong>Smart Home Bundle:</strong> Smart Thermostat + Smart Lighting = $30 discount</p>
+                    </div>
+                    
+                    <div class="bundles-section">
+                        <h3 style="color: var(--primary-light); margin-top: 0; margin-bottom: 15px;"><i class="fas fa-crown"></i> Premium Service Tiers <span class="tier-badge">NEW</span></h3>
+                        <p><strong>Basic Installation:</strong> Standard mounting/programming</p>
+                        <p><strong>Premium Installation:</strong> Extended warranty, custom configuration, priority scheduling <span style="color: var(--primary-light);">(+ $30-50)</span></p>
                     </div>
 
-                    <div id="otherPricing" style="display: none;">
-                        <p>Pricing for other services is customized based on your specific needs. Our technician will provide a detailed quote after assessing your project.</p>
-                        <p style="margin-top: 15px;"><strong>Typical price ranges:</strong></p>
-                        <ul style="padding-left: 20px; margin-top: 10px;">
-                            <li>Security Camera Installation: $180-$300 per camera</li>
-                            <li>Smart Home Setup: $150-$250</li>
-                            <li>Networking Solutions: $100-$200</li>
-                            <li>Smart Lighting: $100-$250</li>
-                            <li>Smart Thermostats: $150-$250</li>
-                        </ul>
+                    <!-- Service Selection Dropdown -->
+                    <div class="form-group">
+                        <label for="serviceDropdown">Select a Service to View Pricing</label>
+                        <select id="serviceDropdown" class="form-control">
+                            <option value="">-- Choose a Service --</option>
+                            <option value="tv-mounting">TV Mounting</option>
+                            <option value="security">Security Camera Installation</option>
+                            <option value="smart-home">Smart Home Setup</option>
+                            <option value="networking">Networking Solutions</option>
+                            <option value="lighting">Smart Lighting</option>
+                            <option value="thermostat">Smart Thermostat</option>
+                            <option value="audio">Audio Systems</option>
+                            <option value="doorbell">Video Doorbell</option>
+                            <option value="wifi">WiFi Equipment</option>
+                            <option value="smart-devices">Smart Devices</option>
+                        </select>
+                    </div>
+
+                    <!-- Pricing Tables (Initially Hidden) -->
+                    <div id="pricingTablesContainer">
+                        <!-- TV Mounting Pricing -->
+                        <div id="tv-mounting-pricing" class="service-pricing" style="display: none;">
+                            <h3>TV Mounting Only (Mount Not Included)</h3>
+                            <table class="pricing-table">
+                                <tr>
+                                    <th>TV Size</th>
+                                    <th>Price</th>
+                                </tr>
+                                <tr>
+                                    <td>Under 55"</td>
+                                    <td>$80</td>
+                                </tr>
+                                <tr>
+                                    <td>55" - 70"</td>
+                                    <td>$90</td>
+                                </tr>
+                                <tr>
+                                    <td>70" and above</td>
+                                    <td>$90</td>
+                                </tr>
+                            </table>
+
+                            <h4 style="margin-top: 20px;">TV Mounting With Mount Included</h4>
+                            <table class="pricing-table">
+                                <tr>
+                                    <th>TV Size</th>
+                                    <th>Price</th>
+                                </tr>
+                                <tr>
+                                    <td>Under 55"</td>
+                                    <td>$140</td>
+                                </tr>
+                                <tr>
+                                    <td>55" - 70"</td>
+                                    <td>$155</td>
+                                </tr>
+                                <tr>
+                                    <td>70" and above</td>
+                                    <td>$175</td>
+                                </tr>
+                            </table>
+
+                            <h4 style="margin-top: 20px;">Add-ons</h4>
+                            <table class="pricing-table">
+                                <tr>
+                                    <th>Add-on</th>
+                                    <th>Price</th>
+                                </tr>
+                                <tr>
+                                    <td>Stone Installation</td>
+                                    <td>+$60</td>
+                                </tr>
+                                <tr>
+                                    <td>Additional TV Same Day</td>
+                                    <td>+$60</td>
+                                </tr>
+                                <tr>
+                                    <td>Sound Bar Mounting</td>
+                                    <td>+$30</td>
+                                </tr>
+                                <tr>
+                                    <td>In-wall Wire Concealment</td>
+                                    <td>+$70</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Security Pricing -->
+                        <div id="security-pricing" class="service-pricing" style="display: none;">
+                            <h3>Security Camera Installation</h3>
+                            <table class="pricing-table">
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Price Range</th>
+                                </tr>
+                                <tr>
+                                    <td>Audio Camera</td>
+                                    <td>$180</td>
+                                </tr>
+                                <tr>
+                                    <td>Door Lock</td>
+                                    <td>$150</td>
+                                </tr>
+                                <tr>
+                                    <td>Flood Light</td>
+                                    <td>$190</td>
+                                </tr>
+                                <tr>
+                                    <td>Hard Wired Camera</td>
+                                    <td>$250</td>
+                                </tr>
+                                <tr>
+                                    <td>Security Screen</td>
+                                    <td>$120</td>
+                                </tr>
+                                <tr>
+                                    <td>Video Doorbell</td>
+                                    <td>$175</td>
+                                </tr>
+                                <tr>
+                                    <td>Wireless Camera</td>
+                                    <td>$160</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Wifi Pricing -->
+                        <div id="wifi-pricing" class="service-pricing" style="display: none;">
+                            <h3>WiFi Equipment</h3>
+                            <table class="pricing-table">
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Price</th>
+                                </tr>
+                                <tr>
+                                    <td>Wifi Router</td>
+                                    <td>$140</td>
+                                </tr>
+                                <tr>
+                                    <td>Wifi Extender</td>
+                                    <td>$100</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Smart Device Pricing -->
+                        <div id="smart-device-pricing" class="service-pricing" style="display: none;">
+                            <h3>Smart Devices</h3>
+                            <table class="pricing-table">
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Price</th>
+                                </tr>
+                                <tr>
+                                    <td>Smart Thermostat</td>
+                                    <td>$150</td>
+                                </tr>
+                                <tr>
+                                    <td>Other Smart Device</td>
+                                    <td>$150</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Other Services Pricing (Generic) -->
+                        <div id="other-pricing" class="service-pricing" style="display: none;">
+                            <h3>Service Pricing</h3>
+                            <p>Pricing for other services is customized based on your specific needs. Our technician will provide a detailed quote after assessing your project.</p>
+                            <p style="margin-top: 15px;"><strong>Typical price ranges:</strong></p>
+                            <ul style="padding-left: 20px; margin-top: 10px;">
+                                <li>Smart Home Setup: $150-$250</li>
+                                <li>Networking Solutions: $100-$200</li>
+                                <li>Smart Lighting: $100-$250</li>
+                                <li>Audio Systems: $150-$300</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1071,7 +1193,7 @@
 
         // DOM Elements for Zip Check
         const zipCheckSection = document.getElementById('zipCheckSection');
-        const hcpBookingSection = document.getElementById('hcpBookingSection');
+        const mainBookingForm = document.getElementById('mainBookingForm');
         const customerZipInput = document.getElementById('customerZip');
         const checkZipBtn = document.getElementById('checkZipBtn');
         const zipErrorMessage = document.getElementById('zipErrorMessage');
@@ -1104,10 +1226,10 @@
                 zipSuccessMessage.textContent = `Great! We service the ${zipCode} area. Please proceed with your booking.`;
                 zipSuccessMessage.style.display = 'block';
                 
-                // Show Housecall Pro booking section and hide zip check after a short delay
+                // Show booking form and hide zip check after a short delay
                 setTimeout(() => {
                     zipCheckSection.style.display = 'none';
-                    hcpBookingSection.style.display = 'block';
+                    mainBookingForm.style.display = 'block';
                 }, 1500);
             } else {
                 zipErrorMessage.textContent = `Sorry, we currently do not service the ${zipCode} area. Please contact us for more information.`;
@@ -1117,12 +1239,55 @@
 
         // Back to zip check
         backToZipCheckBtn.addEventListener('click', function() {
-            hcpBookingSection.style.display = 'none';
+            mainBookingForm.style.display = 'none';
             zipCheckSection.style.display = 'block';
             // Reset zip code input
             customerZipInput.value = '';
             zipErrorMessage.style.display = 'none';
             zipSuccessMessage.style.display = 'none';
+        });
+
+        // Service Selection Dropdown Logic
+        const serviceDropdown = document.getElementById('serviceDropdown');
+        const pricingTablesContainer = document.getElementById('pricingTablesContainer');
+
+        // Hide all pricing tables initially
+        document.querySelectorAll('.service-pricing').forEach(table => {
+            table.style.display = 'none';
+        });
+
+        serviceDropdown.addEventListener('change', function() {
+            const selectedService = this.value;
+            
+            // Hide all pricing tables
+            document.querySelectorAll('.service-pricing').forEach(table => {
+                table.style.display = 'none';
+            });
+            
+            // Show the selected pricing table
+            if (selectedService) {
+                let tableToShow = document.getElementById(`${selectedService}-pricing`);
+                
+                // If no specific table, show generic "other" table
+                if (!tableToShow) {
+                    // Map specific services to their categories for pricing display
+                    if (['audio', 'smart-home', 'networking', 'lighting', 'thermostat', 'doorbell'].includes(selectedService)) {
+                        tableToShow = document.getElementById('other-pricing');
+                    } else if (['security'].includes(selectedService)) {
+                        tableToShow = document.getElementById('security-pricing');
+                    } else if (['wifi'].includes(selectedService)) {
+                        tableToShow = document.getElementById('wifi-pricing');
+                    } else if (['smart-devices'].includes(selectedService)) {
+                        tableToShow = document.getElementById('smart-device-pricing');
+                    } else {
+                        tableToShow = document.getElementById('other-pricing'); // Fallback
+                    }
+                }
+                
+                if (tableToShow) {
+                    tableToShow.style.display = 'block';
+                }
+            }
         });
     </script>
 </body>
