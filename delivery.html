@@ -4,85 +4,352 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FreshCart - Grocery Delivery</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-dark: #003366;
+      --primary-light: #0099cc;
+      --accent: #c0c0c0;
+      --dark-bg: #1a1a1a;
+      --text-light: #f0f0f0;
+      --text-dark: #333;
+      --success: #4CAF50;
+      --warning: #ff9800;
+      --danger: #f44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary-light);
+      margin-bottom: 15px;
+    }
+
+    .section-title p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: var(--accent);
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--primary-light);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #2a2a2a;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 2px rgba(0, 153, 204, 0.3);
+    }
+
+    /* Buttons */
+    .btn-custom {
+      display: inline-block;
+      padding: 15px 35px;
+      background-color: var(--primary-light);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-custom:hover {
+      background-color: #0077a3;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-btn {
+      background: none;
+      border: 1px solid var(--primary-light);
+      color: var(--primary-light);
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      width: auto;
+    }
+
+    .back-btn:hover {
+      background: rgba(0, 153, 204, 0.1);
+    }
+
+    /* Layout */
+    .booking-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      background: #2a2a2a;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 992px) {
+      .booking-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .booking-form-section,
+    .pricing-section {
+      padding: 30px;
+      background: #333;
+    }
+
+    .pricing-section {
+      background: #222;
+    }
+
+    /* Messages */
+    .error-message {
+      color: var(--danger);
+      background-color: rgba(244, 67, 54, 0.1);
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .success-message {
+      color: var(--success);
+      background-color: rgba(76, 175, 80, 0.1);
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Cart & Product Styles */
+    .product {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #444;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #444;
+    }
+
+    .cart-item em {
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    #order-summary {
+      background: rgba(0, 51, 102, 0.3);
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    #order-summary p {
+      margin: 8px 0;
+    }
+
+    .cashtag {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-light);
+      background: rgba(0, 153, 204, 0.1);
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+
+    .qr-placeholder {
+      width: 150px;
+      height: 150px;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px auto;
+      color: var(--accent);
+      font-size: 0.85rem;
+      text-align: center;
+      border: 1px dashed #555;
+    }
+
+    textarea.form-control {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .section {
+        padding: 60px 0;
+      }
+      .section-title h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🍎 FreshCart</h1>
-    <p>Order groceries. We deliver to your door!</p>
-  </header>
-
-  <main>
-    <!-- Step 1: Select Location -->
-    <section id="location-section">
-      <h2>1. Enter Your ZIP Code</h2>
-      <input type="text" id="zip-input" placeholder="e.g., 10001" maxlength="5" />
-      <button onclick="setDeliveryFee()">Set Location</button>
-      <p id="delivery-message"></p>
-    </section>
-
-    <!-- Step 2: Grocery Items -->
-    <section id="products-section" style="display: none;">
-      <h2>2. Select Items</h2>
-
-      <div id="product-list">
-        <!-- Products will be loaded by JS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>🛒 FreshCart Grocery Delivery</h2>
+        <p>Order essentials online. We deliver fast—with pricing based on your location.</p>
       </div>
 
-      <h3>Don’t see what you need?</h3>
-      <div class="custom-item">
-        <input type="text" id="custom-name" placeholder="Item name (e.g., Almond Milk)" />
-        <textarea id="custom-notes" placeholder="Brand, size, or notes..."></textarea>
-        <button onclick="addCustomItem()">Add Custom Item</button>
+      <div class="booking-container">
+        <!-- Form Side -->
+        <div class="booking-form-section">
+          <!-- ZIP Check -->
+          <div id="zipCheckSection">
+            <h3 style="color: var(--primary-light); margin-bottom: 20px;">📍 Enter Your ZIP Code</h3>
+            <div class="form-group">
+              <label for="customerZip">ZIP Code *</label>
+              <input type="text" id="customerZip" class="form-control" placeholder="e.g., 37042" maxlength="5" required>
+            </div>
+            <button id="checkZipBtn" class="btn-custom">Check Delivery Area</button>
+            <div id="zipErrorMessage" class="error-message"></div>
+            <div id="zipSuccessMessage" class="success-message"></div>
+          </div>
+
+          <!-- Main Form (Hidden Initially) -->
+          <div id="mainOrderForm" style="display: none;">
+            <h3 style="color: var(--primary-light); margin: 20px 0;">📦 Select Items</h3>
+            <div id="product-list"></div>
+
+            <h4 style="margin: 25px 0 15px; color: var(--primary-light);">➕ Custom Request?</h4>
+            <div class="form-group">
+              <input type="text" id="custom-name" class="form-control" placeholder="Item name (e.g., Organic Almond Milk)">
+            </div>
+            <div class="form-group">
+              <textarea id="custom-notes" class="form-control" placeholder="Brand, size, or special instructions..."></textarea>
+            </div>
+            <button onclick="addCustomItem()" class="btn-custom">Add to Order</button>
+
+            <div id="cart-section" style="margin-top: 30px; display: none;">
+              <h3 style="color: var(--primary-light); margin-bottom: 15px;">🛒 Your Order</h3>
+              <div id="cart-items"></div>
+              <div id="order-summary">
+                <p>Subtotal: <span id="subtotal">$0.00</span></p>
+                <p>Delivery Fee: <span id="delivery-fee">$0.00</span></p>
+                <p><strong>Total: <span id="total">$0.00</span></strong></p>
+              </div>
+              <button onclick="placeOrder()" class="btn-custom">Review & Pay</button>
+            </div>
+
+            <button id="backToZipBtn" class="back-btn" style="margin-top: 20px;">
+              <i class="fas fa-arrow-left"></i> Back to ZIP Check
+            </button>
+          </div>
+        </div>
+
+        <!-- Info / Payment Side -->
+        <div class="pricing-section">
+          <h3 style="color: var(--primary-light);"><i class="fas fa-dollar-sign"></i> How Payment Works</h3>
+          <p>We accept payments via <strong>Cash App</strong> only.</p>
+          <p>After placing your order, send the total amount to:</p>
+
+          <div class="cashtag">$YourGroceryShop</div>
+
+          <p style="margin: 15px 0;">Include your order number in the note:</p>
+          <div style="background: rgba(0, 51, 102, 0.3); padding: 10px; border-radius: 5px; text-align: center; font-weight: bold;" id="order-id">FC-XXXX</div>
+
+          <div class="qr-placeholder">
+            <i class="fas fa-qrcode"></i><br>
+            (Your Cash App QR Code)
+          </div>
+
+          <p style="font-size: 0.9rem; color: var(--accent);">
+            📌 Tip: Replace <code>$YourGroceryShop</code> with your real $Cashtag.<br>
+            Generate your QR code in Cash App → Profile → Share QR.
+          </p>
+
+          <!-- Delivery Zones Info -->
+          <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #444;">
+            <h4 style="color: var(--primary-light); margin-bottom: 10px;"><i class="fas fa-truck"></i> Delivery Zones</h4>
+            <ul style="padding-left: 20px; font-size: 0.95rem;">
+              <li>ZIPs 37040–37044: $2.99</li>
+              <li>Other local ZIPs: $4.99</li>
+              <li>Outside service area: Not available</li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <!-- Step 3: Cart & Checkout -->
-    <section id="cart-section" style="display: none;">
-      <h2>3. Review & Pay</h2>
-      <div id="cart-items"></div>
-      <div id="order-summary">
-        <p>Subtotal: <span id="subtotal">$0.00</span></p>
-        <p>Delivery Fee: <span id="delivery-fee">$0.00</span></p>
-        <p><strong>Total: <span id="total">$0.00</span></strong></p>
-      </div>
-
-      <div id="cashapp-instructions">
-        <h3>💳 Pay via Cash App</h3>
-        <p>Please send the total amount to:</p>
-        <div class="cashtag"> <strong>$YourGroceryShop</strong> </div>
-        <p>(Replace <code>$YourGroceryShop</code> with your real $Cashtag!)</p>
-        <p>Include your order number in the note: <strong id="order-id">FC-XXXX</strong></p>
-        <p>✅ Your order will be confirmed once payment is received!</p>
-        <img src="https://cash.app/images/qr-code-placeholder.png" alt="Cash App QR Code (replace with yours)" class="qr-code" />
-        <p><em>Tip: Generate your QR code from Cash App > Profile > Share QR</em></p>
-      </div>
-
-      <button onclick="placeOrder()" id="confirm-btn">I’ve Sent Payment – Confirm Order</button>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 FreshCart Grocery. All rights reserved.</p>
-  </footer>
+    </div>
+  </section>
 
   <script>
-    // CONFIG: Replace these!
+    // CONFIG — Customize these!
     const YOUR_CASHTAG = "$YourGroceryShop";
-    const DELIVERY_ZONES = {
-      // ZIP codes mapped to delivery fees (in USD)
-      "10001": 2.99,
-      "10002": 2.99,
-      "10003": 2.99,
-      "10004": 4.99,
-      "10005": 4.99,
-      "11201": 3.99,
-      "11202": 3.99,
-      // Add more as needed
+    const APPROVED_ZIPS = [
+      "37040", "37041", "37042", "37043", "37044",
+      "37073", "37074", "37075", "37076", "37077",
+      "37078", "37079", "37080", "37082", "37083",
+      "37085", "37086", "37087", "37090", "37091"
+    ];
+    const DELIVERY_FEES = {
+      "37040": 2.99, "37041": 2.99, "37042": 2.99, "37043": 2.99, "37044": 2.99
     };
-    const DEFAULT_DELIVERY_FEE = 5.99; // For ZIPs not listed
+    const DEFAULT_DELIVERY_FEE = 4.99;
 
-    // Sample products
     const PRODUCTS = [
       { id: 1, name: "Milk (1 gal)", price: 3.49 },
       { id: 2, name: "Bread (Whole Wheat)", price: 2.99 },
@@ -90,15 +357,21 @@
       { id: 4, name: "Bananas (1 lb)", price: 0.69 },
       { id: 5, name: "Chicken Breast (1 lb)", price: 5.99 },
       { id: 6, name: "Rice (2 lb bag)", price: 2.49 },
+      { id: 7, name: "Apples (1 lb)", price: 1.99 },
+      { id: 8, name: "Ground Beef (1 lb)", price: 6.49 }
     ];
 
     let cart = [];
     let deliveryFee = 0;
-    let orderId = "FC-" + Math.floor(1000 + Math.random() * 9000);
+    let userZip = "";
+    const orderId = "FC-" + Math.floor(1000 + Math.random() * 9000);
 
-    // DOM Elements
-    const zipInput = document.getElementById("zip-input");
-    const deliveryMessage = document.getElementById("delivery-message");
+    // DOM
+    const zipInput = document.getElementById("customerZip");
+    const zipCheckSection = document.getElementById("zipCheckSection");
+    const mainOrderForm = document.getElementById("mainOrderForm");
+    const zipErrorMessage = document.getElementById("zipErrorMessage");
+    const zipSuccessMessage = document.getElementById("zipSuccessMessage");
     const productList = document.getElementById("product-list");
     const cartItemsEl = document.getElementById("cart-items");
     const subtotalEl = document.getElementById("subtotal");
@@ -106,105 +379,106 @@
     const totalEl = document.getElementById("total");
     const orderIdEl = document.getElementById("order-id");
 
-    // Initialize product list
-    function initProducts() {
+    orderIdEl.textContent = orderId;
+
+    // Load products
+    function loadProducts() {
       productList.innerHTML = PRODUCTS.map(p => `
         <div class="product">
-          <span>${p.name} - $${p.price.toFixed(2)}</span>
-          <button onclick="addToCart(${p.id})">Add</button>
+          <span>${p.name}</span>
+          <button onclick="addToCart(${p.id})" class="back-btn" style="padding: 6px 12px; font-size: 0.85rem;">Add</button>
         </div>
       `).join("");
     }
 
-    // Set delivery fee based on ZIP
-    function setDeliveryFee() {
+    // ZIP validation
+    document.getElementById("checkZipBtn").addEventListener("click", () => {
       const zip = zipInput.value.trim();
-      if (!/^\d{5}$/.test(zip)) {
-        deliveryMessage.textContent = "Please enter a valid 5-digit ZIP code.";
-        deliveryMessage.style.color = "red";
+      zipErrorMessage.style.display = "none";
+      zipSuccessMessage.style.display = "none";
+
+      if (!zip || zip.length !== 5 || isNaN(zip)) {
+        zipErrorMessage.textContent = "Please enter a valid 5-digit ZIP code.";
+        zipErrorMessage.style.display = "block";
         return;
       }
 
-      deliveryFee = DELIVERY_ZONES[zip] !== undefined ? DELIVERY_ZONES[zip] : DEFAULT_DELIVERY_FEE;
-      deliveryMessage.textContent = `✅ Delivery fee: $${deliveryFee.toFixed(2)}. Ready to shop!`;
-      deliveryMessage.style.color = "green";
-      document.getElementById("products-section").style.display = "block";
-      initProducts();
-    }
-
-    // Add predefined item to cart
-    function addToCart(productId) {
-      const product = PRODUCTS.find(p => p.id === productId);
-      if (product) {
-        cart.push({ type: "product", ...product });
-        updateCart();
+      if (!APPROVED_ZIPS.includes(zip)) {
+        zipErrorMessage.textContent = `Sorry, we don’t deliver to ${zip}.`;
+        zipErrorMessage.style.display = "block";
+        return;
       }
+
+      userZip = zip;
+      deliveryFee = DELIVERY_FEES[zip] !== undefined ? DELIVERY_FEES[zip] : DEFAULT_DELIVERY_FEE;
+      zipSuccessMessage.textContent = `✅ Delivery available! Fee: $${deliveryFee.toFixed(2)}`;
+      zipSuccessMessage.style.display = "block";
+
+      setTimeout(() => {
+        zipCheckSection.style.display = "none";
+        mainOrderForm.style.display = "block";
+        loadProducts();
+      }, 1200);
+    });
+
+    document.getElementById("backToZipBtn").addEventListener("click", () => {
+      mainOrderForm.style.display = "none";
+      zipCheckSection.style.display = "block";
+      zipInput.value = "";
+      cart = [];
+      document.getElementById("cart-section").style.display = "none";
+    });
+
+    function addToCart(id) {
+      const item = PRODUCTS.find(p => p.id === id);
+      if (item) cart.push({ ...item, type: "product" });
+      updateCart();
     }
 
-    // Add custom item
     function addCustomItem() {
       const name = document.getElementById("custom-name").value.trim();
       const notes = document.getElementById("custom-notes").value.trim();
       if (!name) return alert("Please enter an item name.");
-      cart.push({
-        type: "custom",
-        name: name,
-        notes: notes,
-        price: 0 // Will be priced later
-      });
+      cart.push({ type: "custom", name, notes, price: 0 });
       document.getElementById("custom-name").value = "";
       document.getElementById("custom-notes").value = "";
       updateCart();
     }
 
-    // Update cart display & totals
-    function updateCart() {
-      if (cart.length === 0) {
-        cartItemsEl.innerHTML = "<p>Your cart is empty.</p>";
-        return;
-      }
-
-      cartItemsEl.innerHTML = cart.map((item, index) => `
-        <div class="cart-item">
-          <div>
-            <strong>${item.name || item.name}</strong>
-            ${item.notes ? `<br><em>Notes: ${item.notes}</em>` : ""}
-            ${item.price > 0 ? `<br>$${item.price.toFixed(2)}` : "<br><em>Price TBD</em>"}
-          </div>
-          <button onclick="removeFromCart(${index})">Remove</button>
-        </div>
-      `).join("");
-
-      const subtotal = cart
-        .filter(item => item.price > 0)
-        .reduce((sum, item) => sum + item.price, 0);
-
-      subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-      deliveryFeeEl.textContent = `$${deliveryFee.toFixed(2)}`;
-      totalEl.textContent = `$${(subtotal + deliveryFee).toFixed(2)}`;
-
-      document.getElementById("cart-section").style.display = "block";
-      orderIdEl.textContent = orderId;
-    }
-
-    // Remove item from cart
     function removeFromCart(index) {
       cart.splice(index, 1);
       updateCart();
     }
 
-    // Final confirmation
-    function placeOrder() {
+    function updateCart() {
       if (cart.length === 0) {
-        alert("Your cart is empty!");
+        document.getElementById("cart-section").style.display = "none";
         return;
       }
-      alert(`Order ${orderId} submitted!\nWe’ll prepare your items once we receive your Cash App payment.`);
-      // In a real app, you'd email this or save it somewhere.
+
+      cartItemsEl.innerHTML = cart.map((item, i) => `
+        <div class="cart-item">
+          <div>
+            <strong>${item.name}</strong>
+            ${item.notes ? `<br><em>${item.notes}</em>` : ""}
+            <br>${item.price > 0 ? `$${item.price.toFixed(2)}` : "<em>Price TBD</em>"}
+          </div>
+          <button onclick="removeFromCart(${i})" class="back-btn" style="padding: 4px 8px; font-size: 0.8rem;">Remove</button>
+        </div>
+      `).join("");
+
+      const subtotal = cart.filter(i => i.price > 0).reduce((sum, i) => sum + i.price, 0);
+      subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+      deliveryFeeEl.textContent = `$${deliveryFee.toFixed(2)}`;
+      totalEl.textContent = `$${(subtotal + deliveryFee).toFixed(2)}`;
+
+      document.getElementById("cart-section").style.display = "block";
     }
 
-    // Initialize
-    orderIdEl.textContent = orderId;
+    function placeOrder() {
+      alert(`Order ${orderId} is ready!\n\nPlease send the total to ${YOUR_CASHTAG} on Cash App.\nInclude "${orderId}" in the note.\n\nWe’ll deliver once payment is received!`);
+      // Optional: Email/SMS integration can be added later
+    }
   </script>
 </body>
 </html>
