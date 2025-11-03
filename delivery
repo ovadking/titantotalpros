@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FreshCart - Grocery Delivery</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🍎 FreshCart</h1>
+    <p>Order groceries. We deliver to your door!</p>
+  </header>
+
+  <main>
+    <!-- Step 1: Select Location -->
+    <section id="location-section">
+      <h2>1. Enter Your ZIP Code</h2>
+      <input type="text" id="zip-input" placeholder="e.g., 10001" maxlength="5" />
+      <button onclick="setDeliveryFee()">Set Location</button>
+      <p id="delivery-message"></p>
+    </section>
+
+    <!-- Step 2: Grocery Items -->
+    <section id="products-section" style="display: none;">
+      <h2>2. Select Items</h2>
+
+      <div id="product-list">
+        <!-- Products will be loaded by JS -->
+      </div>
+
+      <h3>Don’t see what you need?</h3>
+      <div class="custom-item">
+        <input type="text" id="custom-name" placeholder="Item name (e.g., Almond Milk)" />
+        <textarea id="custom-notes" placeholder="Brand, size, or notes..."></textarea>
+        <button onclick="addCustomItem()">Add Custom Item</button>
+      </div>
+    </section>
+
+    <!-- Step 3: Cart & Checkout -->
+    <section id="cart-section" style="display: none;">
+      <h2>3. Review & Pay</h2>
+      <div id="cart-items"></div>
+      <div id="order-summary">
+        <p>Subtotal: <span id="subtotal">$0.00</span></p>
+        <p>Delivery Fee: <span id="delivery-fee">$0.00</span></p>
+        <p><strong>Total: <span id="total">$0.00</span></strong></p>
+      </div>
+
+      <div id="cashapp-instructions">
+        <h3>💳 Pay via Cash App</h3>
+        <p>Please send the total amount to:</p>
+        <div class="cashtag"> <strong>$YourGroceryShop</strong> </div>
+        <p>(Replace <code>$YourGroceryShop</code> with your real $Cashtag!)</p>
+        <p>Include your order number in the note: <strong id="order-id">FC-XXXX</strong></p>
+        <p>✅ Your order will be confirmed once payment is received!</p>
+        <img src="https://cash.app/images/qr-code-placeholder.png" alt="Cash App QR Code (replace with yours)" class="qr-code" />
+        <p><em>Tip: Generate your QR code from Cash App > Profile > Share QR</em></p>
+      </div>
+
+      <button onclick="placeOrder()" id="confirm-btn">I’ve Sent Payment – Confirm Order</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 FreshCart Grocery. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // CONFIG: Replace these!
+    const YOUR_CASHTAG = "$YourGroceryShop";
+    const DELIVERY_ZONES = {
+      // ZIP codes mapped to delivery fees (in USD)
+      "10001": 2.99,
+      "10002": 2.99,
+      "10003": 2.99,
+      "10004": 4.99,
+      "10005": 4.99,
+      "11201": 3.99,
+      "11202": 3.99,
+      // Add more as needed
+    };
+    const DEFAULT_DELIVERY_FEE = 5.99; // For ZIPs not listed
+
+    // Sample products
+    const PRODUCTS = [
+      { id: 1, name: "Milk (1 gal)", price: 3.49 },
+      { id: 2, name: "Bread (Whole Wheat)", price: 2.99 },
+      { id: 3, name: "Eggs (Dozen)", price: 4.29 },
+      { id: 4, name: "Bananas (1 lb)", price: 0.69 },
+      { id: 5, name: "Chicken Breast (1 lb)", price: 5.99 },
+      { id: 6, name: "Rice (2 lb bag)", price: 2.49 },
+    ];
+
+    let cart = [];
+    let deliveryFee = 0;
+    let orderId = "FC-" + Math.floor(1000 + Math.random() * 9000);
+
+    // DOM Elements
+    const zipInput = document.getElementById("zip-input");
+    const deliveryMessage = document.getElementById("delivery-message");
+    const productList = document.getElementById("product-list");
+    const cartItemsEl = document.getElementById("cart-items");
+    const subtotalEl = document.getElementById("subtotal");
+    const deliveryFeeEl = document.getElementById("delivery-fee");
+    const totalEl = document.getElementById("total");
+    const orderIdEl = document.getElementById("order-id");
+
+    // Initialize product list
+    function initProducts() {
+      productList.innerHTML = PRODUCTS.map(p => `
+        <div class="product">
+          <span>${p.name} - $${p.price.toFixed(2)}</span>
+          <button onclick="addToCart(${p.id})">Add</button>
+        </div>
+      `).join("");
+    }
+
+    // Set delivery fee based on ZIP
+    function setDeliveryFee() {
+      const zip = zipInput.value.trim();
+      if (!/^\d{5}$/.test(zip)) {
+        deliveryMessage.textContent = "Please enter a valid 5-digit ZIP code.";
+        deliveryMessage.style.color = "red";
+        return;
+      }
+
+      deliveryFee = DELIVERY_ZONES[zip] !== undefined ? DELIVERY_ZONES[zip] : DEFAULT_DELIVERY_FEE;
+      deliveryMessage.textContent = `✅ Delivery fee: $${deliveryFee.toFixed(2)}. Ready to shop!`;
+      deliveryMessage.style.color = "green";
+      document.getElementById("products-section").style.display = "block";
+      initProducts();
+    }
+
+    // Add predefined item to cart
+    function addToCart(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (product) {
+        cart.push({ type: "product", ...product });
+        updateCart();
+      }
+    }
+
+    // Add custom item
+    function addCustomItem() {
+      const name = document.getElementById("custom-name").value.trim();
+      const notes = document.getElementById("custom-notes").value.trim();
+      if (!name) return alert("Please enter an item name.");
+      cart.push({
+        type: "custom",
+        name: name,
+        notes: notes,
+        price: 0 // Will be priced later
+      });
+      document.getElementById("custom-name").value = "";
+      document.getElementById("custom-notes").value = "";
+      updateCart();
+    }
+
+    // Update cart display & totals
+    function updateCart() {
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+      }
+
+      cartItemsEl.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <div>
+            <strong>${item.name || item.name}</strong>
+            ${item.notes ? `<br><em>Notes: ${item.notes}</em>` : ""}
+            ${item.price > 0 ? `<br>$${item.price.toFixed(2)}` : "<br><em>Price TBD</em>"}
+          </div>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        </div>
+      `).join("");
+
+      const subtotal = cart
+        .filter(item => item.price > 0)
+        .reduce((sum, item) => sum + item.price, 0);
+
+      subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+      deliveryFeeEl.textContent = `$${deliveryFee.toFixed(2)}`;
+      totalEl.textContent = `$${(subtotal + deliveryFee).toFixed(2)}`;
+
+      document.getElementById("cart-section").style.display = "block";
+      orderIdEl.textContent = orderId;
+    }
+
+    // Remove item from cart
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    // Final confirmation
+    function placeOrder() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      alert(`Order ${orderId} submitted!\nWe’ll prepare your items once we receive your Cash App payment.`);
+      // In a real app, you'd email this or save it somewhere.
+    }
+
+    // Initialize
+    orderIdEl.textContent = orderId;
+  </script>
+</body>
+</html>
