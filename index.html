@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TV Mounting & Security Camera Installation | Titan Total Pros - Clarksville, TN</title>
     <meta name="description" content="Professional TV mounting, floodlight, wireless camera, and smart home installation in Clarksville, TN. Fast, reliable, and affordable service from Titan Total Pros.">
-    
+
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
     <!-- Open Graph / Social Meta Tags -->
     <meta property="og:title" content="TV Mounting & Security Camera Installation | Titan Total Pros - Clarksville, TN">
@@ -24,7 +24,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      gtag('config', 'G-3587S9LLC2');
     </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -36,9 +36,6 @@
             --dark-bg: #1a1a1a;
             --text-light: #f0f0f0;
             --text-dark: #333;
-            --success: #4CAF50;
-            --warning: #ff9800;
-            --danger: #f44336;
         }
         * {
             margin: 0;
@@ -57,27 +54,16 @@
             margin: 0 auto;
             padding: 0 15px;
         }
-        /* Header Styles */
+        /* Header */
         .header-wrapper {
             position: relative;
             overflow: hidden;
         }
-        .header-background {
-            background-color: #222;
+        .header-background, .header-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #222;
             z-index: -1;
-        }
-        .header-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #222;
         }
         header {
             padding: 15px 0;
@@ -91,25 +77,9 @@
             justify-content: space-between;
             align-items: center;
         }
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
         .logo-img {
             height: 60px;
-            width: auto;
-            object-fit: contain;
             margin-right: 15px;
-        }
-        .logo-text {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
-            position: relative;
-            z-index: 2;
-        }
-        .logo-text span {
-            color: var(--primary-light);
         }
         nav ul {
             display: flex;
@@ -123,11 +93,9 @@
             text-decoration: none;
             font-weight: 500;
             font-size: 1.1rem;
-            transition: all 0.3s;
             padding: 5px 10px;
             border-radius: 4px;
-            position: relative;
-            z-index: 2;
+            transition: all 0.3s;
         }
         nav ul li a:hover {
             color: var(--primary-light);
@@ -141,10 +109,8 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            z-index: 2;
-            position: relative;
         }
-        /* Hero Section */
+        /* Hero */
         .hero {
             height: 80vh;
             display: flex;
@@ -154,26 +120,12 @@
             position: relative;
             overflow: hidden;
         }
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
         .hero-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; object-position: center; z-index: 1;
         }
         .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.9));
             z-index: 2;
         }
@@ -186,14 +138,13 @@
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         .hero p {
             font-size: 1.4rem;
             margin-bottom: 30px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-        /* Book Now Button */
         .btn {
             display: inline-block;
             padding: 15px 35px;
@@ -204,7 +155,7 @@
             font-size: 1.2rem;
             border-radius: 50px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border: 2px solid var(--primary-light);
             margin-top: 20px;
         }
@@ -212,12 +163,9 @@
             background-color: transparent;
             color: var(--primary-light);
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
-        .btn:active {
-            transform: translateY(-1px);
-        }
-        /* Services Section */
+        /* Services */
         .section {
             padding: 80px 0;
         }
@@ -230,12 +178,6 @@
             color: var(--primary-light);
             margin-bottom: 15px;
         }
-        .section-title p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-            color: var(--accent);
-        }
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -244,15 +186,14 @@
         .service-card {
             background-color: #2a2a2a;
             border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
             padding: 30px 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid rgba(0, 153, 204, 0.2);
         }
         .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             border-color: var(--primary-light);
         }
         .service-icon {
@@ -260,11 +201,7 @@
             color: var(--primary-light);
             margin-bottom: 20px;
         }
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-        /* Booking Section */
+        /* Booking */
         .booking-section {
             background-color: #222;
             padding: 80px 0;
@@ -276,7 +213,7 @@
             background: #2a2a2a;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         @media (max-width: 992px) {
             .booking-container {
@@ -326,7 +263,6 @@
             padding: 15px 35px;
             background-color: var(--primary-light);
             color: white;
-            text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
             border-radius: 5px;
@@ -339,7 +275,7 @@
         .btn-custom:hover {
             background-color: #0077a3;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         .pricing-table {
             width: 100%;
@@ -358,9 +294,6 @@
         }
         .pricing-table tr:nth-child(even) {
             background: #2a2a2a;
-        }
-        .pricing-table tr:hover {
-            background: rgba(0, 153, 204, 0.1);
         }
         .bundles-section {
             background: rgba(0, 153, 204, 0.1);
@@ -396,13 +329,11 @@
             height: 2px;
             background: var(--primary-light);
         }
-        .footer-column p,
-        .footer-column a {
+        .footer-column p, .footer-column a {
             color: var(--accent);
             margin-bottom: 10px;
             display: block;
             text-decoration: none;
-            transition: color 0.3s;
             font-size: 0.95rem;
         }
         .footer-column a:hover {
@@ -419,7 +350,7 @@
             justify-content: center;
             width: 36px;
             height: 36px;
-            background-color: rgba(255, 255, 255, 0.08);
+            background-color: rgba(255,255,255,0.08);
             border-radius: 50%;
             transition: all 0.3s;
         }
@@ -430,31 +361,16 @@
         .copyright {
             text-align: center;
             padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255,255,255,0.08);
             color: var(--accent);
             font-size: 0.9rem;
         }
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            .hero p {
-                font-size: 1.2rem;
-            }
-        }
+        /* Responsive */
         @media (max-width: 768px) {
-            .header-content {
-                position: relative;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
+            .mobile-menu-btn { display: block; }
             nav {
                 position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
+                top: 100%; left: 0; width: 100%;
                 background-color: var(--primary-dark);
                 padding: 20px;
                 clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
@@ -463,43 +379,23 @@
             nav.active {
                 clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
             }
-            nav ul {
-                flex-direction: column;
-            }
-            nav ul li {
-                margin: 10px 0;
-            }
-            .hero {
-                height: 70vh;
-            }
-            .hero h1 {
-                font-size: 2.3rem;
-            }
-            .btn {
-                display: block;
-                margin: 15px auto;
-                width: 80%;
-            }
+            nav ul { flex-direction: column; }
+            nav ul li { margin: 10px 0; }
+            .hero { height: 70vh; }
+            .hero h1 { font-size: 2.3rem; }
+            .btn { display: block; width: 80%; margin: 15px auto; }
         }
         @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .section {
-                padding: 60px 0;
-            }
-            .section-title h2 {
-                font-size: 2rem;
-            }
+            .hero h1 { font-size: 2rem; }
+            .section { padding: 60px 0; }
+            .section-title h2 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <div class="header-wrapper">
-        <div class="header-background">
-            <div class="header-overlay"></div>
-        </div>
+        <div class="header-background"></div>
         <header>
             <div class="container header-content">
                 <div class="logo-container">
@@ -520,19 +416,19 @@
             </div>
         </header>
     </div>
-    <!-- Hero Section -->
+
+    <!-- Hero -->
     <section class="hero" id="home">
-        <div class="hero-background">
-            <img src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Smart Home Technology" class="hero-image">
-            <div class="hero-overlay"></div>
-        </div>
+        <img src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Smart Home Technology" class="hero-image">
+        <div class="hero-overlay"></div>
         <div class="container hero-content">
             <h1>Your Local Tech Pros</h1>
             <p>Expert Solutions for Smart Installations</p>
             <a href="#booking" class="btn">Get a Quote</a>
         </div>
     </section>
-    <!-- Services Section -->
+
+    <!-- Services -->
     <section class="section" id="services">
         <div class="container">
             <div class="section-title">
@@ -541,44 +437,35 @@
             </div>
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-tv"></i>
-                    </div>
+                    <div class="service-icon"><i class="fas fa-tv"></i></div>
                     <h3>TV Mounting</h3>
                     <p>Secure wall mounting, cable management, and setup for a clean look.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
+                    <div class="service-icon"><i class="fas fa-lightbulb"></i></div>
                     <h3>Floodlight Cameras</h3>
                     <p>Bright, motion-activated security lighting with HD video.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-camera"></i>
-                    </div>
+                    <div class="service-icon"><i class="fas fa-camera"></i></div>
                     <h3>Wireless Cameras</h3>
                     <p>Easy-to-install WiFi cameras with remote viewing and alerts.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-door-open"></i>
-                    </div>
+                    <div class="service-icon"><i class="fas fa-door-open"></i></div>
                     <h3>Doorbell Cameras</h3>
                     <p>See and speak to visitors from your phone, day or night.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
+                    <div class="service-icon"><i class="fas fa-network-wired"></i></div>
                     <h3>Wired Cameras</h3>
                     <p>Professional-grade surveillance systems—custom quoted.</p>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Booking / Quote Section -->
+
+    <!-- Booking / Quote -->
     <div class="booking-section" id="booking">
         <div class="container">
             <div class="section-title">
@@ -588,10 +475,9 @@
             <div class="booking-container">
                 <!-- Quote Form -->
                 <div class="booking-form-section">
-                    <form id="quoteForm" action="https://formspree.io/f/movzawrq" method="POST">
+                    <form action="https://formspree.io/f/movzawrq" method="POST">
                         <input type="hidden" name="_next" value="https://titantotalpros.com/thank-you.html" />
                         <input type="hidden" name="_subject" value="New Quote Request - Titan Total Pros" />
-                        <input type="hidden" name="_replyto" value="email" />
                         <div class="form-group">
                             <label for="name">Full Name *</label>
                             <input type="text" id="name" name="name" class="form-control" required>
@@ -622,44 +508,21 @@
                         <button type="submit" class="btn-custom">Get My Quote</button>
                     </form>
                 </div>
-                <!-- Simplified Pricing -->
+
+                <!-- Pricing -->
                 <div class="pricing-section">
                     <h3 style="color: var(--primary-light); margin-top: 0; margin-bottom: 20px;"><i class="fas fa-tag"></i> Transparent Pricing</h3>
                     <table class="pricing-table">
-                        <tr>
-                            <th>Service</th>
-                            <th>Price</th>
-                        </tr>
-                        <tr>
-                            <td>TV Mounting (under 55")</td>
-                            <td>$65</td>
-                        </tr>
-                        <tr>
-                            <td>TV Mounting (55" – 70")</td>
-                            <td>$75</td>
-                        </tr>
-                        <tr>
-                            <td>TV Mounting (70"+)</td>
-                            <td>$95</td>
-                        </tr>
-                        <tr>
-                            <td>Floodlight Camera Installation</td>
-                            <td>$140</td>
-                        </tr>
-                        <tr>
-                            <td>Wireless Security Camera</td>
-                            <td>$120</td>
-                        </tr>
-                        <tr>
-                            <td>Video Doorbell Installation</td>
-                            <td>$130</td>
-                        </tr>
-                        <tr>
-                            <td>Wired Camera Installation</td>
-                            <td>Custom Quote</td>
-                        </tr>
+                        <tr><th>Service</th><th>Price</th></tr>
+                        <tr><td>TV Mounting (under 55")</td><td>$65</td></tr>
+                        <tr><td>TV Mounting (55" – 70")</td><td>$75</td></tr>
+                        <tr><td>TV Mounting (70"+)</td><td>$95</td></tr>
+                        <tr><td>Floodlight Camera Installation</td><td>$140</td></tr>
+                        <tr><td>Wireless Security Camera</td><td>$120</td></tr>
+                        <tr><td>Video Doorbell Installation</td><td>$130</td></tr>
+                        <tr><td>Wired Camera Installation</td><td>Custom Quote</td></tr>
                     </table>
-                    <div class="bundles-section" style="margin-top: 25px;">
+                    <div class="bundles-section">
                         <p><i class="fas fa-info-circle"></i> <strong>Notes:</strong></p>
                         <ul style="padding-left: 20px; margin-top: 10px; color: var(--accent);">
                             <li>Mounts not included (can be purchased separately)</li>
@@ -671,6 +534,7 @@
             </div>
         </div>
     </div>
+
     <!-- Footer -->
     <footer id="contact">
         <div class="container">
@@ -742,26 +606,23 @@
     }
     </script>
 
+    <!-- Scripts -->
     <script>
-        // Mobile Menu Toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
             document.getElementById('mainNav').classList.toggle('active');
         });
-        // Close menu when clicking a link
         document.querySelectorAll('#mainNav a').forEach(link => {
             link.addEventListener('click', () => {
                 document.getElementById('mainNav').classList.remove('active');
             });
         });
-        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: target.offsetTop - 80,
                         behavior: 'smooth'
                     });
                 }
