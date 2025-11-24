@@ -246,7 +246,6 @@
             background-color: #222;
             padding: 80px 0;
         }
-        /* Custom Booking Styles */
         .booking-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -294,7 +293,7 @@
         }
         select.form-control {
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-image: url("image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 15px center;
             background-size: 15px;
@@ -318,12 +317,6 @@
             background-color: #0077a3;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        .btn-custom:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
         .pricing-table {
             width: 100%;
@@ -352,6 +345,114 @@
             padding: 20px;
             border-radius: 0 8px 8px 0;
             margin-bottom: 25px;
+        }
+        /* Testimonials */
+        .testimonials {
+            background-color: #2a2a2a;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .testimonial-card {
+            background-color: #333;
+            padding: 25px;
+            border-radius: 10px;
+            position: relative;
+            border: 1px solid rgba(192, 192, 192, 0.1);
+        }
+        .testimonial-card:hover {
+            border-color: var(--primary-light);
+        }
+        .testimonial-card:before {
+            content: """;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 5rem;
+            color: var(--primary-light);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        .testimonial-content {
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .client-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        .client-details h4 {
+            margin-bottom: 5px;
+        }
+        .client-details p {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            padding: 50px 0 20px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--primary-light);
+        }
+        .footer-column p, .footer-column a {
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-column a:hover {
+            color: white;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+            font-size: 0.9rem;
         }
         /* Responsive Design */
         @media (max-width: 992px) {
@@ -509,6 +610,8 @@
                 <div class="booking-form-section">
                     <form id="quoteForm" action="https://formspree.io/f/movzawrq" method="POST">
                         <input type="hidden" name="_next" value="https://titantotalpros.com/thank-you.html" />
+                        <input type="hidden" name="_subject" value="New Quote Request - Titan Total Pros" />
+                        <input type="hidden" name="_replyto" value="email" />
                         <div class="form-group">
                             <label for="name">Full Name *</label>
                             <input type="text" id="name" name="name" class="form-control" required>
@@ -539,7 +642,6 @@
                         <button type="submit" class="btn-custom">Get My Quote</button>
                     </form>
                 </div>
-
                 <!-- Simplified Pricing -->
                 <div class="pricing-section">
                     <h3 style="color: var(--primary-light); margin-top: 0; margin-bottom: 20px;"><i class="fas fa-tag"></i> Transparent Pricing</h3>
