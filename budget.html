@@ -345,10 +345,10 @@
         const budgetCtx = document.getElementById('budgetChart').getContext('2d');
         let budgetChart = new Chart(budgetCtx, {
             type: 'doughnut',
-            data: {
+             {
                 labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Other'],
                 datasets: [{
-                    data: [0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0],
                     backgroundColor: [
                         '#4361ee',
                         '#3a0ca3',
@@ -402,9 +402,17 @@
             const phone = parseFloat(document.getElementById('phone').value) || 0;
             const trash = parseFloat(document.getElementById('trash').value) || 0;
             
-            const totalExpenses = rent + gas + power + water + phone + trash;
-            const other = income - totalExpenses;
-            const remaining = income - (totalExpenses + Math.max(0, other));
+            // Calculate total of specified expenses
+            const specifiedExpenses = rent + gas + power + water + phone + trash;
+            
+            // "Other" expenses are what's left after specified expenses (but not more than income)
+            const other = Math.max(0, income - specifiedExpenses);
+            
+            // Total expenses include both specified and other expenses
+            const totalExpenses = specifiedExpenses + other;
+            
+            // Remaining balance is income minus total expenses (should be 0 or positive)
+            const remaining = income - totalExpenses;
             
             // Create summary content
             const summaryElement = document.getElementById('budgetSummary');
@@ -439,11 +447,11 @@
                 </div>
                 <div class="summary-item">
                     <span>Other Expenses:</span>
-                    <span>${formatCurrency(Math.max(0, other))}</span>
+                    <span>${formatCurrency(other)}</span>
                 </div>
                 <div class="summary-item">
                     <span>Total Expenses:</span>
-                    <span>${formatCurrency(totalExpenses + Math.max(0, other))}</span>
+                    <span>${formatCurrency(totalExpenses)}</span>
                 </div>
                 <div class="summary-item">
                     <span>Remaining Balance:</span>
@@ -452,7 +460,7 @@
             `;
             
             // Update chart
-            budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, Math.max(0, other)];
+            budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, other];
             budgetChart.update();
         }
 
@@ -483,13 +491,13 @@
             const phone = document.getElementById('phone').value || '0';
             const trash = document.getElementById('trash').value || '0';
             
-            const totalExpenses = (parseFloat(rent) + parseFloat(gas) + parseFloat(power) + 
-                                 parseFloat(water) + parseFloat(phone) + parseFloat(trash) + 
-                                 Math.max(0, parseFloat(income) - parseFloat(rent) - parseFloat(gas) - 
-                                 parseFloat(power) - parseFloat(water) - parseFloat(phone) - parseFloat(trash))).toFixed(2);
-            const remaining = (parseFloat(income) - parseFloat(totalExpenses)).toFixed(2);
+            const specifiedExpenses = parseFloat(rent) + parseFloat(gas) + parseFloat(power) + 
+                                     parseFloat(water) + parseFloat(phone) + parseFloat(trash);
+            const other = Math.max(0, parseFloat(income) - specifiedExpenses);
+            const totalExpenses = specifiedExpenses + other;
+            const remaining = parseFloat(income) - totalExpenses;
             
-            const shareText = `My Monthly Budget:\n\nIncome: $${income}\nRent: $${rent}\nGas: $${gas}\nPower: $${power}\nWater: $${water}\nPhone: $${phone}\nTrash: $${trash}\n\nTotal Expenses: $${totalExpenses}\nRemaining: $${remaining}\n\nCreated with Budget Planner!`;
+            const shareText = `My Monthly Budget:\n\nIncome: $${income}\nRent: $${rent}\nGas: $${gas}\nPower: $${power}\nWater: $${water}\nPhone: $${phone}\nTrash: $${trash}\n\nTotal Expenses: $${totalExpenses.toFixed(2)}\nRemaining: $${remaining.toFixed(2)}\n\nCreated with Budget Planner!`;
             
             if (navigator.share) {
                 navigator.share({
