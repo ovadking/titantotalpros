@@ -456,155 +456,134 @@
     </div>
 
     <script>
-        // Wait for DOM to be fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Format currency
+        // Wait for the page to fully load
+        window.addEventListener('load', function() {
+            // Format currency function
             function formatCurrency(amount) {
-                if (isNaN(amount) || amount === null || amount === undefined || amount === '') return '$0.00';
+                if (isNaN(amount) || amount === null || amount === undefined || amount === '') {
+                    return '$0.00';
+                }
                 return '$' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             }
 
-            // Safely parse float from input value
+            // Safely parse input values
             function parseInput(value) {
-                if (value === '' || value === null || value === undefined) return 0;
+                if (value === '' || value === null || value === undefined) {
+                    return 0;
+                }
                 const num = parseFloat(value);
                 return isNaN(num) ? 0 : num;
             }
 
-            // Update budget summary
-            function updateBudgetSummary() {
-                try {
-                    // Get input values safely
-                    const income = parseInput(document.getElementById('income').value);
-                    const rent = parseInput(document.getElementById('rent').value);
-                    const gas = parseInput(document.getElementById('gas').value);
-                    const power = parseInput(document.getElementById('power').value);
-                    const water = parseInput(document.getElementById('water').value);
-                    const phone = parseInput(document.getElementById('phone').value);
-                    const trash = parseInput(document.getElementById('trash').value);
-                    const carLoan = parseInput(document.getElementById('carLoan').value);
-                    const savings = parseInput(document.getElementById('savings').value);
-                    const investment = parseInput(document.getElementById('investment').value);
-                    
-                    // Calculate totals
-                    const totalExpenses = rent + gas + power + water + phone + trash + carLoan + savings + investment;
-                    const remaining = income - totalExpenses;
-                    
-                    // Update display elements
-                    document.getElementById('displayIncome').textContent = formatCurrency(income);
-                    document.getElementById('displayRent').textContent = formatCurrency(rent);
-                    document.getElementById('displayGas').textContent = formatCurrency(gas);
-                    document.getElementById('displayPower').textContent = formatCurrency(power);
-                    document.getElementById('displayWater').textContent = formatCurrency(water);
-                    document.getElementById('displayPhone').textContent = formatCurrency(phone);
-                    document.getElementById('displayTrash').textContent = formatCurrency(trash);
-                    document.getElementById('displayCarLoan').textContent = formatCurrency(carLoan);
-                    document.getElementById('displaySavings').textContent = formatCurrency(savings);
-                    document.getElementById('displayInvestment').textContent = formatCurrency(investment);
-                    document.getElementById('displayTotalExpenses').textContent = formatCurrency(totalExpenses);
-                    
-                    const remainingElement = document.getElementById('displayRemaining');
-                    remainingElement.textContent = formatCurrency(remaining);
-                    remainingElement.className = remaining >= 0 ? 'positive' : 'negative';
-                    
-                    // Update suggestions based on remaining balance
-                    updateSuggestions(remaining);
-                    
-                    // Update chart if it exists
-                    if (window.budgetChart) {
-                        window.budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, carLoan, savings, investment];
-                        window.budgetChart.update();
-                    }
-                } catch (error) {
-                    console.error('Error updating budget summary:', error);
-                }
-            }
-
-            // Update suggestions section
-            function updateSuggestions(remaining) {
-                try {
-                    // Only show suggestions if there's a positive remaining balance
-                    if (remaining <= 0) {
-                        document.getElementById('suggestion1').textContent = '$0.00';
-                        document.getElementById('suggestion2').textContent = '$0.00';
-                        document.getElementById('suggestion3').textContent = '$0.00';
-                        document.getElementById('suggestion4').textContent = '$0.00';
-                        document.getElementById('suggestion5').textContent = '$0.00';
-                        return;
-                    }
-                    
-                    // Calculate allocation amounts
-                    const entertainment = remaining * 0.30;
-                    const additionalSavings = remaining * 0.25;
-                    const investMore = remaining * 0.20;
-                    const emergencyFund = remaining * 0.15;
-                    const personalSpending = remaining * 0.10;
-                    
-                    // Update display
-                    document.getElementById('suggestion1').textContent = formatCurrency(entertainment);
-                    document.getElementById('suggestion2').textContent = formatCurrency(additionalSavings);
-                    document.getElementById('suggestion3').textContent = formatCurrency(investMore);
-                    document.getElementById('suggestion4').textContent = formatCurrency(emergencyFund);
-                    document.getElementById('suggestion5').textContent = formatCurrency(personalSpending);
-                } catch (error) {
-                    console.error('Error updating suggestions:', error);
-                }
-            }
-
-            // Initialize Chart
-            function initializeChart() {
-                try {
-                    const ctx = document.getElementById('budgetChart').getContext('2d');
-                    window.budgetChart = new Chart(ctx, {
-                        type: 'doughnut',
-                         {
-                            labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Car Loan', 'Savings', 'Investment'],
-                            datasets: [{
-                                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                                backgroundColor: [
-                                    '#4361ee',
-                                    '#3a0ca3',
-                                    '#4cc9f0',
-                                    '#f72585',
-                                    '#7209b7',
-                                    '#4ade80',
-                                    '#f8961e',
-                                    '#9d4edd',
-                                    '#00bbf9'
-                                ],
-                                borderWidth: 0,
-                                borderRadius: 6,
-                                spacing: 8
-                            }]
+            // Initialize the chart
+            const ctx = document.getElementById('budgetChart').getContext('2d');
+            const budgetChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Car Loan', 'Savings', 'Investment'],
+                    datasets: [{
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        backgroundColor: [
+                            '#4361ee',
+                            '#3a0ca3',
+                            '#4cc9f0',
+                            '#f72585',
+                            '#7209b7',
+                            '#4ade80',
+                            '#f8961e',
+                            '#9d4edd',
+                            '#00bbf9'
+                        ],
+                        borderWidth: 0,
+                        borderRadius: 6,
+                        spacing: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
                         },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: {
-                                    position: 'bottom',
-                                    labels: {
-                                        padding: 20,
-                                        usePointStyle: true,
-                                        pointStyle: 'circle'
-                                    }
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            return `${context.label}: $${context.raw.toFixed(2)}`;
-                                        }
-                                    }
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': $' + context.raw.toFixed(2);
                                 }
                             }
                         }
-                    });
-                } catch (error) {
-                    console.error('Error initializing chart:', error);
+                    }
                 }
+            });
+
+            // Update suggestions section
+            function updateSuggestions(remaining) {
+                if (remaining <= 0) {
+                    document.getElementById('suggestion1').textContent = '$0.00';
+                    document.getElementById('suggestion2').textContent = '$0.00';
+                    document.getElementById('suggestion3').textContent = '$0.00';
+                    document.getElementById('suggestion4').textContent = '$0.00';
+                    document.getElementById('suggestion5').textContent = '$0.00';
+                    return;
+                }
+                
+                document.getElementById('suggestion1').textContent = formatCurrency(remaining * 0.30);
+                document.getElementById('suggestion2').textContent = formatCurrency(remaining * 0.25);
+                document.getElementById('suggestion3').textContent = formatCurrency(remaining * 0.20);
+                document.getElementById('suggestion4').textContent = formatCurrency(remaining * 0.15);
+                document.getElementById('suggestion5').textContent = formatCurrency(remaining * 0.10);
             }
 
-            // Reset budget
+            // Update budget summary and chart
+            function updateBudgetSummary() {
+                // Get all input values
+                const income = parseInput(document.getElementById('income').value);
+                const rent = parseInput(document.getElementById('rent').value);
+                const gas = parseInput(document.getElementById('gas').value);
+                const power = parseInput(document.getElementById('power').value);
+                const water = parseInput(document.getElementById('water').value);
+                const phone = parseInput(document.getElementById('phone').value);
+                const trash = parseInput(document.getElementById('trash').value);
+                const carLoan = parseInput(document.getElementById('carLoan').value);
+                const savings = parseInput(document.getElementById('savings').value);
+                const investment = parseInput(document.getElementById('investment').value);
+                
+                // Calculate totals
+                const totalExpenses = rent + gas + power + water + phone + trash + carLoan + savings + investment;
+                const remaining = income - totalExpenses;
+                
+                // Update summary display
+                document.getElementById('displayIncome').textContent = formatCurrency(income);
+                document.getElementById('displayRent').textContent = formatCurrency(rent);
+                document.getElementById('displayGas').textContent = formatCurrency(gas);
+                document.getElementById('displayPower').textContent = formatCurrency(power);
+                document.getElementById('displayWater').textContent = formatCurrency(water);
+                document.getElementById('displayPhone').textContent = formatCurrency(phone);
+                document.getElementById('displayTrash').textContent = formatCurrency(trash);
+                document.getElementById('displayCarLoan').textContent = formatCurrency(carLoan);
+                document.getElementById('displaySavings').textContent = formatCurrency(savings);
+                document.getElementById('displayInvestment').textContent = formatCurrency(investment);
+                document.getElementById('displayTotalExpenses').textContent = formatCurrency(totalExpenses);
+                
+                const remainingElement = document.getElementById('displayRemaining');
+                remainingElement.textContent = formatCurrency(remaining);
+                remainingElement.className = remaining >= 0 ? 'positive' : 'negative';
+                
+                // Update suggestions
+                updateSuggestions(remaining);
+                
+                // Update chart
+                budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, carLoan, savings, investment];
+                budgetChart.update();
+            }
+
+            // Reset all fields
             function resetBudget() {
                 document.getElementById('income').value = '';
                 document.getElementById('rent').value = '';
@@ -619,12 +598,12 @@
                 updateBudgetSummary();
             }
 
-            // Print budget
+            // Print function
             function printBudget() {
                 window.print();
             }
 
-            // Share budget
+            // Share function
             function shareBudget() {
                 const income = document.getElementById('income').value || '0';
                 const rent = document.getElementById('rent').value || '0';
@@ -649,30 +628,28 @@
                         title: 'My Budget Report',
                         text: shareText,
                         url: window.location.href
-                    }).catch(console.error);
+                    });
                 } else {
                     navigator.clipboard.writeText(shareText).then(() => {
                         alert('Budget details copied to clipboard!');
-                    }).catch(err => {
-                        console.error('Failed to copy: ', err);
+                    }).catch(() => {
                         alert('Unable to share. Please copy manually:\n\n' + shareText);
                     });
                 }
             }
 
-            // Event listeners
+            // Set up event listeners
             document.getElementById('resetBudgetBtn').addEventListener('click', resetBudget);
             document.getElementById('printBtn').addEventListener('click', printBudget);
             document.getElementById('shareBtn').addEventListener('click', shareBudget);
 
-            // Auto-update budget when inputs change
-            const budgetInputs = document.querySelectorAll('#income, #rent, #gas, #power, #water, #phone, #trash, #carLoan, #savings, #investment');
-            budgetInputs.forEach(input => {
+            // Auto-update when inputs change
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => {
                 input.addEventListener('input', updateBudgetSummary);
             });
 
-            // Initialize on load
-            initializeChart();
+            // Initialize with empty values
             updateBudgetSummary();
         });
     </script>
