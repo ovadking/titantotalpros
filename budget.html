@@ -213,6 +213,31 @@
             flex-wrap: wrap;
         }
 
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .btn, .btn-group, input, .actions {
+                display: none !important;
+            }
+            
+            .widget {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .chart-container {
+                height: 250px !important;
+            }
+            
+            .summary {
+                page-break-inside: avoid;
+            }
+        }
+
         @media (max-width: 768px) {
             .content {
                 flex-direction: column;
@@ -236,45 +261,42 @@
                 <div class="input-section">
                     <div class="form-group">
                         <label for="income">Monthly Income ($)</label>
-                        <input type="number" id="income" placeholder="0.00" value="5000">
+                        <input type="number" id="income" placeholder="0.00" value="0">
                     </div>
                     
                     <div class="form-group">
                         <label for="housing">Housing ($)</label>
-                        <input type="number" id="housing" placeholder="0.00" value="1500">
+                        <input type="number" id="housing" placeholder="0.00" value="0">
                     </div>
                     
                     <div class="form-group">
                         <label for="food">Food & Groceries ($)</label>
-                        <input type="number" id="food" placeholder="0.00" value="600">
+                        <input type="number" id="food" placeholder="0.00" value="0">
                     </div>
                     
                     <div class="form-group">
                         <label for="transport">Transportation ($)</label>
-                        <input type="number" id="transport" placeholder="0.00" value="300">
+                        <input type="number" id="transport" placeholder="0.00" value="0">
                     </div>
                     
                     <div class="form-group">
                         <label for="utilities">Utilities ($)</label>
-                        <input type="number" id="utilities" placeholder="0.00" value="200">
+                        <input type="number" id="utilities" placeholder="0.00" value="0">
                     </div>
                     
                     <div class="form-group">
                         <label for="entertainment">Entertainment ($)</label>
-                        <input type="number" id="entertainment" placeholder="0.00" value="250">
+                        <input type="number" id="entertainment" placeholder="0.00" value="0">
                     </div>
                     
                     <div class="form-group">
                         <label for="savings">Savings ($)</label>
-                        <input type="number" id="savings" placeholder="0.00" value="1000">
+                        <input type="number" id="savings" placeholder="0.00" value="0">
                     </div>
                     
                     <div class="btn-group">
-                        <button id="calculateBtn" class="btn btn-primary">
-                            <i class="fas fa-calculator"></i> Calculate Budget
-                        </button>
                         <button id="resetBtn" class="btn btn-danger">
-                            <i class="fas fa-redo"></i> Reset
+                            <i class="fas fa-redo"></i> Reset All
                         </button>
                     </div>
                 </div>
@@ -284,25 +306,14 @@
                         <canvas id="budgetChart"></canvas>
                     </div>
                     
-                    <div class="summary">
-                        <h3>Budget Summary</h3>
-                        <div class="summary-item">
-                            <span>Total Income:</span>
-                            <span id="totalIncome">$5,000.00</span>
-                        </div>
-                        <div class="summary-item">
-                            <span>Total Expenses:</span>
-                            <span id="totalExpenses">$3,850.00</span>
-                        </div>
-                        <div class="summary-item">
-                            <span>Remaining:</span>
-                            <span id="remaining" class="positive">$1,150.00</span>
-                        </div>
+                    <div class="summary" id="budgetSummary">
+                        <h3>Your Budget Summary</h3>
+                        <!-- Summary items will be generated dynamically -->
                     </div>
                     
                     <div class="actions">
-                        <button id="downloadBtn" class="btn btn-success">
-                            <i class="fas fa-download"></i> Download as HTML
+                        <button id="printBtn" class="btn btn-success">
+                            <i class="fas fa-print"></i> Print Budget Report
                         </button>
                         <button id="shareBtn" class="btn btn-primary">
                             <i class="fas fa-share-alt"></i> Share Results
@@ -321,7 +332,7 @@
             data: {
                 labels: ['Housing', 'Food & Groceries', 'Transportation', 'Utilities', 'Entertainment', 'Savings'],
                 datasets: [{
-                    data: [1500, 600, 300, 200, 250, 1000],
+                    data: [0, 0, 0, 0, 0, 0],
                     backgroundColor: [
                         '#4361ee',
                         '#3a0ca3',
@@ -360,11 +371,12 @@
 
         // Format currency
         function formatCurrency(amount) {
+            if (isNaN(amount)) return '$0.00';
             return '$' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
-        // Calculate budget
-        function calculateBudget() {
+        // Update budget summary
+        function updateSummary() {
             const income = parseFloat(document.getElementById('income').value) || 0;
             const housing = parseFloat(document.getElementById('housing').value) || 0;
             const food = parseFloat(document.getElementById('food').value) || 0;
@@ -376,13 +388,47 @@
             const totalExpenses = housing + food + transport + utilities + entertainment + savings;
             const remaining = income - totalExpenses;
             
-            // Update display
-            document.getElementById('totalIncome').textContent = formatCurrency(income);
-            document.getElementById('totalExpenses').textContent = formatCurrency(totalExpenses);
-            
-            const remainingElement = document.getElementById('remaining');
-            remainingElement.textContent = formatCurrency(remaining);
-            remainingElement.className = remaining >= 0 ? 'positive' : 'negative';
+            // Create summary content
+            const summaryElement = document.getElementById('budgetSummary');
+            summaryElement.innerHTML = `
+                <h3>Your Budget Summary</h3>
+                <div class="summary-item">
+                    <span>Monthly Income:</span>
+                    <span id="totalIncome">${formatCurrency(income)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Housing:</span>
+                    <span>${formatCurrency(housing)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Food & Groceries:</span>
+                    <span>${formatCurrency(food)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Transportation:</span>
+                    <span>${formatCurrency(transport)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Utilities:</span>
+                    <span>${formatCurrency(utilities)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Entertainment:</span>
+                    <span>${formatCurrency(entertainment)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Savings:</span>
+                    <span>${formatCurrency(savings)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Total Expenses:</span>
+                    <span id="totalExpenses">${formatCurrency(totalExpenses)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Remaining Balance:</span>
+                    <span id="remaining" class="${remaining >= 0 ? 'positive' : 'negative'}">${formatCurrency(remaining)}</span>
+                </div>
+            `;
             
             // Update chart
             budgetChart.data.datasets[0].data = [housing, food, transport, utilities, entertainment, savings];
@@ -391,42 +437,23 @@
 
         // Reset form
         function resetForm() {
-            document.getElementById('income').value = '5000';
-            document.getElementById('housing').value = '1500';
-            document.getElementById('food').value = '600';
-            document.getElementById('transport').value = '300';
-            document.getElementById('utilities').value = '200';
-            document.getElementById('entertainment').value = '250';
-            document.getElementById('savings').value = '1000';
-            calculateBudget();
+            document.getElementById('income').value = '0';
+            document.getElementById('housing').value = '0';
+            document.getElementById('food').value = '0';
+            document.getElementById('transport').value = '0';
+            document.getElementById('utilities').value = '0';
+            document.getElementById('entertainment').value = '0';
+            document.getElementById('savings').value = '0';
+            updateSummary();
         }
 
-        // Download as HTML file
-        function downloadHTML() {
-            // Create a copy of the current page with calculated values
-            const currentHTML = document.documentElement.outerHTML;
-            
-            // Create a blob with the HTML content
-            const blob = new Blob([currentHTML], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            
-            // Create a temporary link and trigger download
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'budget-report.html';
-            document.body.appendChild(a);
-            a.click();
-            
-            // Clean up
-            setTimeout(() => {
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            }, 100);
+        // Print budget report
+        function printBudget() {
+            window.print();
         }
 
         // Share results
         function shareResults() {
-            // Get current values
             const income = document.getElementById('income').value || '0';
             const housing = document.getElementById('housing').value || '0';
             const food = document.getElementById('food').value || '0';
@@ -439,17 +466,15 @@
                                  parseFloat(utilities) + parseFloat(entertainment) + parseFloat(savings)).toFixed(2);
             const remaining = (parseFloat(income) - parseFloat(totalExpenses)).toFixed(2);
             
-            const shareText = `My Monthly Budget:\n\nIncome: $${income}\nExpenses: $${totalExpenses}\nRemaining: $${remaining}\n\nCreated with BudgetWise!`;
+            const shareText = `My Monthly Budget:\n\nIncome: $${income}\nHousing: $${housing}\nFood: $${food}\nTransport: $${transport}\nUtilities: $${utilities}\nEntertainment: $${entertainment}\nSavings: $${savings}\n\nTotal Expenses: $${totalExpenses}\nRemaining: $${remaining}\n\nCreated with BudgetWise!`;
             
             if (navigator.share) {
-                // Web Share API
                 navigator.share({
                     title: 'My Budget Report',
                     text: shareText,
                     url: window.location.href
                 }).catch(console.error);
             } else {
-                // Fallback: copy to clipboard
                 navigator.clipboard.writeText(shareText).then(() => {
                     alert('Budget details copied to clipboard! You can paste them anywhere.');
                 }).catch(err => {
@@ -460,19 +485,18 @@
         }
 
         // Event listeners
-        document.getElementById('calculateBtn').addEventListener('click', calculateBudget);
         document.getElementById('resetBtn').addEventListener('click', resetForm);
-        document.getElementById('downloadBtn').addEventListener('click', downloadHTML);
+        document.getElementById('printBtn').addEventListener('click', printBudget);
         document.getElementById('shareBtn').addEventListener('click', shareResults);
 
-        // Auto-calculate when inputs change
+        // Auto-update when inputs change
         const inputs = document.querySelectorAll('input[type="number"]');
         inputs.forEach(input => {
-            input.addEventListener('input', calculateBudget);
+            input.addEventListener('input', updateSummary);
         });
 
         // Initialize on load
-        window.addEventListener('load', calculateBudget);
+        window.addEventListener('load', updateSummary);
     </script>
     <!-- Font Awesome for icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
