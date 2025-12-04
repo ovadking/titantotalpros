@@ -345,7 +345,7 @@
         const budgetCtx = document.getElementById('budgetChart').getContext('2d');
         let budgetChart = new Chart(budgetCtx, {
             type: 'doughnut',
-             {
+            data: {
                 labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Other'],
                 datasets: [{
                     data: [0, 0, 0, 0, 0, 0, 0],
