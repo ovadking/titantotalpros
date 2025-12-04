@@ -247,9 +247,9 @@
             border-bottom: none;
         }
 
-        .suggestion-percentage {
-            color: var(--warning);
+        .suggestion-amount {
             font-weight: 600;
+            color: var(--warning);
         }
 
         /* Print styles */
@@ -422,24 +422,24 @@
                 <div class="suggestions">
                     <h3>How to Use Your Remaining Balance</h3>
                     <div class="suggestion-item">
-                        <span>Entertainment & Dining:</span>
-                        <span class="suggestion-percentage">30%</span>
+                        <span>Entertainment & Dining (30%):</span>
+                        <span id="suggestion1" class="suggestion-amount">$0.00</span>
                     </div>
                     <div class="suggestion-item">
-                        <span>Additional Savings:</span>
-                        <span class="suggestion-percentage">25%</span>
+                        <span>Additional Savings (25%):</span>
+                        <span id="suggestion2" class="suggestion-amount">$0.00</span>
                     </div>
                     <div class="suggestion-item">
-                        <span>Invest More:</span>
-                        <span class="suggestion-percentage">20%</span>
+                        <span>Invest More (20%):</span>
+                        <span id="suggestion3" class="suggestion-amount">$0.00</span>
                     </div>
                     <div class="suggestion-item">
-                        <span>Emergency Fund:</span>
-                        <span class="suggestion-percentage">15%</span>
+                        <span>Emergency Fund (15%):</span>
+                        <span id="suggestion4" class="suggestion-amount">$0.00</span>
                     </div>
                     <div class="suggestion-item">
-                        <span>Personal Spending:</span>
-                        <span class="suggestion-percentage">10%</span>
+                        <span>Personal Spending (10%):</span>
+                        <span id="suggestion5" class="suggestion-amount">$0.00</span>
                     </div>
                 </div>
                 
@@ -504,6 +504,9 @@
             remainingElement.textContent = formatCurrency(remaining);
             remainingElement.className = remaining >= 0 ? 'positive' : 'negative';
             
+            // Update suggestions based on remaining balance
+            updateSuggestions(remaining);
+            
             // Update chart if it exists
             if (window.budgetChart) {
                 window.budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, carLoan, savings, investment];
@@ -511,15 +514,42 @@
             }
         }
 
+        // Update suggestions section
+        function updateSuggestions(remaining) {
+            // Only show suggestions if there's a positive remaining balance
+            if (remaining <= 0) {
+                document.getElementById('suggestion1').textContent = '$0.00';
+                document.getElementById('suggestion2').textContent = '$0.00';
+                document.getElementById('suggestion3').textContent = '$0.00';
+                document.getElementById('suggestion4').textContent = '$0.00';
+                document.getElementById('suggestion5').textContent = '$0.00';
+                return;
+            }
+            
+            // Calculate allocation amounts
+            const entertainment = remaining * 0.30;
+            const additionalSavings = remaining * 0.25;
+            const investMore = remaining * 0.20;
+            const emergencyFund = remaining * 0.15;
+            const personalSpending = remaining * 0.10;
+            
+            // Update display
+            document.getElementById('suggestion1').textContent = formatCurrency(entertainment);
+            document.getElementById('suggestion2').textContent = formatCurrency(additionalSavings);
+            document.getElementById('suggestion3').textContent = formatCurrency(investMore);
+            document.getElementById('suggestion4').textContent = formatCurrency(emergencyFund);
+            document.getElementById('suggestion5').textContent = formatCurrency(personalSpending);
+        }
+
         // Initialize Chart
         function initializeChart() {
             const ctx = document.getElementById('budgetChart').getContext('2d');
             window.budgetChart = new Chart(ctx, {
                 type: 'doughnut',
-                data: {
+                 {
                     labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Car Loan', 'Savings', 'Investment'],
                     datasets: [{
-                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                         [0, 0, 0, 0, 0, 0, 0, 0, 0],
                         backgroundColor: [
                             '#4361ee',
                             '#3a0ca3',
