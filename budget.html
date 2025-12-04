@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BudgetWise - Smart Budget Management</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.baidu.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Monthly Budget Widget</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -17,624 +16,307 @@
         :root {
             --primary: #4361ee;
             --secondary: #3f37c9;
-            --success: #4cc9f0;
-            --warning: #f72585;
+            --success: #4ade80;
+            --danger: #f72585;
             --light: #f8f9fa;
             --dark: #212529;
             --gray: #6c757d;
             --light-gray: #e9ecef;
             --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
         }
 
         body {
-            background-color: #f5f7ff;
+            background: linear-gradient(135deg, #f5f7ff, #eef2ff);
             color: var(--dark);
-            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
+            max-width: 1000px;
             width: 100%;
-            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
         }
 
-        /* Header Styles */
-        header {
+        .widget {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 1.5rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo i {
-            background: white;
-            color: var(--primary);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            padding: 8px 12px;
-            border-radius: 4px;
-        }
-
-        nav a:hover, nav a.active {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 4rem 0;
+            padding: 25px 30px;
             text-align: center;
-            background: linear-gradient(to bottom, #f5f7ff, #eef2ff);
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--secondary);
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            color: var(--gray);
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            margin-left: 15px;
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 5rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
-
-        .section-title p {
-            color: var(--gray);
+        .header p {
+            opacity: 0.9;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(67, 97, 238, 0.1);
-            border-radius: 50%;
+        .content {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            padding: 30px;
+            gap: 30px;
         }
 
-        .card-icon i {
-            font-size: 28px;
-            color: var(--primary);
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .card p {
-            color: var(--gray);
-        }
-
-        /* Budget Calculator */
-        .calculator {
-            padding: 5rem 0;
-            background: linear-gradient(to bottom, #eef2ff, #f5f7ff);
-        }
-
-        .calculator-content {
-            display: flex;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .calculator-form {
+        .input-section {
             flex: 1;
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
+            min-width: 300px;
+        }
+
+        .chart-section {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             font-weight: 600;
             color: var(--dark);
         }
 
         .form-group input {
             width: 100%;
-            padding: 14px;
+            padding: 12px 15px;
             border: 2px solid var(--light-gray);
             border-radius: 12px;
             font-size: 1.1rem;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus {
             border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
         }
 
-        .result-card {
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
             background: var(--primary);
             color: white;
-            padding: 2rem;
-            border-radius: 16px;
-            margin-top: 2rem;
         }
 
-        .result-card h3 {
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
         }
 
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.8rem;
+        .btn-success {
+            background: var(--success);
+            color: var(--dark);
         }
 
-        .result-item span:last-child {
-            font-weight: 700;
+        .btn-success:hover {
+            background: #2ecc71;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e11d74;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(247, 37, 133, 0.3);
         }
 
         .chart-container {
-            flex: 1;
-            height: 400px;
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
+            height: 300px;
+            position: relative;
         }
 
-        /* Testimonials */
-        .testimonials {
-            padding: 5rem 0;
-        }
-
-        .testimonial-card {
-            background: white;
-            padding: 2rem;
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--light);
             border-radius: 16px;
-            box-shadow: var(--card-shadow);
-            margin: 0 auto;
-            max-width: 800px;
+            border-left: 4px solid var(--primary);
         }
 
-        .testimonial-content {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            color: var(--gray);
+        .summary h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
         }
 
-        .testimonial-author {
+        .summary-item {
             display: flex;
-            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            padding-top: 15px;
+        }
+
+        .positive {
+            color: var(--success);
+        }
+
+        .negative {
+            color: var(--danger);
+        }
+
+        .actions {
+            display: flex;
             gap: 15px;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--light-gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .author-info h4 {
-            margin-bottom: 0.2rem;
-        }
-
-        .author-info p {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 3rem 0 1.5rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-column h3 {
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-column a {
-            color: #adb5bd;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-column a:hover {
-            color: white;
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #adb5bd;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .calculator-content {
-                flex-direction: column;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+            margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         @media (max-width: 768px) {
-            nav ul {
-                display: none;
+            .content {
+                flex-direction: column;
             }
             
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .btn {
-                display: block;
-                margin: 10px auto;
-                width: 80%;
-                max-width: 300px;
-            }
-            
-            .btn-outline {
-                margin-left: 0;
+            .header h1 {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <i class="fas fa-wallet"></i>
-                <span>BudgetWise</span>
+    <div class="container">
+        <div class="widget">
+            <div class="header">
+                <h1>Monthly Budget Planner</h1>
+                <p>Track your income and expenses to stay on top of your finances</p>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="#">Features</a></li>
-                    <li><a href="#">How It Works</a></li>
-                    <li><a href="#">Pricing</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Take Control of Your Finances</h1>
-            <p>BudgetWise helps you manage your money smarter with intuitive budgeting tools, expense tracking, and financial insights.</p>
-            <a href="#" class="btn">Get Started Free</a>
-            <a href="#" class="btn btn-outline">View Demo</a>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Budgeting Features</h2>
-                <p>Everything you need to manage your finances in one place</p>
-            </div>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                    <h3>Smart Budget Calculator</h3>
-                    <p>Set monthly budgets and track your spending against your goals in real-time.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                    <h3>Expense Visualization</h3>
-                    <p>See where your money goes with beautiful, interactive charts and reports.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <h3>Spending Alerts</h3>
-                    <p>Get notified when you're approaching your budget limits or overspending.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
-                    <h3>Auto Categorization</h3>
-                    <p>Transactions are automatically sorted into categories for easy analysis.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>Bank-Level Security</h3>
-                    <p>Your financial data is protected with military-grade encryption.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Mobile App</h3>
-                    <p>Track spending and manage budgets on the go with our iOS and Android apps.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Budget Calculator Section -->
-    <section class="calculator">
-        <div class="container">
-            <div class="section-title">
-                <h2>Plan Your Monthly Budget</h2>
-                <p>See how your income and expenses compare</p>
-            </div>
-            <div class="calculator-content">
-                <div class="calculator-form">
+            
+            <div class="content">
+                <div class="input-section">
                     <div class="form-group">
-                        <label for="income">Monthly Income</label>
+                        <label for="income">Monthly Income ($)</label>
                         <input type="number" id="income" placeholder="0.00" value="5000">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="housing">Housing</label>
+                        <label for="housing">Housing ($)</label>
                         <input type="number" id="housing" placeholder="0.00" value="1500">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="food">Food & Groceries</label>
+                        <label for="food">Food & Groceries ($)</label>
                         <input type="number" id="food" placeholder="0.00" value="600">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="transport">Transportation</label>
+                        <label for="transport">Transportation ($)</label>
                         <input type="number" id="transport" placeholder="0.00" value="300">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="utilities">Utilities</label>
+                        <label for="utilities">Utilities ($)</label>
                         <input type="number" id="utilities" placeholder="0.00" value="200">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="entertainment">Entertainment</label>
+                        <label for="entertainment">Entertainment ($)</label>
                         <input type="number" id="entertainment" placeholder="0.00" value="250">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="savings">Savings</label>
+                        <label for="savings">Savings ($)</label>
                         <input type="number" id="savings" placeholder="0.00" value="1000">
                     </div>
-                    <button class="btn" id="calculateBtn">Calculate Budget</button>
                     
-                    <div class="result-card">
+                    <div class="btn-group">
+                        <button id="calculateBtn" class="btn btn-primary">
+                            <i class="fas fa-calculator"></i> Calculate Budget
+                        </button>
+                        <button id="resetBtn" class="btn btn-danger">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chart-section">
+                    <div class="chart-container">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                    
+                    <div class="summary">
                         <h3>Budget Summary</h3>
-                        <div class="result-item">
+                        <div class="summary-item">
                             <span>Total Income:</span>
                             <span id="totalIncome">$5,000.00</span>
                         </div>
-                        <div class="result-item">
+                        <div class="summary-item">
                             <span>Total Expenses:</span>
                             <span id="totalExpenses">$3,850.00</span>
                         </div>
-                        <div class="result-item" style="font-size: 1.2rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2);">
+                        <div class="summary-item">
                             <span>Remaining:</span>
-                            <span id="remaining" style="color: #4ade80; font-weight: 700;">$1,150.00</span>
+                            <span id="remaining" class="positive">$1,150.00</span>
                         </div>
                     </div>
-                </div>
-                <div class="chart-container">
-                    <canvas id="budgetChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>What Our Users Say</h2>
-                <p>Join thousands of satisfied BudgetWise users</p>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    "BudgetWise completely transformed how I manage my finances. I used to live paycheck to paycheck, but now I'm saving consistently and actually enjoying budgeting!"
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">SJ</div>
-                    <div class="author-info">
-                        <h4>Sarah Johnson</h4>
-                        <p>Freelance Designer</p>
+                    
+                    <div class="actions">
+                        <button id="downloadBtn" class="btn btn-success">
+                            <i class="fas fa-download"></i> Download as HTML
+                        </button>
+                        <button id="shareBtn" class="btn btn-primary">
+                            <i class="fas fa-share-alt"></i> Share Results
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>BudgetWise</h3>
-                    <p>Smart budgeting tools for modern financial management.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Webinars</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Partners</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; 2025 BudgetWise. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    </div>
 
     <script>
         // Initialize Chart
         const ctx = document.getElementById('budgetChart').getContext('2d');
-        const budgetChart = new Chart(ctx, {
+        let budgetChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: ['Housing', 'Food & Groceries', 'Transportation', 'Utilities', 'Entertainment', 'Savings'],
@@ -676,7 +358,12 @@
             }
         });
 
-        // Budget Calculator
+        // Format currency
+        function formatCurrency(amount) {
+            return '$' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        // Calculate budget
         function calculateBudget() {
             const income = parseFloat(document.getElementById('income').value) || 0;
             const housing = parseFloat(document.getElementById('housing').value) || 0;
@@ -690,28 +377,96 @@
             const remaining = income - totalExpenses;
             
             // Update display
-            document.getElementById('totalIncome').textContent = `$${income.toFixed(2)}`;
-            document.getElementById('totalExpenses').textContent = `$${totalExpenses.toFixed(2)}`;
-            document.getElementById('remaining').textContent = `$${remaining.toFixed(2)}`;
+            document.getElementById('totalIncome').textContent = formatCurrency(income);
+            document.getElementById('totalExpenses').textContent = formatCurrency(totalExpenses);
+            
+            const remainingElement = document.getElementById('remaining');
+            remainingElement.textContent = formatCurrency(remaining);
+            remainingElement.className = remaining >= 0 ? 'positive' : 'negative';
             
             // Update chart
             budgetChart.data.datasets[0].data = [housing, food, transport, utilities, entertainment, savings];
             budgetChart.update();
+        }
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('income').value = '5000';
+            document.getElementById('housing').value = '1500';
+            document.getElementById('food').value = '600';
+            document.getElementById('transport').value = '300';
+            document.getElementById('utilities').value = '200';
+            document.getElementById('entertainment').value = '250';
+            document.getElementById('savings').value = '1000';
+            calculateBudget();
+        }
+
+        // Download as HTML file
+        function downloadHTML() {
+            // Create a copy of the current page with calculated values
+            const currentHTML = document.documentElement.outerHTML;
             
-            // Update remaining color based on value
-            const remainingElement = document.getElementById('remaining');
-            if (remaining < 0) {
-                remainingElement.style.color = '#f72585';
+            // Create a blob with the HTML content
+            const blob = new Blob([currentHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create a temporary link and trigger download
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'budget-report.html';
+            document.body.appendChild(a);
+            a.click();
+            
+            // Clean up
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        // Share results
+        function shareResults() {
+            // Get current values
+            const income = document.getElementById('income').value || '0';
+            const housing = document.getElementById('housing').value || '0';
+            const food = document.getElementById('food').value || '0';
+            const transport = document.getElementById('transport').value || '0';
+            const utilities = document.getElementById('utilities').value || '0';
+            const entertainment = document.getElementById('entertainment').value || '0';
+            const savings = document.getElementById('savings').value || '0';
+            
+            const totalExpenses = (parseFloat(housing) + parseFloat(food) + parseFloat(transport) + 
+                                 parseFloat(utilities) + parseFloat(entertainment) + parseFloat(savings)).toFixed(2);
+            const remaining = (parseFloat(income) - parseFloat(totalExpenses)).toFixed(2);
+            
+            const shareText = `My Monthly Budget:\n\nIncome: $${income}\nExpenses: $${totalExpenses}\nRemaining: $${remaining}\n\nCreated with BudgetWise!`;
+            
+            if (navigator.share) {
+                // Web Share API
+                navigator.share({
+                    title: 'My Budget Report',
+                    text: shareText,
+                    url: window.location.href
+                }).catch(console.error);
             } else {
-                remainingElement.style.color = '#4ade80';
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Budget details copied to clipboard! You can paste them anywhere.');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('Unable to share. Please copy manually:\n\n' + shareText);
+                });
             }
         }
 
         // Event listeners
         document.getElementById('calculateBtn').addEventListener('click', calculateBudget);
-        
+        document.getElementById('resetBtn').addEventListener('click', resetForm);
+        document.getElementById('downloadBtn').addEventListener('click', downloadHTML);
+        document.getElementById('shareBtn').addEventListener('click', shareResults);
+
         // Auto-calculate when inputs change
-        const inputs = document.querySelectorAll('#income, #housing, #food, #transport, #utilities, #entertainment, #savings');
+        const inputs = document.querySelectorAll('input[type="number"]');
         inputs.forEach(input => {
             input.addEventListener('input', calculateBudget);
         });
@@ -719,5 +474,7 @@
         // Initialize on load
         window.addEventListener('load', calculateBudget);
     </script>
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
