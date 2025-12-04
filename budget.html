@@ -261,13 +261,13 @@
         </header>
         
         <div class="navigation">
-            <a href="#" class="nav-btn active">
+            <a href="budget.html" class="nav-btn active">
                 <i class="fas fa-calculator"></i> Budget Planner
             </a>
-            <a href="#" class="nav-btn" id="savingsLink">
+            <a href="savings.html" class="nav-btn">
                 <i class="fas fa-piggy-bank"></i> Savings Goal
             </a>
-            <a href="#" class="nav-btn" id="investmentLink">
+            <a href="investment.html" class="nav-btn">
                 <i class="fas fa-chart-line"></i> Investment Planner
             </a>
         </div>
@@ -330,10 +330,10 @@
         const budgetCtx = document.getElementById('budgetChart').getContext('2d');
         let budgetChart = new Chart(budgetCtx, {
             type: 'doughnut',
-             {
+            data: {
                 labels: ['Housing', 'Food & Groceries', 'Transportation', 'Other'],
                 datasets: [{
-                     [0, 0, 0, 0],
+                    data: [0, 0, 0, 0],
                     backgroundColor: [
                         '#4361ee',
                         '#3a0ca3',
@@ -466,25 +466,10 @@
             }
         }
 
-        // Navigation functions
-        function goToSavings() {
-            // In a real implementation, this would navigate to savings.html
-            // For this demo, we'll show an alert
-            alert('In a complete implementation, this would navigate to the Savings Goal page.');
-        }
-        
-        function goToInvestment() {
-            // In a real implementation, this would navigate to investment.html
-            // For this demo, we'll show an alert
-            alert('In a complete implementation, this would navigate to the Investment Planner page.');
-        }
-
         // Event listeners
         document.getElementById('resetBudgetBtn').addEventListener('click', resetBudget);
         document.getElementById('printBtn').addEventListener('click', printBudget);
         document.getElementById('shareBtn').addEventListener('click', shareBudget);
-        document.getElementById('savingsLink').addEventListener('click', goToSavings);
-        document.getElementById('investmentLink').addEventListener('click', goToInvestment);
 
         // Auto-update budget when inputs change
         const budgetInputs = document.querySelectorAll('#income, #housing, #food, #transport');
