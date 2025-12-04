@@ -621,11 +621,10 @@
             }
 
             // Calculate bi-weekly income based on $21/hour
-            // Assuming 40 hours/week: 40 * 21 * 2 = $1,680 bi-weekly per person
+            // Assuming 40 hours/week: 40 * 21 = $840 weekly, so $1,680 bi-weekly
             const hourlyRate = 21;
             const hoursPerWeek = 40;
             const biWeeklyIncome = hourlyRate * hoursPerWeek * 2; // $1,680
-            const monthlyIncomeFromPaycheck = biWeeklyIncome * 2; // $3,360 per person monthly
 
             // Initialize the chart
             const ctx = document.getElementById('budgetChart').getContext('2d');
@@ -708,39 +707,43 @@
                 // Calculate total monthly expenses
                 const totalExpenses = rent + gas + power + water + phone + trash + carLoan + savings + investment;
                 
-                // Split expenses equally between Jeffrey and Lymer
-                const jeffreyExpenses = totalExpenses / 2;
-                const lymerExpenses = totalExpenses / 2;
+                // Each person pays half of each expense
+                const jeffreyTotalExpenses = totalExpenses / 2;
+                const lymerTotalExpenses = totalExpenses / 2;
+                
+                // Convert monthly expenses to bi-weekly (divide by 2 since there are 2 paychecks per month)
+                const jeffreyBiWeeklyExpenses = jeffreyTotalExpenses / 2;
+                const lymerBiWeeklyExpenses = lymerTotalExpenses / 2;
                 
                 // Calculate remaining for each person
-                const jeffreyRemaining = biWeeklyIncome - (jeffreyExpenses / 2); // Expenses are monthly, so divide by 2 for bi-weekly
-                const lymerRemaining = biWeeklyIncome - (lymerExpenses / 2);
+                const jeffreyRemaining = biWeeklyIncome - jeffreyBiWeeklyExpenses;
+                const lymerRemaining = biWeeklyIncome - lymerBiWeeklyExpenses;
                 
                 // Update Jeffrey's section
                 document.getElementById('jeffreyIncome').textContent = formatCurrency(biWeeklyIncome);
-                document.getElementById('jeffreyRent').textContent = formatCurrency(rent / 2);
-                document.getElementById('jeffreyGas').textContent = formatCurrency(gas / 2);
-                document.getElementById('jeffreyPower').textContent = formatCurrency(power / 2);
-                document.getElementById('jeffreyWater').textContent = formatCurrency(water / 2);
-                document.getElementById('jeffreyPhone').textContent = formatCurrency(phone / 2);
-                document.getElementById('jeffreyTrash').textContent = formatCurrency(trash / 2);
-                document.getElementById('jeffreyCarLoan').textContent = formatCurrency(carLoan / 2);
-                document.getElementById('jeffreySavings').textContent = formatCurrency(savings / 2);
-                document.getElementById('jeffreyInvestment').textContent = formatCurrency(investment / 2);
+                document.getElementById('jeffreyRent').textContent = formatCurrency(rent / 4); // Half of rent, divided by 2 for bi-weekly
+                document.getElementById('jeffreyGas').textContent = formatCurrency(gas / 4);
+                document.getElementById('jeffreyPower').textContent = formatCurrency(power / 4);
+                document.getElementById('jeffreyWater').textContent = formatCurrency(water / 4);
+                document.getElementById('jeffreyPhone').textContent = formatCurrency(phone / 4);
+                document.getElementById('jeffreyTrash').textContent = formatCurrency(trash / 4);
+                document.getElementById('jeffreyCarLoan').textContent = formatCurrency(carLoan / 4);
+                document.getElementById('jeffreySavings').textContent = formatCurrency(savings / 4);
+                document.getElementById('jeffreyInvestment').textContent = formatCurrency(investment / 4);
                 document.getElementById('jeffreyRemaining').textContent = formatCurrency(jeffreyRemaining);
                 document.getElementById('jeffreyRemaining').className = jeffreyRemaining >= 0 ? 'positive' : 'negative';
                 
                 // Update Lymer's section
                 document.getElementById('lymerIncome').textContent = formatCurrency(biWeeklyIncome);
-                document.getElementById('lymerRent').textContent = formatCurrency(rent / 2);
-                document.getElementById('lymerGas').textContent = formatCurrency(gas / 2);
-                document.getElementById('lymerPower').textContent = formatCurrency(power / 2);
-                document.getElementById('lymerWater').textContent = formatCurrency(water / 2);
-                document.getElementById('lymerPhone').textContent = formatCurrency(phone / 2);
-                document.getElementById('lymerTrash').textContent = formatCurrency(trash / 2);
-                document.getElementById('lymerCarLoan').textContent = formatCurrency(carLoan / 2);
-                document.getElementById('lymerSavings').textContent = formatCurrency(savings / 2);
-                document.getElementById('lymerInvestment').textContent = formatCurrency(investment / 2);
+                document.getElementById('lymerRent').textContent = formatCurrency(rent / 4);
+                document.getElementById('lymerGas').textContent = formatCurrency(gas / 4);
+                document.getElementById('lymerPower').textContent = formatCurrency(power / 4);
+                document.getElementById('lymerWater').textContent = formatCurrency(water / 4);
+                document.getElementById('lymerPhone').textContent = formatCurrency(phone / 4);
+                document.getElementById('lymerTrash').textContent = formatCurrency(trash / 4);
+                document.getElementById('lymerCarLoan').textContent = formatCurrency(carLoan / 4);
+                document.getElementById('lymerSavings').textContent = formatCurrency(savings / 4);
+                document.getElementById('lymerInvestment').textContent = formatCurrency(investment / 4);
                 document.getElementById('lymerRemaining').textContent = formatCurrency(lymerRemaining);
                 document.getElementById('lymerRemaining').className = lymerRemaining >= 0 ? 'positive' : 'negative';
             }
