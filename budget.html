@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Planner</title>
+    <!-- FIXED: Removed extra spaces in CDN URLs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -495,7 +496,7 @@
                         <div class="person-header">Jeffrey</div>
                         <div class="paycheck-item">
                             <span>Bi-Weekly Income:</span>
-                            <span id="jeffreyIncome" class="income-highlight">$882.00</span>
+                            <span id="jeffreyIncome" class="income-highlight">$1,680.00</span>
                         </div>
                         <div class="paycheck-item">
                             <span>Rent:</span>
@@ -535,7 +536,7 @@
                         </div>
                         <div class="paycheck-item">
                             <span><strong>Remaining:</strong></span>
-                            <span id="jeffreyRemaining" class="positive">$882.00</span>
+                            <span id="jeffreyRemaining" class="positive">$1,680.00</span>
                         </div>
                     </div>
                     
@@ -543,7 +544,7 @@
                         <div class="person-header">Lymer</div>
                         <div class="paycheck-item">
                             <span>Bi-Weekly Income:</span>
-                            <span id="lymerIncome" class="income-highlight">$882.00</span>
+                            <span id="lymerIncome" class="income-highlight">$1,680.00</span>
                         </div>
                         <div class="paycheck-item">
                             <span>Rent:</span>
@@ -583,7 +584,7 @@
                         </div>
                         <div class="paycheck-item">
                             <span><strong>Remaining:</strong></span>
-                            <span id="lymerRemaining" class="positive">$882.00</span>
+                            <span id="lymerRemaining" class="positive">$1,680.00</span>
                         </div>
                     </div>
                 </div>
@@ -727,10 +728,10 @@
             const ctx = document.getElementById('budgetChart').getContext('2d');
             window.budgetChart = new Chart(ctx, {
                 type: 'doughnut',
-                 {
+                data: {
                     labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Car Loan', 'Savings', 'Investment'],
                     datasets: [{
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
                         backgroundColor: [
                             '#4361ee',
                             '#3a0ca3',
