@@ -223,6 +223,35 @@
             margin-top: 20px;
         }
 
+        .suggestions {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 16px;
+            border-left: 4px solid var(--warning);
+        }
+
+        .suggestions h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .suggestion-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-percentage {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
         /* Print styles */
         @media print {
             .btn, .btn-group, input, .actions, .navigation {
@@ -280,37 +309,52 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="income">Monthly Income ($)</label>
-                    <input type="number" id="income" placeholder="0.00" value="0">
+                    <input type="number" id="income" placeholder="0.00">
                 </div>
                 
                 <div class="form-group">
                     <label for="rent">Rent ($)</label>
-                    <input type="number" id="rent" placeholder="0.00" value="0">
+                    <input type="number" id="rent" placeholder="0.00">
                 </div>
                 
                 <div class="form-group">
                     <label for="gas">Gas ($)</label>
-                    <input type="number" id="gas" placeholder="0.00" value="0">
+                    <input type="number" id="gas" placeholder="0.00">
                 </div>
                 
                 <div class="form-group">
                     <label for="power">Power ($)</label>
-                    <input type="number" id="power" placeholder="0.00" value="0">
+                    <input type="number" id="power" placeholder="0.00">
                 </div>
                 
                 <div class="form-group">
                     <label for="water">Water ($)</label>
-                    <input type="number" id="water" placeholder="0.00" value="0">
+                    <input type="number" id="water" placeholder="0.00">
                 </div>
                 
                 <div class="form-group">
                     <label for="phone">Phone ($)</label>
-                    <input type="number" id="phone" placeholder="0.00" value="0">
+                    <input type="number" id="phone" placeholder="0.00">
                 </div>
                 
                 <div class="form-group">
                     <label for="trash">Trash ($)</label>
-                    <input type="number" id="trash" placeholder="0.00" value="0">
+                    <input type="number" id="trash" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="carLoan">Car Loan ($)</label>
+                    <input type="number" id="carLoan" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="savings">Savings ($)</label>
+                    <input type="number" id="savings" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="investment">Investment ($)</label>
+                    <input type="number" id="investment" placeholder="0.00">
                 </div>
                 
                 <div class="btn-group">
@@ -350,6 +394,18 @@
                         <span id="displayTrash">$0.00</span>
                     </div>
                     <div class="summary-item">
+                        <span>Car Loan:</span>
+                        <span id="displayCarLoan">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Savings:</span>
+                        <span id="displaySavings">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Investment:</span>
+                        <span id="displayInvestment">$0.00</span>
+                    </div>
+                    <div class="summary-item">
                         <span>Total Expenses:</span>
                         <span id="displayTotalExpenses">$0.00</span>
                     </div>
@@ -361,6 +417,30 @@
                 
                 <div class="chart-container">
                     <canvas id="budgetChart"></canvas>
+                </div>
+                
+                <div class="suggestions">
+                    <h3>How to Use Your Remaining Balance</h3>
+                    <div class="suggestion-item">
+                        <span>Entertainment & Dining:</span>
+                        <span class="suggestion-percentage">30%</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <span>Additional Savings:</span>
+                        <span class="suggestion-percentage">25%</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <span>Invest More:</span>
+                        <span class="suggestion-percentage">20%</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <span>Emergency Fund:</span>
+                        <span class="suggestion-percentage">15%</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <span>Personal Spending:</span>
+                        <span class="suggestion-percentage">10%</span>
+                    </div>
                 </div>
                 
                 <div class="actions" style="margin-top: 20px;">
@@ -378,7 +458,7 @@
     <script>
         // Format currency
         function formatCurrency(amount) {
-            if (isNaN(amount) || amount === null || amount === undefined) return '$0.00';
+            if (isNaN(amount) || amount === null || amount === undefined || amount === '') return '$0.00';
             return '$' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
@@ -392,9 +472,12 @@
             const water = parseFloat(document.getElementById('water').value) || 0;
             const phone = parseFloat(document.getElementById('phone').value) || 0;
             const trash = parseFloat(document.getElementById('trash').value) || 0;
+            const carLoan = parseFloat(document.getElementById('carLoan').value) || 0;
+            const savings = parseFloat(document.getElementById('savings').value) || 0;
+            const investment = parseFloat(document.getElementById('investment').value) || 0;
             
             // Calculate totals
-            const totalExpenses = rent + gas + power + water + phone + trash;
+            const totalExpenses = rent + gas + power + water + phone + trash + carLoan + savings + investment;
             const remaining = income - totalExpenses;
             
             // Update display elements
@@ -405,6 +488,9 @@
             document.getElementById('displayWater').textContent = formatCurrency(water);
             document.getElementById('displayPhone').textContent = formatCurrency(phone);
             document.getElementById('displayTrash').textContent = formatCurrency(trash);
+            document.getElementById('displayCarLoan').textContent = formatCurrency(carLoan);
+            document.getElementById('displaySavings').textContent = formatCurrency(savings);
+            document.getElementById('displayInvestment').textContent = formatCurrency(investment);
             document.getElementById('displayTotalExpenses').textContent = formatCurrency(totalExpenses);
             
             const remainingElement = document.getElementById('displayRemaining');
@@ -413,7 +499,7 @@
             
             // Update chart if it exists
             if (window.budgetChart) {
-                window.budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash];
+                window.budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, carLoan, savings, investment];
                 window.budgetChart.update();
             }
         }
@@ -423,17 +509,20 @@
             const ctx = document.getElementById('budgetChart').getContext('2d');
             window.budgetChart = new Chart(ctx, {
                 type: 'doughnut',
-                data: {
-                    labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash'],
+                 {
+                    labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Car Loan', 'Savings', 'Investment'],
                     datasets: [{
-                        data: [0, 0, 0, 0, 0, 0],
+                         [0, 0, 0, 0, 0, 0, 0, 0, 0],
                         backgroundColor: [
                             '#4361ee',
                             '#3a0ca3',
                             '#4cc9f0',
                             '#f72585',
                             '#7209b7',
-                            '#4ade80'
+                            '#4ade80',
+                            '#f8961e',
+                            '#9d4edd',
+                            '#00bbf9'
                         ],
                         borderWidth: 0,
                         borderRadius: 6,
@@ -466,13 +555,16 @@
 
         // Reset budget
         function resetBudget() {
-            document.getElementById('income').value = '0';
-            document.getElementById('rent').value = '0';
-            document.getElementById('gas').value = '0';
-            document.getElementById('power').value = '0';
-            document.getElementById('water').value = '0';
-            document.getElementById('phone').value = '0';
-            document.getElementById('trash').value = '0';
+            document.getElementById('income').value = '';
+            document.getElementById('rent').value = '';
+            document.getElementById('gas').value = '';
+            document.getElementById('power').value = '';
+            document.getElementById('water').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('trash').value = '';
+            document.getElementById('carLoan').value = '';
+            document.getElementById('savings').value = '';
+            document.getElementById('investment').value = '';
             updateBudgetSummary();
         }
 
@@ -490,12 +582,16 @@
             const water = document.getElementById('water').value || '0';
             const phone = document.getElementById('phone').value || '0';
             const trash = document.getElementById('trash').value || '0';
+            const carLoan = document.getElementById('carLoan').value || '0';
+            const savings = document.getElementById('savings').value || '0';
+            const investment = document.getElementById('investment').value || '0';
             
             const totalExpenses = parseFloat(rent) + parseFloat(gas) + parseFloat(power) + 
-                                 parseFloat(water) + parseFloat(phone) + parseFloat(trash);
+                                 parseFloat(water) + parseFloat(phone) + parseFloat(trash) + 
+                                 parseFloat(carLoan) + parseFloat(savings) + parseFloat(investment);
             const remaining = parseFloat(income) - totalExpenses;
             
-            const shareText = `My Monthly Budget:\n\nIncome: $${income}\nRent: $${rent}\nGas: $${gas}\nPower: $${power}\nWater: $${water}\nPhone: $${phone}\nTrash: $${trash}\n\nTotal Expenses: $${totalExpenses.toFixed(2)}\nRemaining: $${remaining.toFixed(2)}\n\nCreated with Budget Planner!`;
+            const shareText = `My Monthly Budget:\n\nIncome: $${income}\nRent: $${rent}\nGas: $${gas}\nPower: $${power}\nWater: $${water}\nPhone: $${phone}\nTrash: $${trash}\nCar Loan: $${carLoan}\nSavings: $${savings}\nInvestment: $${investment}\n\nTotal Expenses: $${totalExpenses.toFixed(2)}\nRemaining: $${remaining.toFixed(2)}\n\nCreated with Budget Planner!`;
             
             if (navigator.share) {
                 navigator.share({
@@ -519,7 +615,7 @@
         document.getElementById('shareBtn').addEventListener('click', shareBudget);
 
         // Auto-update budget when inputs change
-        const budgetInputs = document.querySelectorAll('#income, #rent, #gas, #power, #water, #phone, #trash');
+        const budgetInputs = document.querySelectorAll('#income, #rent, #gas, #power, #water, #phone, #trash, #carLoan, #savings, #investment');
         budgetInputs.forEach(input => {
             input.addEventListener('input', updateBudgetSummary);
         });
