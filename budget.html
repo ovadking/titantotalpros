@@ -284,18 +284,33 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="housing">Housing ($)</label>
-                    <input type="number" id="housing" placeholder="0.00" value="0">
+                    <label for="rent">Rent ($)</label>
+                    <input type="number" id="rent" placeholder="0.00" value="0">
                 </div>
                 
                 <div class="form-group">
-                    <label for="food">Food & Groceries ($)</label>
-                    <input type="number" id="food" placeholder="0.00" value="0">
+                    <label for="gas">Gas ($)</label>
+                    <input type="number" id="gas" placeholder="0.00" value="0">
                 </div>
                 
                 <div class="form-group">
-                    <label for="transport">Transportation ($)</label>
-                    <input type="number" id="transport" placeholder="0.00" value="0">
+                    <label for="power">Power ($)</label>
+                    <input type="number" id="power" placeholder="0.00" value="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="water">Water ($)</label>
+                    <input type="number" id="water" placeholder="0.00" value="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone ($)</label>
+                    <input type="number" id="phone" placeholder="0.00" value="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="trash">Trash ($)</label>
+                    <input type="number" id="trash" placeholder="0.00" value="0">
                 </div>
                 
                 <div class="btn-group">
@@ -330,15 +345,18 @@
         const budgetCtx = document.getElementById('budgetChart').getContext('2d');
         let budgetChart = new Chart(budgetCtx, {
             type: 'doughnut',
-            data: {
-                labels: ['Housing', 'Food & Groceries', 'Transportation', 'Other'],
+             {
+                labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Other'],
                 datasets: [{
-                    data: [0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0],
                     backgroundColor: [
                         '#4361ee',
                         '#3a0ca3',
                         '#4cc9f0',
-                        '#f72585'
+                        '#f72585',
+                        '#7209b7',
+                        '#4ade80',
+                        '#f8961e'
                     ],
                     borderWidth: 0,
                     borderRadius: 10,
@@ -377,13 +395,16 @@
         // Update budget summary
         function updateBudgetSummary() {
             const income = parseFloat(document.getElementById('income').value) || 0;
-            const housing = parseFloat(document.getElementById('housing').value) || 0;
-            const food = parseFloat(document.getElementById('food').value) || 0;
-            const transport = parseFloat(document.getElementById('transport').value) || 0;
-            const other = income - housing - food - transport;
+            const rent = parseFloat(document.getElementById('rent').value) || 0;
+            const gas = parseFloat(document.getElementById('gas').value) || 0;
+            const power = parseFloat(document.getElementById('power').value) || 0;
+            const water = parseFloat(document.getElementById('water').value) || 0;
+            const phone = parseFloat(document.getElementById('phone').value) || 0;
+            const trash = parseFloat(document.getElementById('trash').value) || 0;
             
-            const totalExpenses = housing + food + transport + Math.max(0, other);
-            const remaining = income - totalExpenses;
+            const totalExpenses = rent + gas + power + water + phone + trash;
+            const other = income - totalExpenses;
+            const remaining = income - (totalExpenses + Math.max(0, other));
             
             // Create summary content
             const summaryElement = document.getElementById('budgetSummary');
@@ -393,16 +414,28 @@
                     <span>${formatCurrency(income)}</span>
                 </div>
                 <div class="summary-item">
-                    <span>Housing:</span>
-                    <span>${formatCurrency(housing)}</span>
+                    <span>Rent:</span>
+                    <span>${formatCurrency(rent)}</span>
                 </div>
                 <div class="summary-item">
-                    <span>Food & Groceries:</span>
-                    <span>${formatCurrency(food)}</span>
+                    <span>Gas:</span>
+                    <span>${formatCurrency(gas)}</span>
                 </div>
                 <div class="summary-item">
-                    <span>Transportation:</span>
-                    <span>${formatCurrency(transport)}</span>
+                    <span>Power:</span>
+                    <span>${formatCurrency(power)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Water:</span>
+                    <span>${formatCurrency(water)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Phone:</span>
+                    <span>${formatCurrency(phone)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Trash:</span>
+                    <span>${formatCurrency(trash)}</span>
                 </div>
                 <div class="summary-item">
                     <span>Other Expenses:</span>
@@ -410,7 +443,7 @@
                 </div>
                 <div class="summary-item">
                     <span>Total Expenses:</span>
-                    <span>${formatCurrency(totalExpenses)}</span>
+                    <span>${formatCurrency(totalExpenses + Math.max(0, other))}</span>
                 </div>
                 <div class="summary-item">
                     <span>Remaining Balance:</span>
@@ -419,16 +452,19 @@
             `;
             
             // Update chart
-            budgetChart.data.datasets[0].data = [housing, food, transport, Math.max(0, other)];
+            budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, Math.max(0, other)];
             budgetChart.update();
         }
 
         // Reset budget
         function resetBudget() {
             document.getElementById('income').value = '0';
-            document.getElementById('housing').value = '0';
-            document.getElementById('food').value = '0';
-            document.getElementById('transport').value = '0';
+            document.getElementById('rent').value = '0';
+            document.getElementById('gas').value = '0';
+            document.getElementById('power').value = '0';
+            document.getElementById('water').value = '0';
+            document.getElementById('phone').value = '0';
+            document.getElementById('trash').value = '0';
             updateBudgetSummary();
         }
 
@@ -440,15 +476,20 @@
         // Share budget
         function shareBudget() {
             const income = document.getElementById('income').value || '0';
-            const housing = document.getElementById('housing').value || '0';
-            const food = document.getElementById('food').value || '0';
-            const transport = document.getElementById('transport').value || '0';
+            const rent = document.getElementById('rent').value || '0';
+            const gas = document.getElementById('gas').value || '0';
+            const power = document.getElementById('power').value || '0';
+            const water = document.getElementById('water').value || '0';
+            const phone = document.getElementById('phone').value || '0';
+            const trash = document.getElementById('trash').value || '0';
             
-            const totalExpenses = (parseFloat(housing) + parseFloat(food) + parseFloat(transport) + 
-                                 Math.max(0, parseFloat(income) - parseFloat(housing) - parseFloat(food) - parseFloat(transport))).toFixed(2);
+            const totalExpenses = (parseFloat(rent) + parseFloat(gas) + parseFloat(power) + 
+                                 parseFloat(water) + parseFloat(phone) + parseFloat(trash) + 
+                                 Math.max(0, parseFloat(income) - parseFloat(rent) - parseFloat(gas) - 
+                                 parseFloat(power) - parseFloat(water) - parseFloat(phone) - parseFloat(trash))).toFixed(2);
             const remaining = (parseFloat(income) - parseFloat(totalExpenses)).toFixed(2);
             
-            const shareText = `My Monthly Budget:\n\nIncome: $${income}\nHousing: $${housing}\nFood: $${food}\nTransport: $${transport}\n\nTotal Expenses: $${totalExpenses}\nRemaining: $${remaining}\n\nCreated with Budget Planner!`;
+            const shareText = `My Monthly Budget:\n\nIncome: $${income}\nRent: $${rent}\nGas: $${gas}\nPower: $${power}\nWater: $${water}\nPhone: $${phone}\nTrash: $${trash}\n\nTotal Expenses: $${totalExpenses}\nRemaining: $${remaining}\n\nCreated with Budget Planner!`;
             
             if (navigator.share) {
                 navigator.share({
@@ -472,7 +513,7 @@
         document.getElementById('shareBtn').addEventListener('click', shareBudget);
 
         // Auto-update budget when inputs change
-        const budgetInputs = document.querySelectorAll('#income, #housing, #food, #transport');
+        const budgetInputs = document.querySelectorAll('#income, #rent, #gas, #power, #water, #phone, #trash');
         budgetInputs.forEach(input => {
             input.addEventListener('input', updateBudgetSummary);
         });
