@@ -321,7 +321,42 @@
                 
                 <div class="summary" id="budgetSummary">
                     <h3>Budget Summary</h3>
-                    <!-- Summary will be populated by JS -->
+                    <div class="summary-item">
+                        <span>Monthly Income:</span>
+                        <span id="displayIncome">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Rent:</span>
+                        <span id="displayRent">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Gas:</span>
+                        <span id="displayGas">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Power:</span>
+                        <span id="displayPower">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Water:</span>
+                        <span id="displayWater">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Phone:</span>
+                        <span id="displayPhone">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Trash:</span>
+                        <span id="displayTrash">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total Expenses:</span>
+                        <span id="displayTotalExpenses">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Remaining Balance:</span>
+                        <span id="displayRemaining" class="positive">$0.00</span>
+                    </div>
                 </div>
                 
                 <div class="chart-container">
@@ -341,58 +376,15 @@
     </div>
 
     <script>
-        // Initialize Chart
-        const budgetCtx = document.getElementById('budgetChart').getContext('2d');
-        let budgetChart = new Chart(budgetCtx, {
-            type: 'doughnut',
-             {
-                labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash'],
-                datasets: [{
-                     [0, 0, 0, 0, 0, 0],
-                    backgroundColor: [
-                        '#4361ee',
-                        '#3a0ca3',
-                        '#4cc9f0',
-                        '#f72585',
-                        '#7209b7',
-                        '#4ade80'
-                    ],
-                    borderWidth: 0,
-                    borderRadius: 1;
-                    spacing: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 20,
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.label}: $${context.raw.toFixed(2)}`;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
         // Format currency
         function formatCurrency(amount) {
-            if (isNaN(amount)) return '$0.00';
+            if (isNaN(amount) || amount === null || amount === undefined) return '$0.00';
             return '$' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
         // Update budget summary
         function updateBudgetSummary() {
+            // Get input values
             const income = parseFloat(document.getElementById('income').value) || 0;
             const rent = parseFloat(document.getElementById('rent').value) || 0;
             const gas = parseFloat(document.getElementById('gas').value) || 0;
@@ -401,56 +393,75 @@
             const phone = parseFloat(document.getElementById('phone').value) || 0;
             const trash = parseFloat(document.getElementById('trash').value) || 0;
             
-            // Calculate total of all entered expenses
+            // Calculate totals
             const totalExpenses = rent + gas + power + water + phone + trash;
-            
-            // Remaining balance is income minus total expenses
             const remaining = income - totalExpenses;
             
-            // Create summary content
-            const summaryElement = document.getElementById('budgetSummary');
-            summaryElement.innerHTML = `
-                <div class="summary-item">
-                    <span>Monthly Income:</span>
-                    <span>${formatCurrency(income)}</span>
-                </div>
-                <div class="summary-item">
-                    <span>Rent:</span>
-                    <span>${formatCurrency(rent)}</span>
-                </div>
-                <div class="summary-item">
-                    <span>Gas:</span>
-                    <span>${formatCurrency(gas)}</span>
-                </div>
-                <div class="summary-item">
-                    <span>Power:</span>
-                    <span>${formatCurrency(power)}</span>
-                </div>
-                <div class="summary-item">
-                    <span>Water:</span>
-                    <span>${formatCurrency(water)}</span>
-                </div>
-                <div class="summary-item">
-                    <span>Phone:</span>
-                    <span>${formatCurrency(phone)}</span>
-                </div>
-                <div class="summary-item">
-                    <span>Trash:</span>
-                    <span>${formatCurrency(trash)}</span>
-                </div>
-                <div class="summary-item">
-                    <span>Total Expenses:</span>
-                    <span>${formatCurrency(totalExpenses)}</span>
-                </div>
-                <div class="summary-item">
-                    <span>Remaining Balance:</span>
-                    <span class="${remaining >= 0 ? 'positive' : 'negative'}">${formatCurrency(remaining)}</span>
-                </div>
-            `;
+            // Update display elements
+            document.getElementById('displayIncome').textContent = formatCurrency(income);
+            document.getElementById('displayRent').textContent = formatCurrency(rent);
+            document.getElementById('displayGas').textContent = formatCurrency(gas);
+            document.getElementById('displayPower').textContent = formatCurrency(power);
+            document.getElementById('displayWater').textContent = formatCurrency(water);
+            document.getElementById('displayPhone').textContent = formatCurrency(phone);
+            document.getElementById('displayTrash').textContent = formatCurrency(trash);
+            document.getElementById('displayTotalExpenses').textContent = formatCurrency(totalExpenses);
             
-            // Update chart (only the 6 expense categories)
-            budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash];
-            budgetChart.update();
+            const remainingElement = document.getElementById('displayRemaining');
+            remainingElement.textContent = formatCurrency(remaining);
+            remainingElement.className = remaining >= 0 ? 'positive' : 'negative';
+            
+            // Update chart if it exists
+            if (window.budgetChart) {
+                window.budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash];
+                window.budgetChart.update();
+            }
+        }
+
+        // Initialize Chart
+        function initializeChart() {
+            const ctx = document.getElementById('budgetChart').getContext('2d');
+            window.budgetChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash'],
+                    datasets: [{
+                        data: [0, 0, 0, 0, 0, 0],
+                        backgroundColor: [
+                            '#4361ee',
+                            '#3a0ca3',
+                            '#4cc9f0',
+                            '#f72585',
+                            '#7209b7',
+                            '#4ade80'
+                        ],
+                        borderWidth: 0,
+                        borderRadius: 6,
+                        spacing: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: $${context.raw.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         // Reset budget
@@ -514,7 +525,10 @@
         });
 
         // Initialize on load
-        window.addEventListener('load', updateBudgetSummary);
+        window.addEventListener('load', function() {
+            initializeChart();
+            updateBudgetSummary();
+        });
     </script>
 </body>
 </html>
