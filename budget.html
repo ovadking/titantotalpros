@@ -265,36 +265,37 @@
             color: var(--secondary);
         }
 
-        .paycheck-people {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .person-card {
-            flex: 1;
-            min-width: 200px;
+        .person-section {
+            margin-bottom: 20px;
             padding: 15px;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
-        .person-card h4 {
-            margin-bottom: 15px;
-            color: var(--primary);
-            text-align: center;
+        .person-header {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--secondary);
+            font-size: 1.2rem;
         }
 
-        .person-item {
+        .paycheck-item {
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
             border-bottom: 1px solid var(--light-gray);
         }
 
-        .person-item:last-child {
+        .paycheck-item:last-child {
             border-bottom: none;
+            font-weight: 700;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .income-highlight {
+            color: var(--success);
         }
 
         /* Print styles */
@@ -323,10 +324,6 @@
                 width: 80%;
                 max-width: 300px;
                 justify-content: center;
-            }
-            
-            .paycheck-people {
-                flex-direction: column;
             }
         }
     </style>
@@ -493,59 +490,100 @@
                 </div>
                 
                 <div class="paycheck-breakdown">
-                    <h3>Paycheck Breakdown ($21/hour)</h3>
-                    <div class="paycheck-people">
-                        <div class="person-card">
-                            <h4>Jeffrey</h4>
-                            <div class="person-item">
-                                <span>Hourly Rate:</span>
-                                <span>$21.00</span>
-                            </div>
-                            <div class="person-item">
-                                <span>Weekly Hours:</span>
-                                <span>40 hours</span>
-                            </div>
-                            <div class="person-item">
-                                <span>Weekly Pay:</span>
-                                <span id="jeffrey-weekly">$840.00</span>
-                            </div>
-                            <div class="person-item">
-                                <span>Bi-weekly Pay:</span>
-                                <span id="jeffrey-biweekly">$1,680.00</span>
-                            </div>
-                            <div class="person-item">
-                                <span>Monthly Pay:</span>
-                                <span id="jeffrey-monthly">$3,640.00</span>
-                            </div>
+                    <h3>Bi-Weekly Paycheck Distribution</h3>
+                    <div class="person-section">
+                        <div class="person-header">Jeffrey</div>
+                        <div class="paycheck-item">
+                            <span>Bi-Weekly Income:</span>
+                            <span id="jeffreyIncome" class="income-highlight">$882.00</span>
                         </div>
-                        <div class="person-card">
-                            <h4>Lymer</h4>
-                            <div class="person-item">
-                                <span>Hourly Rate:</span>
-                                <span>$21.00</span>
-                            </div>
-                            <div class="person-item">
-                                <span>Weekly Hours:</span>
-                                <span>40 hours</span>
-                            </div>
-                            <div class="person-item">
-                                <span>Weekly Pay:</span>
-                                <span id="lymer-weekly">$840.00</span>
-                            </div>
-                            <div class="person-item">
-                                <span>Bi-weekly Pay:</span>
-                                <span id="lymer-biweekly">$1,680.00</span>
-                            </div>
-                            <div class="person-item">
-                                <span>Monthly Pay:</span>
-                                <span id="lymer-monthly">$3,640.00</span>
-                            </div>
+                        <div class="paycheck-item">
+                            <span>Rent:</span>
+                            <span id="jeffreyRent">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Gas:</span>
+                            <span id="jeffreyGas">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Power:</span>
+                            <span id="jeffreyPower">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Water:</span>
+                            <span id="jeffreyWater">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Phone:</span>
+                            <span id="jeffreyPhone">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Trash:</span>
+                            <span id="jeffreyTrash">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Car Loan:</span>
+                            <span id="jeffreyCarLoan">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Savings:</span>
+                            <span id="jeffreySavings">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Investment:</span>
+                            <span id="jeffreyInvestment">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span><strong>Remaining:</strong></span>
+                            <span id="jeffreyRemaining" class="positive">$882.00</span>
                         </div>
                     </div>
-                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--light-gray);">
-                        <div class="person-item" style="font-weight: bold;">
-                            <span>Combined Monthly Income:</span>
-                            <span id="combined-monthly">$7,280.00</span>
+                    
+                    <div class="person-section">
+                        <div class="person-header">Lymer</div>
+                        <div class="paycheck-item">
+                            <span>Bi-Weekly Income:</span>
+                            <span id="lymerIncome" class="income-highlight">$882.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Rent:</span>
+                            <span id="lymerRent">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Gas:</span>
+                            <span id="lymerGas">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Power:</span>
+                            <span id="lymerPower">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Water:</span>
+                            <span id="lymerWater">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Phone:</span>
+                            <span id="lymerPhone">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Trash:</span>
+                            <span id="lymerTrash">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Car Loan:</span>
+                            <span id="lymerCarLoan">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Savings:</span>
+                            <span id="lymerSavings">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span>Investment:</span>
+                            <span id="lymerInvestment">$0.00</span>
+                        </div>
+                        <div class="paycheck-item">
+                            <span><strong>Remaining:</strong></span>
+                            <span id="lymerRemaining" class="positive">$882.00</span>
                         </div>
                     </div>
                 </div>
@@ -581,6 +619,13 @@
                 const num = parseFloat(value);
                 return isNaN(num) ? 0 : num;
             }
+
+            // Calculate bi-weekly income based on $21/hour
+            // Assuming 40 hours/week: 40 * 21 * 2 = $1,680 bi-weekly per person
+            const hourlyRate = 21;
+            const hoursPerWeek = 40;
+            const biWeeklyIncome = hourlyRate * hoursPerWeek * 2; // $1,680
+            const monthlyIncomeFromPaycheck = biWeeklyIncome * 2; // $3,360 per person monthly
 
             // Initialize the chart
             const ctx = document.getElementById('budgetChart').getContext('2d');
@@ -647,28 +692,57 @@
                 document.getElementById('suggestion5').textContent = formatCurrency(remaining * 0.10);
             }
 
-            // Update paycheck breakdown
-            function updatePaycheckBreakdown() {
-                const hourlyRate = 21;
-                const weeklyHours = 40;
-                const weeklyPay = hourlyRate * weeklyHours;
-                const biweeklyPay = weeklyPay * 2;
-                // Monthly pay = weekly pay * 52 weeks / 12 months
-                const monthlyPay = weeklyPay * 52 / 12;
-                const combinedMonthly = monthlyPay * 2;
+            // Update paycheck distribution
+            function updatePaycheckDistribution() {
+                // Get expense values
+                const rent = parseInput(document.getElementById('rent').value);
+                const gas = parseInput(document.getElementById('gas').value);
+                const power = parseInput(document.getElementById('power').value);
+                const water = parseInput(document.getElementById('water').value);
+                const phone = parseInput(document.getElementById('phone').value);
+                const trash = parseInput(document.getElementById('trash').value);
+                const carLoan = parseInput(document.getElementById('carLoan').value);
+                const savings = parseInput(document.getElementById('savings').value);
+                const investment = parseInput(document.getElementById('investment').value);
                 
-                // Update Jeffrey's values
-                document.getElementById('jeffrey-weekly').textContent = formatCurrency(weeklyPay);
-                document.getElementById('jeffrey-biweekly').textContent = formatCurrency(biweeklyPay);
-                document.getElementById('jeffrey-monthly').textContent = formatCurrency(monthlyPay);
+                // Calculate total monthly expenses
+                const totalExpenses = rent + gas + power + water + phone + trash + carLoan + savings + investment;
                 
-                // Update Lymer's values (same as Jeffrey)
-                document.getElementById('lymer-weekly').textContent = formatCurrency(weeklyPay);
-                document.getElementById('lymer-biweekly').textContent = formatCurrency(biweeklyPay);
-                document.getElementById('lymer-monthly').textContent = formatCurrency(monthlyPay);
+                // Split expenses equally between Jeffrey and Lymer
+                const jeffreyExpenses = totalExpenses / 2;
+                const lymerExpenses = totalExpenses / 2;
                 
-                // Update combined income
-                document.getElementById('combined-monthly').textContent = formatCurrency(combinedMonthly);
+                // Calculate remaining for each person
+                const jeffreyRemaining = biWeeklyIncome - (jeffreyExpenses / 2); // Expenses are monthly, so divide by 2 for bi-weekly
+                const lymerRemaining = biWeeklyIncome - (lymerExpenses / 2);
+                
+                // Update Jeffrey's section
+                document.getElementById('jeffreyIncome').textContent = formatCurrency(biWeeklyIncome);
+                document.getElementById('jeffreyRent').textContent = formatCurrency(rent / 2);
+                document.getElementById('jeffreyGas').textContent = formatCurrency(gas / 2);
+                document.getElementById('jeffreyPower').textContent = formatCurrency(power / 2);
+                document.getElementById('jeffreyWater').textContent = formatCurrency(water / 2);
+                document.getElementById('jeffreyPhone').textContent = formatCurrency(phone / 2);
+                document.getElementById('jeffreyTrash').textContent = formatCurrency(trash / 2);
+                document.getElementById('jeffreyCarLoan').textContent = formatCurrency(carLoan / 2);
+                document.getElementById('jeffreySavings').textContent = formatCurrency(savings / 2);
+                document.getElementById('jeffreyInvestment').textContent = formatCurrency(investment / 2);
+                document.getElementById('jeffreyRemaining').textContent = formatCurrency(jeffreyRemaining);
+                document.getElementById('jeffreyRemaining').className = jeffreyRemaining >= 0 ? 'positive' : 'negative';
+                
+                // Update Lymer's section
+                document.getElementById('lymerIncome').textContent = formatCurrency(biWeeklyIncome);
+                document.getElementById('lymerRent').textContent = formatCurrency(rent / 2);
+                document.getElementById('lymerGas').textContent = formatCurrency(gas / 2);
+                document.getElementById('lymerPower').textContent = formatCurrency(power / 2);
+                document.getElementById('lymerWater').textContent = formatCurrency(water / 2);
+                document.getElementById('lymerPhone').textContent = formatCurrency(phone / 2);
+                document.getElementById('lymerTrash').textContent = formatCurrency(trash / 2);
+                document.getElementById('lymerCarLoan').textContent = formatCurrency(carLoan / 2);
+                document.getElementById('lymerSavings').textContent = formatCurrency(savings / 2);
+                document.getElementById('lymerInvestment').textContent = formatCurrency(investment / 2);
+                document.getElementById('lymerRemaining').textContent = formatCurrency(lymerRemaining);
+                document.getElementById('lymerRemaining').className = lymerRemaining >= 0 ? 'positive' : 'negative';
             }
 
             // Update budget summary and chart
@@ -708,6 +782,9 @@
                 
                 // Update suggestions
                 updateSuggestions(remaining);
+                
+                // Update paycheck distribution
+                updatePaycheckDistribution();
                 
                 // Update chart
                 budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, carLoan, savings, investment];
@@ -782,7 +859,6 @@
 
             // Initialize with empty values
             updateBudgetSummary();
-            updatePaycheckBreakdown();
         });
     </script>
 </body>
