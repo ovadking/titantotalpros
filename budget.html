@@ -346,20 +346,19 @@
         let budgetChart = new Chart(budgetCtx, {
             type: 'doughnut',
              {
-                labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Other'],
+                labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash'],
                 datasets: [{
-                     [0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0],
                     backgroundColor: [
                         '#4361ee',
                         '#3a0ca3',
                         '#4cc9f0',
                         '#f72585',
                         '#7209b7',
-                        '#4ade80',
-                        '#f8961e'
+                        '#4ade80'
                     ],
                     borderWidth: 0,
-                    borderRadius: 10,
+                    borderRadius: 1;
                     spacing: 8
                 }]
             },
@@ -402,16 +401,10 @@
             const phone = parseFloat(document.getElementById('phone').value) || 0;
             const trash = parseFloat(document.getElementById('trash').value) || 0;
             
-            // Calculate total of specified expenses
-            const specifiedExpenses = rent + gas + power + water + phone + trash;
+            // Calculate total of all entered expenses
+            const totalExpenses = rent + gas + power + water + phone + trash;
             
-            // "Other" expenses are what's left after specified expenses (but not more than income)
-            const other = Math.max(0, income - specifiedExpenses);
-            
-            // Total expenses include both specified and other expenses
-            const totalExpenses = specifiedExpenses + other;
-            
-            // Remaining balance is income minus total expenses (should be 0 or positive)
+            // Remaining balance is income minus total expenses
             const remaining = income - totalExpenses;
             
             // Create summary content
@@ -446,10 +439,6 @@
                     <span>${formatCurrency(trash)}</span>
                 </div>
                 <div class="summary-item">
-                    <span>Other Expenses:</span>
-                    <span>${formatCurrency(other)}</span>
-                </div>
-                <div class="summary-item">
                     <span>Total Expenses:</span>
                     <span>${formatCurrency(totalExpenses)}</span>
                 </div>
@@ -459,8 +448,8 @@
                 </div>
             `;
             
-            // Update chart
-            budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, other];
+            // Update chart (only the 6 expense categories)
+            budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash];
             budgetChart.update();
         }
 
@@ -491,10 +480,8 @@
             const phone = document.getElementById('phone').value || '0';
             const trash = document.getElementById('trash').value || '0';
             
-            const specifiedExpenses = parseFloat(rent) + parseFloat(gas) + parseFloat(power) + 
-                                     parseFloat(water) + parseFloat(phone) + parseFloat(trash);
-            const other = Math.max(0, parseFloat(income) - specifiedExpenses);
-            const totalExpenses = specifiedExpenses + other;
+            const totalExpenses = parseFloat(rent) + parseFloat(gas) + parseFloat(power) + 
+                                 parseFloat(water) + parseFloat(phone) + parseFloat(trash);
             const remaining = parseFloat(income) - totalExpenses;
             
             const shareText = `My Monthly Budget:\n\nIncome: $${income}\nRent: $${rent}\nGas: $${gas}\nPower: $${power}\nWater: $${water}\nPhone: $${phone}\nTrash: $${trash}\n\nTotal Expenses: $${totalExpenses.toFixed(2)}\nRemaining: $${remaining.toFixed(2)}\n\nCreated with Budget Planner!`;
