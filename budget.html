@@ -462,19 +462,26 @@
             return '$' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
+        // Safely parse float from input value
+        function parseInput(value) {
+            if (value === '' || value === null || value === undefined) return 0;
+            const num = parseFloat(value);
+            return isNaN(num) ? 0 : num;
+        }
+
         // Update budget summary
         function updateBudgetSummary() {
-            // Get input values
-            const income = parseFloat(document.getElementById('income').value) || 0;
-            const rent = parseFloat(document.getElementById('rent').value) || 0;
-            const gas = parseFloat(document.getElementById('gas').value) || 0;
-            const power = parseFloat(document.getElementById('power').value) || 0;
-            const water = parseFloat(document.getElementById('water').value) || 0;
-            const phone = parseFloat(document.getElementById('phone').value) || 0;
-            const trash = parseFloat(document.getElementById('trash').value) || 0;
-            const carLoan = parseFloat(document.getElementById('carLoan').value) || 0;
-            const savings = parseFloat(document.getElementById('savings').value) || 0;
-            const investment = parseFloat(document.getElementById('investment').value) || 0;
+            // Get input values safely
+            const income = parseInput(document.getElementById('income').value);
+            const rent = parseInput(document.getElementById('rent').value);
+            const gas = parseInput(document.getElementById('gas').value);
+            const power = parseInput(document.getElementById('power').value);
+            const water = parseInput(document.getElementById('water').value);
+            const phone = parseInput(document.getElementById('phone').value);
+            const trash = parseInput(document.getElementById('trash').value);
+            const carLoan = parseInput(document.getElementById('carLoan').value);
+            const savings = parseInput(document.getElementById('savings').value);
+            const investment = parseInput(document.getElementById('investment').value);
             
             // Calculate totals
             const totalExpenses = rent + gas + power + water + phone + trash + carLoan + savings + investment;
@@ -509,10 +516,10 @@
             const ctx = document.getElementById('budgetChart').getContext('2d');
             window.budgetChart = new Chart(ctx, {
                 type: 'doughnut',
-                 {
+                data: {
                     labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Car Loan', 'Savings', 'Investment'],
                     datasets: [{
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
                         backgroundColor: [
                             '#4361ee',
                             '#3a0ca3',
@@ -586,10 +593,10 @@
             const savings = document.getElementById('savings').value || '0';
             const investment = document.getElementById('investment').value || '0';
             
-            const totalExpenses = parseFloat(rent) + parseFloat(gas) + parseFloat(power) + 
-                                 parseFloat(water) + parseFloat(phone) + parseFloat(trash) + 
-                                 parseFloat(carLoan) + parseFloat(savings) + parseFloat(investment);
-            const remaining = parseFloat(income) - totalExpenses;
+            const totalExpenses = parseInput(rent) + parseInput(gas) + parseInput(power) + 
+                                 parseInput(water) + parseInput(phone) + parseInput(trash) + 
+                                 parseInput(carLoan) + parseInput(savings) + parseInput(investment);
+            const remaining = parseInput(income) - totalExpenses;
             
             const shareText = `My Monthly Budget:\n\nIncome: $${income}\nRent: $${rent}\nGas: $${gas}\nPower: $${power}\nWater: $${water}\nPhone: $${phone}\nTrash: $${trash}\nCar Loan: $${carLoan}\nSavings: $${savings}\nInvestment: $${investment}\n\nTotal Expenses: $${totalExpenses.toFixed(2)}\nRemaining: $${remaining.toFixed(2)}\n\nCreated with Budget Planner!`;
             
