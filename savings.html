@@ -333,7 +333,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="goalAmount">Savings Goal Amount ($)</label>
-                    <input type="number" id="goalAmount" placeholder="0.00" value="10000">
+                    <input type="number" id="goalAmount" placeholder="0.00" value="0">
                 </div>
                 
                 <div class="projection-controls">
@@ -402,11 +402,11 @@
         const savingsCtx = document.getElementById('savingsChart').getContext('2d');
         let savingsChart = new Chart(savingsCtx, {
             type: 'line',
-             {
+            data: {
                 labels: [],
                 datasets: [{
                     label: 'Monthly Savings Required',
-                     [],
+                    data: [],
                     borderColor: '#4361ee',
                     backgroundColor: 'rgba(67, 97, 238, 0.1)',
                     borderWidth: 3,
@@ -461,12 +461,12 @@
             const goalAmount = parseFloat(document.getElementById('goalAmount').value) || 0;
             const maxYears = parseInt(document.getElementById('maxYears').value) || 10;
             
-            // Handle case where goal amount is 0
+            // Handle case where goal is 0
             if (goalAmount <= 0) {
                 document.getElementById('savingsSummary').innerHTML = `
                     <div class="summary-item">
                         <span>Goal Amount:</span>
-                        <span>$0.00</span>
+                        <span>${formatCurrency(goalAmount)}</span>
                     </div>
                     <div class="summary-item">
                         <span>Status:</span>
@@ -540,7 +540,7 @@
 
         // Reset savings form
         function resetSavings() {
-            document.getElementById('goalAmount').value = '10000';
+            document.getElementById('goalAmount').value = '0';
             document.getElementById('maxYears').value = '10';
             calculateSavingsProjections();
         }
