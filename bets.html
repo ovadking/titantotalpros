@@ -1,291 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFL Bet Tracker</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Live NFL Bet Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         :root {
-            --primary: #00338d;
-            --secondary: #d50a0a;
-            --dark: #1a1a1a;
-            --light: #f8f9fa;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --gray: #6c757d;
+            --primary: #00338d; --secondary: #d50a0a; --dark: #1a1a1a; --light: #f8f9fa;
+            --success: #28a745; --warning: #ffc107; --danger: #dc3545; --gray: #6c757d;
         }
-        
         body {
             background: linear-gradient(135deg, #0c2340 0%, #1a3a5f 100%);
-            color: var(--light);
-            min-height: 100vh;
-            padding: 20px;
+            color: var(--light); min-height: 100vh; padding: 20px;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-        }
-        
+        .container { max-width: 1200px; margin: 0 auto; }
+        header { text-align: center; padding: 20px 0; margin-bottom: 30px; }
         header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+            font-size: 2.8rem; margin-bottom: 10px;
             background: linear-gradient(to right, var(--secondary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        
-        header p {
-            color: #a0c4e8;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .app-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-        
+        header p { color: #a0c4e8; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .app-container { display: flex; flex-wrap: wrap; gap: 25px; margin-bottom: 30px; }
         .card {
-            background: rgba(25, 40, 65, 0.85);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(25, 40, 65, 0.85); border-radius: 12px; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        
-        .form-container {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .stats-container {
-            flex: 2;
-            min-width: 300px;
-        }
-        
+        .form-container { flex: 1; min-width: 300px; }
+        .stats-container { flex: 2; min-width: 300px; }
         .card-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.5rem; margin-bottom: 20px; padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary); display: flex; align-items: center; gap: 10px;
         }
-        
-        .card-title i {
-            color: var(--secondary);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #e0e7ff;
-        }
-        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #e0e7ff; }
         select, input {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(10, 20, 40, 0.7);
-            color: white;
-            font-size: 1rem;
+            width: 100%; padding: 12px 15px; border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2); background: rgba(10,20,40,0.7);
+            color: white; font-size: 1rem;
         }
-        
         select:focus, input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 51, 141, 0.3);
+            outline: none; border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,51,141,0.3);
         }
-        
         .btn {
-            background: linear-gradient(to right, var(--primary), #0055b3);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
+            background: linear-gradient(to right, var(--primary), #0055b3); color: white; border: none;
+            padding: 12px 25px; border-radius: 8px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease; width: 100%;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 51, 141, 0.4);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .game-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .game-selector select {
-            flex: 1;
-        }
-        
-        .stats-display {
-            background: rgba(10, 20, 40, 0.7);
-            border-radius: 10px;
-            padding: 20px;
-            min-height: 200px;
-            height: 100%;
-        }
-        
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,51,141,0.4); }
+        .stats-display { background: rgba(10,20,40,0.7); border-radius: 10px; padding: 20px; min-height: 250px; }
         .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-            padding: 10px;
-            background: rgba(213, 10, 10, 0.2);
-            border-radius: 8px;
-            font-weight: 600;
+            display: flex; align-items: center; gap: 8px; margin-bottom: 20px;
+            padding: 10px; background: rgba(213,10,10,0.2); border-radius: 8px; font-weight: 600;
         }
-        
         .live-dot {
-            width: 12px;
-            height: 12px;
-            background: var(--danger);
-            border-radius: 50%;
+            width: 12px; height: 12px; background: var(--danger); border-radius: 50%;
             animation: pulse 1.5s infinite;
         }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
-        
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .stat-label {
-            color: var(--gray);
-        }
-        
-        .stat-value {
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        
-        .bet-card {
-            background: rgba(0, 51, 141, 0.3);
-            border-radius: 10px;
-            padding: 18px;
-            margin-top: 15px;
-            border-left: 4px solid var(--secondary);
-        }
-        
-        .bet-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        
-        .bet-status {
-            font-size: 0.9rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: var(--success);
-            color: white;
-        }
-        
-        .refresh-info {
-            text-align: center;
-            margin-top: 15px;
-            color: #a0c4e8;
-            font-size: 0.9rem;
-        }
-        
-        .no-games {
-            text-align: center;
-            padding: 30px;
-            color: var(--gray);
-        }
-        
-        .no-games i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #a0c4e8;
-            font-size: 0.9rem;
-        }
-        
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .stat-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .stat-label { color: var(--gray); }
+        .stat-value { font-weight: 700; font-size: 1.2rem; }
+        .bet-card { background: rgba(0,51,141,0.3); border-radius: 10px; padding: 18px; margin-top: 15px; border-left: 4px solid var(--secondary); }
+        .bet-status { font-size: 0.9rem; padding: 4px 10px; border-radius: 20px; }
+        .success { background: var(--success); }
+        .danger { background: var(--danger); }
+        .pending { background: var(--warning); color: var(--dark); }
+        .refresh-info { text-align: center; margin-top: 15px; color: #a0c4e8; font-size: 0.9rem; }
+        .no-games { text-align: center; padding: 30px; color: var(--gray); }
+        .no-games i { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
+        footer { text-align: center; padding: 20px; color: #a0c4e8; font-size: 0.9rem; }
         @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column;
-            }
-            
-            header h1 {
-                font-size: 2.2rem;
-            }
+            .app-container { flex-direction: column; }
+            header h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-football-ball"></i> NFL Bet Tracker</h1>
-            <p>Track your NFL bets with live ESPN statistics updated every 30 seconds</p>
+            <h1><i class="fas fa-football-ball"></i> Live NFL Bet Tracker</h1>
+            <p>Real-time stats from API-Sports • Updates every 30 seconds</p>
         </header>
         
-        <div class="app-container">
+        <div class="app- container">
             <div class="card form-container">
                 <h2 class="card-title"><i class="fas fa-plus-circle"></i> Add Your Bet</h2>
                 <div class="form-group">
                     <label for="gameSelect">Select Live Game</label>
-                    <div class="game-selector">
-                        <select id="gameSelect">
-                            <option value="">Loading live games...</option>
-                        </select>
-                    </div>
+                    <select id="gameSelect" disabled>
+                        <option value="">Loading live games...</option>
+                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -299,21 +109,21 @@
                     <label for="statType">Stat Type</label>
                     <select id="statType" disabled>
                         <option value="">Select a player first</option>
-                        <option value="rushing">Rushing Yards</option>
-                        <option value="passing">Passing Yards</option>
-                        <option value="receiving">Receiving Yards</option>
+                        <option value="rushing_yards">Rushing Yards</option>
+                        <option value="passing_yards">Passing Yards</option>
+                        <option value="receiving_yards">Receiving Yards</option>
                         <option value="touchdowns">Touchdowns</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
                     <label for="betAmount">Bet Amount ($)</label>
-                    <input type="number" id="betAmount" placeholder="Enter amount" min="1" step="1" disabled>
+                    <input type="number" id="betAmount" placeholder="e.g., 50" min="1" step="1" disabled>
                 </div>
                 
                 <div class="form-group">
                     <label for="statThreshold">Stat Threshold</label>
-                    <input type="number" id="statThreshold" placeholder="e.g., 85 rushing yards" min="1" step="1" disabled>
+                    <input type="number" id="statThreshold" placeholder="e.g., 85" min="1" step="1" disabled>
                 </div>
                 
                 <button id="addBetBtn" class="btn" disabled>
@@ -326,8 +136,8 @@
                 <div class="stats-display" id="statsDisplay">
                     <div class="no-games">
                         <i class="fas fa-tv"></i>
-                        <h3>No Live Games</h3>
-                        <p>Select a game to view live stats</p>
+                        <h3>Checking for live games...</h3>
+                        <p>Live games appear only during NFL season</p>
                     </div>
                 </div>
                 <div class="refresh-info">
@@ -342,67 +152,28 @@
         </div>
         
         <footer>
-            <p>Stats powered by ESPN | Data updates automatically every 30 seconds</p>
+            <p>Data from API-Sports via RapidAPI</p>
+            <p style="color:#ff6b6b; margin-top:8px; font-size:0.85rem;">
+                ⚠️ WARNING: This file contains a live API key. 
+                For production, move to a backend proxy to avoid key exposure.
+            </p>
         </footer>
     </div>
 
     <script>
-        // Mock live NFL games data (in a real app, this would come from ESPN API)
-        const liveGames = [
-            {
-                id: "1",
-                homeTeam: "Kansas City Chiefs",
-                awayTeam: "Baltimore Ravens",
-                homeScore: 21,
-                awayScore: 17,
-                quarter: "3rd",
-                timeRemaining: "8:42",
-                players: [
-                    { id: "101", name: "Patrick Mahomes", team: "KC", position: "QB" },
-                    { id: "102", name: "Lamar Jackson", team: "BAL", position: "QB" },
-                    { id: "103", name: "Travis Kelce", team: "KC", position: "TE" },
-                    { id: "104", name: "Mark Andrews", team: "BAL", position: "TE" },
-                    { id: "105", name: "Isaiah Pacheco", team: "KC", position: "RB" },
-                    { id: "106", name: "Gus Edwards", team: "BAL", position: "RB" }
-                ]
-            },
-            {
-                id: "2",
-                homeTeam: "San Francisco 49ers",
-                awayTeam: "Dallas Cowboys",
-                homeScore: 14,
-                awayScore: 14,
-                quarter: "2nd",
-                timeRemaining: "2:15",
-                players: [
-                    { id: "201", name: "Brock Purdy", team: "SF", position: "QB" },
-                    { id: "202", name: "Dak Prescott", team: "DAL", position: "QB" },
-                    { id: "203", name: "Christian McCaffrey", team: "SF", position: "RB" },
-                    { id: "204", name: "CeeDee Lamb", team: "DAL", position: "WR" },
-                    { id: "205", name: "George Kittle", team: "SF", position: "TE" },
-                    { id: "206", name: "Ezekiel Elliott", team: "DAL", position: "RB" }
-                ]
-            }
-        ];
+        // ✅ LIVE API KEY INSERTED (from your provided key)
+        const RAPIDAPI_KEY = "f0da70b6b6mshd658d978bfbedf0p1113b0jsn5672bc067fbb";
         
-        // Mock player stats (in a real app, this would come from ESPN API)
-        const playerStats = {
-            "101": { rushing: 28, passing: 245, receiving: 0, touchdowns: 3 },
-            "102": { rushing: 45, passing: 198, receiving: 0, touchdowns: 2 },
-            "103": { rushing: 0, passing: 0, receiving: 85, touchdowns: 1 },
-            "104": { rushing: 0, passing: 0, receiving: 62, touchdowns: 0 },
-            "105": { rushing: 78, passing: 0, receiving: 12, touchdowns: 1 },
-            "106": { rushing: 42, passing: 0, receiving: 0, touchdowns: 1 },
-            "201": { rushing: 15, passing: 176, receiving: 0, touchdowns: 1 },
-            "202": { rushing: 22, passing: 154, receiving: 0, touchdowns: 2 },
-            "203": { rushing: 89, passing: 0, receiving: 25, touchdowns: 2 },
-            "204": { rushing: 0, passing: 0, receiving: 95, touchdowns: 1 },
-            "205": { rushing: 0, passing: 0, receiving: 58, touchdowns: 0 },
-            "206": { rushing: 65, passing: 0, receiving: 0, touchdowns: 0 }
-        };
+        // Configuration
+        const API_HOST = "api-nflv1.p.rapidapi.com";
+        const SEASON = new Date().getFullYear(); // Current NFL season
+        const TEAM_ID_MAP = {}; // Will be populated from teams endpoint
         
-        // User's bets
+        // State
+        let liveGames = [];
+        let selectedGameId = null;
         let userBets = [];
+        let countdown = 30;
         
         // DOM Elements
         const gameSelect = document.getElementById('gameSelect');
@@ -416,65 +187,153 @@
         const betsList = document.getElementById('betsList');
         const countdownElement = document.getElementById('countdown');
         
-        // Initialize the app
-        function initApp() {
-            loadLiveGames();
+        // Initialize
+        async function initApp() {
+            await loadTeams(); // Needed for player lookup
+            await fetchLiveGames();
             setupEventListeners();
             startAutoRefresh();
         }
         
-        // Load live games into the dropdown
-        function loadLiveGames() {
+        // Fetch all NFL teams (needed to map team IDs to names for players)
+        async function loadTeams() {
+            try {
+                const res = await fetch(`https://${API_HOST}/v1/teams?league=1`, {
+                    headers: {
+                        "X-RapidAPI-Key": RAPIDAPI_KEY,
+                        "X-RapidAPI-Host": API_HOST
+                    }
+                });
+                const data = await res.json();
+                data.response.forEach(team => {
+                    TEAM_ID_MAP[team.id] = team.name;
+                });
+            } catch (err) {
+                console.error("Failed to load teams:", err);
+            }
+        }
+        
+        // Fetch live or today's games
+        async function fetchLiveGames() {
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+            
+            try {
+                const res = await fetch(`https://${API_HOST}/v1/games?date=${today}&league=1&season=${SEASON}`, {
+                    headers: {
+                        "X-RapidAPI-Key": RAPIDAPI_KEY,
+                        "X-RapidAPI-Host": API_HOST
+                    }
+                });
+                const data = await res.json();
+                
+                // Filter for live or pre-game today
+                liveGames = data.response.filter(game => 
+                    ['LIVE', 'HT', '1H', '2H', '3Q', '4Q', 'OT'].includes(game.status.short) ||
+                    game.status.short === 'NS' // Not Started (today)
+                );
+                
+                renderGameDropdown();
+                if (liveGames.length > 0) {
+                    renderLiveStats(liveGames[0].id);
+                }
+            } catch (err) {
+                console.error("Error fetching games:", err);
+                statsDisplay.innerHTML = `<div class="no-games">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Failed to load games</h3>
+                    <p>Check console for errors</p>
+                </div>`;
+            }
+        }
+        
+        // Render game dropdown
+        function renderGameDropdown() {
             gameSelect.innerHTML = '';
             
             if (liveGames.length === 0) {
-                const option = document.createElement('option');
-                option.value = '';
-                option.textContent = 'No live games available';
-                gameSelect.appendChild(option);
+                gameSelect.innerHTML = '<option value="">No live games today</option>';
                 gameSelect.disabled = true;
                 return;
             }
             
             liveGames.forEach(game => {
                 const option = document.createElement('option');
+                const status = game.status.short === 'NS' ? 'Today' : 'LIVE';
                 option.value = game.id;
-                option.textContent = `${game.awayTeam} @ ${game.homeTeam} - ${game.awayScore}-${game.homeScore}`;
+                option.textContent = `${game.teams.away.name} @ ${game.teams.home.name} - ${status}`;
                 gameSelect.appendChild(option);
             });
             
             gameSelect.disabled = false;
+            gameSelect.addEventListener('change', handleGameChange);
         }
         
-        // Update player dropdown based on selected game
-        function updatePlayerDropdown() {
-            const gameId = gameSelect.value;
+        // Handle game selection
+        async function handleGameChange() {
+            selectedGameId = gameSelect.value;
+            if (!selectedGameId) return;
+            
+            // Fetch players for this game
+            await fetchGamePlayers(selectedGameId);
+            renderLiveStats(selectedGameId);
+        }
+        
+        // Fetch players for a game
+        async function fetchGamePlayers(gameId) {
+            try {
+                const res = await fetch(`https://${API_HOST}/v1/games/players?id=${gameId}`, {
+                    headers: {
+                        "X-RapidAPI-Key": RAPIDAPI_KEY,
+                        "X-RapidAPI-Host": API_HOST
+                    }
+                });
+                const data = await res.json();
+                renderPlayerDropdown(data.response);
+            } catch (err) {
+                console.error("Error fetching players:", err);
+            }
+        }
+        
+        // Render player dropdown
+        function renderPlayerDropdown(playersData) {
             playerSelect.innerHTML = '';
             
-            if (!gameId) {
+            if (!playersData || playersData.length === 0) {
+                playerSelect.innerHTML = '<option value="">No players found</option>';
                 playerSelect.disabled = true;
-                statType.disabled = true;
-                betAmount.disabled = true;
-                statThreshold.disabled = true;
-                addBetBtn.disabled = true;
                 return;
             }
             
-            const game = liveGames.find(g => g.id === gameId);
-            if (game) {
-                game.players.forEach(player => {
-                    const option = document.createElement('option');
-                    option.value = player.id;
-                    option.textContent = `${player.name} (${player.team} - ${player.position})`;
-                    playerSelect.appendChild(option);
-                });
-                playerSelect.disabled = false;
+            // Combine home and away players
+            const allPlayers = [];
+            if (playersData[0]?.players?.away) allPlayers.push(...playersData[0].players.away);
+            if (playersData[0]?.players?.home) allPlayers.push(...playersData[0].players.home);
+            
+            // Filter players with stats
+            const activePlayers = allPlayers.filter(p => 
+                (p.statistics[0]?.rushing?.yards > 0 || 
+                 p.statistics[0]?.passing?.yards > 0 || 
+                 p.statistics[0]?.receiving?.yards > 0 ||
+                 p.statistics[0]?.touchdowns?.total > 0)
+            );
+            
+            if (activePlayers.length === 0) {
+                playerSelect.innerHTML = '<option value="">No stats yet</option>';
+                playerSelect.disabled = true;
+                return;
             }
             
+            activePlayers.forEach(player => {
+                const option = document.createElement('option');
+                option.value = player.id;
+                option.textContent = `${player.name} (${TEAM_ID_MAP[player.team.id] || player.team.name})`;
+                playerSelect.appendChild(option);
+            });
+            
+            playerSelect.disabled = false;
             enableFormIfValid();
         }
         
-        // Enable form fields based on selections
         function enableFormIfValid() {
             const gameSelected = gameSelect.value !== '';
             const playerSelected = playerSelect.value !== '';
@@ -485,16 +344,112 @@
             addBetBtn.disabled = !(gameSelected && playerSelected);
         }
         
-        // Set up event listeners
-        function setupEventListeners() {
-            gameSelect.addEventListener('change', updatePlayerDropdown);
-            playerSelect.addEventListener('change', enableFormIfValid);
-            statType.addEventListener('change', enableFormIfValid);
+        // Render live stats for game
+        async function renderLiveStats(gameId) {
+            if (!gameId) return;
             
-            addBetBtn.addEventListener('click', addBet);
+            const game = liveGames.find(g => g.id == gameId);
+            if (!game) return;
+            
+            // Fetch fresh game data
+            let currentGame;
+            try {
+                const res = await fetch(`https://${API_HOST}/v1/games?id=${gameId}`, {
+                    headers: {
+                        "X-RapidAPI-Key": RAPIDAPI_KEY,
+                        "X-RapidAPI-Host": API_HOST
+                    }
+                });
+                const data = await res.json();
+                currentGame = data.response[0];
+            } catch (err) {
+                console.error("Error fetching game:", err);
+                return;
+            }
+            
+            // Fetch players stats
+            let playersData = [];
+            try {
+                const res = await fetch(`https://${API_HOST}/v1/games/players?id=${gameId}`, {
+                    headers: {
+                        "X-RapidAPI-Key": RAPIDAPI_KEY,
+                        "X-RapidAPI-Host": API_HOST
+                    }
+                });
+                const data = await res.json();
+                playersData = data.response;
+            } catch (err) {
+                console.error("Error fetching players:", err);
+            }
+            
+            // Build stats display
+            let statsHTML = `
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    LIVE: ${currentGame.teams.away.name} @ ${currentGame.teams.home.name}
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Score</span>
+                    <span class="stat-value">${currentGame.scores.away.total} - ${currentGame.scores.home.total}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Status</span>
+                    <span class="stat-value">${currentGame.status.long}</span>
+                </div>
+            `;
+            
+            if (playersData.length > 0) {
+                statsHTML += `<div style="margin-top:20px;"><h3 style="margin-bottom:15px;color:var(--secondary);">Live Player Stats</h3>`;
+                
+                const allPlayers = [];
+                if (playersData[0]?.players?.away) allPlayers.push(...playersData[0].players.away);
+                if (playersData[0]?.players?.home) allPlayers.push(...playersData[0].players.home);
+                
+                // Show top performers
+                const topPlayers = allPlayers
+                    .filter(p => p.statistics[0])
+                    .sort((a, b) => {
+                        const aYards = (a.statistics[0].rushing?.yards || 0) + 
+                                      (a.statistics[0].passing?.yards || 0) + 
+                                      (a.statistics[0].receiving?.yards || 0);
+                        const bYards = (b.statistics[0].rushing?.yards || 0) + 
+                                      (b.statistics[0].passing?.yards || 0) + 
+                                      (b.statistics[0].receiving?.yards || 0);
+                        return bYards - aYards;
+                    })
+                    .slice(0, 8); // Top 8 players
+                
+                topPlayers.forEach(p => {
+                    const stats = p.statistics[0];
+                    const rush = stats.rushing?.yards || 0;
+                    const pass = stats.passing?.yards || 0;
+                    const rec = stats.receiving?.yards || 0;
+                    const tds = stats.touchdowns?.total || 0;
+                    
+                    let statStr = "";
+                    if (rush > 0) statStr += `${rush} RUSH • `;
+                    if (pass > 0) statStr += `${pass} PASS • `;
+                    if (rec > 0) statStr += `${rec} REC • `;
+                    if (tds > 0) statStr += `${tds} TD`;
+                    
+                    statsHTML += `
+                        <div class="stat-item">
+                            <span class="stat-label">${p.name}</span>
+                            <span class="stat-value">${statStr || "No stats yet"}</span>
+                        </div>
+                    `;
+                });
+                
+                statsHTML += `</div>`;
+            }
+            
+            statsDisplay.innerHTML = statsHTML;
+            
+            // Update bets with new stats
+            updateBetStatuses(playersData);
         }
         
-        // Add a new bet
+        // Add bet
         function addBet() {
             const gameId = gameSelect.value;
             const playerId = playerSelect.value;
@@ -503,57 +458,69 @@
             const threshold = parseFloat(statThreshold.value);
             
             if (!gameId || !playerId || !stat || isNaN(amount) || isNaN(threshold)) {
-                alert('Please fill in all fields correctly');
+                alert('Please fill all fields');
                 return;
             }
             
-            const game = liveGames.find(g => g.id === gameId);
-            const player = game.players.find(p => p.id === playerId);
+            const game = liveGames.find(g => g.id == gameId);
+            const playerName = playerSelect.options[playerSelect.selectedIndex].text.split(' (')[0];
             
-            const bet = {
+            userBets.push({
                 id: Date.now(),
-                gameId: gameId,
-                playerId: playerId,
-                playerName: player.name,
-                team: player.team,
-                stat: stat,
-                statLabel: getStatLabel(stat),
-                amount: amount,
-                threshold: threshold,
+                gameId,
+                playerId,
+                playerName,
+                stat,
+                threshold,
+                amount,
                 status: 'pending'
-            };
+            });
             
-            userBets.push(bet);
             renderBets();
-            resetForm();
-        }
-        
-        // Get human-readable stat label
-        function getStatLabel(stat) {
-            switch(stat) {
-                case 'rushing': return 'Rushing Yards';
-                case 'passing': return 'Passing Yards';
-                case 'receiving': return 'Receiving Yards';
-                case 'touchdowns': return 'Touchdowns';
-                default: return stat;
-            }
-        }
-        
-        // Reset the form after adding a bet
-        function resetForm() {
+            
+            // Reset form
             betAmount.value = '';
             statThreshold.value = '';
-            gameSelect.value = '';
-            playerSelect.innerHTML = '<option value="">Select a game first</option>';
-            statType.innerHTML = '<option value="">Select a player first</option>';
-            playerSelect.disabled = true;
-            statType.disabled = true;
-            betAmount.disabled = true;
-            statThreshold.disabled = true;
-            addBetBtn.disabled = true;
         }
         
-        // Render user's bets
+        // Update bet statuses
+        function updateBetStatuses(playersData) {
+            if (!playersData || playersData.length === 0) return;
+            
+            const allPlayers = [];
+            if (playersData[0]?.players?.away) allPlayers.push(...playersData[0].players.away);
+            if (playersData[0]?.players?.home) allPlayers.push(...playersData[0].players.home);
+            
+            userBets.forEach(bet => {
+                const player = allPlayers.find(p => p.id == bet.playerId);
+                if (!player || !player.statistics[0]) return;
+                
+                const stats = player.statistics[0];
+                let currentValue = 0;
+                
+                switch(bet.stat) {
+                    case 'rushing_yards': currentValue = stats.rushing?.yards || 0; break;
+                    case 'passing_yards': currentValue = stats.passing?.yards || 0; break;
+                    case 'receiving_yards': currentValue = stats.receiving?.yards || 0; break;
+                    case 'touchdowns': currentValue = stats.touchdowns?.total || 0; break;
+                }
+                
+                const game = liveGames.find(g => g.id == bet.gameId);
+                const isGameOver = game && ['FT', 'AOT'].includes(game.status.short);
+                
+                if (currentValue >= bet.threshold) {
+                    bet.status = 'winning';
+                } else if (isGameOver) {
+                    bet.status = 'lost';
+                } else {
+                    bet.status = 'pending';
+                }
+            });
+            
+            renderBets();
+        }
+        
+        // Render user bets
         function renderBets() {
             if (userBets.length === 0) {
                 betsContainer.style.display = 'none';
@@ -564,186 +531,49 @@
             betsList.innerHTML = '';
             
             userBets.forEach(bet => {
-                const betElement = document.createElement('div');
-                betElement.className = 'bet-card';
+                const statusClass = bet.status === 'winning' ? 'success' : 
+                                   bet.status === 'lost' ? 'danger' : 'pending';
+                const statusText = bet.status === 'winning' ? 'Winning' : 
+                                  bet.status === 'lost' ? 'Lost' : 'Pending';
                 
-                // Get current stat value
-                const currentStat = playerStats[bet.playerId][bet.stat] || 0;
-                let statusClass = 'pending';
-                let statusText = 'Pending';
-                
-                if (currentStat >= bet.threshold) {
-                    statusClass = 'success';
-                    statusText = 'Winning';
-                } else if (isGameOver(bet.gameId)) {
-                    statusClass = 'danger';
-                    statusText = 'Lost';
-                }
-                
-                betElement.innerHTML = `
+                const betEl = document.createElement('div');
+                betEl.className = 'bet-card';
+                betEl.innerHTML = `
                     <div class="bet-header">
-                        <h3>${bet.playerName} (${bet.team})</h3>
+                        <h3>${bet.playerName}</h3>
                         <span class="bet-status ${statusClass}">${statusText}</span>
                     </div>
-                    <p><strong>Bet:</strong> $${bet.amount.toFixed(2)} on ${bet.threshold}+ ${bet.statLabel}</p>
-                    <p><strong>Current:</strong> ${currentStat} ${bet.statLabel}</p>
+                    <p><strong>Bet:</strong> $${bet.amount} on ${bet.threshold}+ ${bet.stat.replace('_', ' ')}</p>
                 `;
-                
-                betsList.appendChild(betElement);
+                betsList.appendChild(betEl);
             });
         }
         
-        // Check if a game is over
-        function isGameOver(gameId) {
-            const game = liveGames.find(g => g.id === gameId);
-            return game ? game.quarter === 'Final' : false;
+        // Set up event listeners
+        function setupEventListeners() {
+            gameSelect.addEventListener('change', handleGameChange);
+            playerSelect.addEventListener('change', enableFormIfValid);
+            addBetBtn.addEventListener('click', addBet);
         }
         
-        // Render live stats for selected game
-        function renderLiveStats() {
-            const gameId = gameSelect.value;
-            
-            if (!gameId) {
-                statsDisplay.innerHTML = `
-                    <div class="no-games">
-                        <i class="fas fa-tv"></i>
-                        <h3>No Live Games</h3>
-                        <p>Select a game to view live stats</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            const game = liveGames.find(g => g.id === gameId);
-            if (!game) return;
-            
-            let statsHTML = `
-                <div class="live-indicator">
-                    <div class="live-dot"></div>
-                    LIVE: ${game.awayTeam} @ ${game.homeTeam}
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Score</span>
-                    <span class="stat-value">${game.awayTeam} ${game.awayScore} - ${game.homeScore} ${game.homeTeam}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Quarter</span>
-                    <span class="stat-value">${game.quarter} - ${game.timeRemaining}</span>
-                </div>
-                <div style="margin-top: 20px;">
-                    <h3 style="margin-bottom: 15px; color: var(--secondary);">Player Stats</h3>
-            `;
-            
-            game.players.forEach(player => {
-                const stats = playerStats[player.id];
-                if (stats) {
-                    statsHTML += `
-                        <div class="stat-item">
-                            <span class="stat-label">${player.name} (${player.team})</span>
-                            <span class="stat-value">
-                                ${stats.rushing > 0 ? `${stats.rushing} RUSH • ` : ''}
-                                ${stats.passing > 0 ? `${stats.passing} PASS • ` : ''}
-                                ${stats.receiving > 0 ? `${stats.receiving} REC • ` : ''}
-                                ${stats.touchdowns > 0 ? `${stats.touchdowns} TD` : ''}
-                            </span>
-                        </div>
-                    `;
-                }
-            });
-            
-            statsHTML += `</div>`;
-            statsDisplay.innerHTML = statsHTML;
-            
-            // Update bets after rendering stats
-            updateBetStatuses();
-        }
-        
-        // Update bet statuses based on current stats
-        function updateBetStatuses() {
-            userBets.forEach(bet => {
-                const currentStat = playerStats[bet.playerId][bet.stat] || 0;
-                
-                if (currentStat >= bet.threshold) {
-                    bet.status = 'winning';
-                } else if (isGameOver(bet.gameId)) {
-                    bet.status = 'lost';
-                } else {
-                    bet.status = 'pending';
-                }
-            });
-            
-            renderBets();
-        }
-        
-        // Start auto-refresh every 30 seconds
+        // Auto-refresh every 30 seconds
         function startAutoRefresh() {
-            let countdown = 30;
             countdownElement.textContent = countdown;
-            
-            const countdownInterval = setInterval(() => {
+            const timer = setInterval(() => {
                 countdown--;
                 countdownElement.textContent = countdown;
                 
                 if (countdown <= 0) {
                     countdown = 30;
-                    refreshData();
-                }
-            }, 1000);
-            
-            // Initial refresh after 5 seconds to show data quickly
-            setTimeout(refreshData, 5000);
-        }
-        
-        // Refresh data from "API" (mock in this case)
-        function refreshData() {
-            // In a real app, this would fetch from ESPN API
-            // For demo, we'll update mock stats with random variations
-            for (const playerId in playerStats) {
-                const stats = playerStats[playerId];
-                // Random small variations to simulate live updates
-                stats.rushing = Math.max(0, stats.rushing + Math.floor(Math.random() * 5));
-                stats.passing = Math.max(0, stats.passing + Math.floor(Math.random() * 15));
-                stats.receiving = Math.max(0, stats.receiving + Math.floor(Math.random() * 8));
-                // Touchdowns only increase
-                if (Math.random() > 0.9) stats.touchdowns++;
-            }
-            
-            // Update game stats
-            liveGames.forEach(game => {
-                // Random score updates
-                if (Math.random() > 0.7) {
-                    if (Math.random() > 0.5) {
-                        game.homeScore += Math.floor(Math.random() * 7) + 1;
-                    } else {
-                        game.awayScore += Math.floor(Math.random() * 7) + 1;
+                    fetchLiveGames(); // Refresh games list
+                    if (selectedGameId) {
+                        renderLiveStats(selectedGameId); // Refresh stats
                     }
                 }
-                
-                // Update game time
-                const timeParts = game.timeRemaining.split(':');
-                let minutes = parseInt(timeParts[0]);
-                let seconds = parseInt(timeParts[1]);
-                
-                seconds -= Math.floor(Math.random() * 15) + 5;
-                if (seconds < 0) {
-                    minutes--;
-                    seconds += 60;
-                }
-                
-                if (minutes < 0) {
-                    game.quarter = "Final";
-                    game.timeRemaining = "";
-                } else {
-                    game.timeRemaining = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                }
-            });
-            
-            // Re-render stats and bets
-            renderLiveStats();
-            countdownElement.textContent = 30;
+            }, 1000);
         }
         
-        // Initialize the app when DOM is loaded
+        // Start when DOM loaded
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
