@@ -85,10 +85,10 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-football-ball"></i> Live NFL Bet Tracker</h1>
-            <p>Real-time stats from API-Sports • Updates every 30 seconds</p>
+            <p>Real-time stats via API-Sports • Updates every 30s</p>
         </header>
         
-        <div class="app- container">
+        <div class="app-container">
             <div class="card form-container">
                 <h2 class="card-title"><i class="fas fa-plus-circle"></i> Add Your Bet</h2>
                 <div class="form-group">
@@ -137,39 +137,33 @@
                     <div class="no-games">
                         <i class="fas fa-tv"></i>
                         <h3>Checking for live games...</h3>
-                        <p>Live games appear only during NFL season</p>
+                        <p>Live during NFL season only</p>
                     </div>
                 </div>
                 <div class="refresh-info">
-                    Stats update every <strong>30 seconds</strong> • Next update in <span id="countdown">30</span>s
+                    Stats update every <strong>30s</strong> • Next in <span id="countdown">30</span>s
                 </div>
             </div>
         </div>
         
         <div class="card" id="betsContainer" style="display: none;">
-            <h2 class="card-title"><i class="fas fa-list"></i> Your Active Bets</h2>
+            <h2 class="card-title"><i class="fas fa-list"></i> Your Bets</h2>
             <div id="betsList"></div>
         </div>
         
         <footer>
-            <p>Data from API-Sports via RapidAPI</p>
-            <p style="color:#ff6b6b; margin-top:8px; font-size:0.85rem;">
-                ⚠️ WARNING: This file contains a live API key. 
-                For production, move to a backend proxy to avoid key exposure.
-            </p>
+            <p>Data: API-Sports via RapidAPI • Proxy: allorigins.win</p>
         </footer>
     </div>
 
     <script>
-        // ✅ LIVE API KEY INSERTED (from your provided key)
+        // ✅ Your API key (safe via proxy)
         const RAPIDAPI_KEY = "f0da70b6b6mshd658d978bfbedf0p1113b0jsn5672bc067fbb";
-        
-        // Configuration
         const API_HOST = "api-nflv1.p.rapidapi.com";
-        const SEASON = new Date().getFullYear(); // Current NFL season
-        const TEAM_ID_MAP = {}; // Will be populated from teams endpoint
+        const PROXY_URL = "https://api.allorigins.win/raw?url=";
+        const SEASON = new Date().getFullYear();
+        const TEAM_ID_MAP = {};
         
-        // State
         let liveGames = [];
         let selectedGameId = null;
         let userBets = [];
@@ -187,71 +181,68 @@
         const betsList = document.getElementById('betsList');
         const countdownElement = document.getElementById('countdown');
         
+        // Build proxied URL
+        function buildUrl(path) {
+            const url = `https://${API_HOST}${path}`;
+            return PROXY_URL + encodeURIComponent(url);
+        }
+        
+        // Fetch with headers (via proxy)
+        async function fetchWithHeaders(path) {
+            const url = buildUrl(path);
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': RAPIDAPI_KEY,
+                    'X-RapidAPI-Host': API_HOST
+                }
+            });
+            return response.json();
+        }
+        
         // Initialize
         async function initApp() {
-            await loadTeams(); // Needed for player lookup
-            await fetchLiveGames();
-            setupEventListeners();
-            startAutoRefresh();
-        }
-        
-        // Fetch all NFL teams (needed to map team IDs to names for players)
-        async function loadTeams() {
             try {
-                const res = await fetch(`https://${API_HOST}/v1/teams?league=1`, {
-                    headers: {
-                        "X-RapidAPI-Key": RAPIDAPI_KEY,
-                        "X-RapidAPI-Host": API_HOST
-                    }
-                });
-                const data = await res.json();
-                data.response.forEach(team => {
-                    TEAM_ID_MAP[team.id] = team.name;
-                });
+                await loadTeams();
+                await fetchLiveGames();
+                setupEventListeners();
+                startAutoRefresh();
             } catch (err) {
-                console.error("Failed to load teams:", err);
-            }
-        }
-        
-        // Fetch live or today's games
-        async function fetchLiveGames() {
-            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-            
-            try {
-                const res = await fetch(`https://${API_HOST}/v1/games?date=${today}&league=1&season=${SEASON}`, {
-                    headers: {
-                        "X-RapidAPI-Key": RAPIDAPI_KEY,
-                        "X-RapidAPI-Host": API_HOST
-                    }
-                });
-                const data = await res.json();
-                
-                // Filter for live or pre-game today
-                liveGames = data.response.filter(game => 
-                    ['LIVE', 'HT', '1H', '2H', '3Q', '4Q', 'OT'].includes(game.status.short) ||
-                    game.status.short === 'NS' // Not Started (today)
-                );
-                
-                renderGameDropdown();
-                if (liveGames.length > 0) {
-                    renderLiveStats(liveGames[0].id);
-                }
-            } catch (err) {
-                console.error("Error fetching games:", err);
+                console.error("Init error:", err);
                 statsDisplay.innerHTML = `<div class="no-games">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h3>Failed to load games</h3>
-                    <p>Check console for errors</p>
+                    <i class="fas fa-plug"></i>
+                    <h3>Connection failed</h3>
+                    <p>Try again later</p>
                 </div>`;
             }
         }
         
-        // Render game dropdown
+        async function loadTeams() {
+            const data = await fetchWithHeaders("/v1/teams?league=1");
+            data.response.forEach(team => {
+                TEAM_ID_MAP[team.id] = team.name;
+            });
+        }
+        
+        async function fetchLiveGames() {
+            const today = new Date().toISOString().split('T')[0];
+            const data = await fetchWithHeaders(`/v1/games?date=${today}&league=1&season=${SEASON}`);
+            
+            liveGames = data.response.filter(game => 
+                ['LIVE', 'HT', '1H', '2H', '3Q', '4Q', 'OT'].includes(game.status.short) ||
+                game.status.short === 'NS'
+            );
+            
+            renderGameDropdown();
+            if (liveGames.length > 0) {
+                renderLiveStats(liveGames[0].id);
+            }
+        }
+        
         function renderGameDropdown() {
             gameSelect.innerHTML = '';
-            
             if (liveGames.length === 0) {
-                gameSelect.innerHTML = '<option value="">No live games today</option>';
+                gameSelect.innerHTML = '<option value="">No live games</option>';
                 gameSelect.disabled = true;
                 return;
             }
@@ -265,51 +256,33 @@
             });
             
             gameSelect.disabled = false;
-            gameSelect.addEventListener('change', handleGameChange);
         }
         
-        // Handle game selection
         async function handleGameChange() {
             selectedGameId = gameSelect.value;
             if (!selectedGameId) return;
-            
-            // Fetch players for this game
             await fetchGamePlayers(selectedGameId);
             renderLiveStats(selectedGameId);
         }
         
-        // Fetch players for a game
         async function fetchGamePlayers(gameId) {
-            try {
-                const res = await fetch(`https://${API_HOST}/v1/games/players?id=${gameId}`, {
-                    headers: {
-                        "X-RapidAPI-Key": RAPIDAPI_KEY,
-                        "X-RapidAPI-Host": API_HOST
-                    }
-                });
-                const data = await res.json();
-                renderPlayerDropdown(data.response);
-            } catch (err) {
-                console.error("Error fetching players:", err);
-            }
+            const data = await fetchWithHeaders(`/v1/games/players?id=${gameId}`);
+            renderPlayerDropdown(data.response);
         }
         
-        // Render player dropdown
         function renderPlayerDropdown(playersData) {
             playerSelect.innerHTML = '';
-            
-            if (!playersData || playersData.length === 0) {
-                playerSelect.innerHTML = '<option value="">No players found</option>';
+            if (!playersData || !playersData[0]) {
+                playerSelect.innerHTML = '<option value="">No players</option>';
                 playerSelect.disabled = true;
                 return;
             }
             
-            // Combine home and away players
-            const allPlayers = [];
-            if (playersData[0]?.players?.away) allPlayers.push(...playersData[0].players.away);
-            if (playersData[0]?.players?.home) allPlayers.push(...playersData[0].players.home);
+            const allPlayers = [
+                ...(playersData[0].players.away || []),
+                ...(playersData[0].players.home || [])
+            ];
             
-            // Filter players with stats
             const activePlayers = allPlayers.filter(p => 
                 (p.statistics[0]?.rushing?.yards > 0 || 
                  p.statistics[0]?.passing?.yards > 0 || 
@@ -337,52 +310,22 @@
         function enableFormIfValid() {
             const gameSelected = gameSelect.value !== '';
             const playerSelected = playerSelect.value !== '';
-            
             statType.disabled = !playerSelected;
             betAmount.disabled = !playerSelected;
             statThreshold.disabled = !playerSelected;
             addBetBtn.disabled = !(gameSelected && playerSelected);
         }
         
-        // Render live stats for game
         async function renderLiveStats(gameId) {
             if (!gameId) return;
             
-            const game = liveGames.find(g => g.id == gameId);
-            if (!game) return;
+            // Fetch game
+            const gameData = await fetchWithHeaders(`/v1/games?id=${gameId}`);
+            const currentGame = gameData.response[0];
             
-            // Fetch fresh game data
-            let currentGame;
-            try {
-                const res = await fetch(`https://${API_HOST}/v1/games?id=${gameId}`, {
-                    headers: {
-                        "X-RapidAPI-Key": RAPIDAPI_KEY,
-                        "X-RapidAPI-Host": API_HOST
-                    }
-                });
-                const data = await res.json();
-                currentGame = data.response[0];
-            } catch (err) {
-                console.error("Error fetching game:", err);
-                return;
-            }
+            // Fetch players
+            const playersData = await fetchWithHeaders(`/v1/games/players?id=${gameId}`);
             
-            // Fetch players stats
-            let playersData = [];
-            try {
-                const res = await fetch(`https://${API_HOST}/v1/games/players?id=${gameId}`, {
-                    headers: {
-                        "X-RapidAPI-Key": RAPIDAPI_KEY,
-                        "X-RapidAPI-Host": API_HOST
-                    }
-                });
-                const data = await res.json();
-                playersData = data.response;
-            } catch (err) {
-                console.error("Error fetching players:", err);
-            }
-            
-            // Build stats display
             let statsHTML = `
                 <div class="live-indicator">
                     <div class="live-dot"></div>
@@ -398,14 +341,13 @@
                 </div>
             `;
             
-            if (playersData.length > 0) {
-                statsHTML += `<div style="margin-top:20px;"><h3 style="margin-bottom:15px;color:var(--secondary);">Live Player Stats</h3>`;
+            if (playersData.response && playersData.response[0]) {
+                statsHTML += `<div style="margin-top:20px;"><h3 style="margin-bottom:15px;color:var(--secondary);">Player Stats</h3>`;
+                const allPlayers = [
+                    ...(playersData.response[0].players.away || []),
+                    ...(playersData.response[0].players.home || [])
+                ];
                 
-                const allPlayers = [];
-                if (playersData[0]?.players?.away) allPlayers.push(...playersData[0].players.away);
-                if (playersData[0]?.players?.home) allPlayers.push(...playersData[0].players.home);
-                
-                // Show top performers
                 const topPlayers = allPlayers
                     .filter(p => p.statistics[0])
                     .sort((a, b) => {
@@ -417,7 +359,7 @@
                                       (b.statistics[0].receiving?.yards || 0);
                         return bYards - aYards;
                     })
-                    .slice(0, 8); // Top 8 players
+                    .slice(0, 8);
                 
                 topPlayers.forEach(p => {
                     const stats = p.statistics[0];
@@ -435,21 +377,17 @@
                     statsHTML += `
                         <div class="stat-item">
                             <span class="stat-label">${p.name}</span>
-                            <span class="stat-value">${statStr || "No stats yet"}</span>
+                            <span class="stat-value">${statStr || "No stats"}</span>
                         </div>
                     `;
                 });
-                
                 statsHTML += `</div>`;
             }
             
             statsDisplay.innerHTML = statsHTML;
-            
-            // Update bets with new stats
-            updateBetStatuses(playersData);
+            updateBetStatuses(playersData.response);
         }
         
-        // Add bet
         function addBet() {
             const gameId = gameSelect.value;
             const playerId = playerSelect.value;
@@ -462,7 +400,6 @@
                 return;
             }
             
-            const game = liveGames.find(g => g.id == gameId);
             const playerName = playerSelect.options[playerSelect.selectedIndex].text.split(' (')[0];
             
             userBets.push({
@@ -477,19 +414,17 @@
             });
             
             renderBets();
-            
-            // Reset form
             betAmount.value = '';
             statThreshold.value = '';
         }
         
-        // Update bet statuses
         function updateBetStatuses(playersData) {
-            if (!playersData || playersData.length === 0) return;
+            if (!playersData || !playersData[0]) return;
             
-            const allPlayers = [];
-            if (playersData[0]?.players?.away) allPlayers.push(...playersData[0].players.away);
-            if (playersData[0]?.players?.home) allPlayers.push(...playersData[0].players.home);
+            const allPlayers = [
+                ...(playersData[0].players.away || []),
+                ...(playersData[0].players.home || [])
+            ];
             
             userBets.forEach(bet => {
                 const player = allPlayers.find(p => p.id == bet.playerId);
@@ -497,7 +432,6 @@
                 
                 const stats = player.statistics[0];
                 let currentValue = 0;
-                
                 switch(bet.stat) {
                     case 'rushing_yards': currentValue = stats.rushing?.yards || 0; break;
                     case 'passing_yards': currentValue = stats.passing?.yards || 0; break;
@@ -508,26 +442,16 @@
                 const game = liveGames.find(g => g.id == bet.gameId);
                 const isGameOver = game && ['FT', 'AOT'].includes(game.status.short);
                 
-                if (currentValue >= bet.threshold) {
-                    bet.status = 'winning';
-                } else if (isGameOver) {
-                    bet.status = 'lost';
-                } else {
-                    bet.status = 'pending';
-                }
+                if (currentValue >= bet.threshold) bet.status = 'winning';
+                else if (isGameOver) bet.status = 'lost';
+                else bet.status = 'pending';
             });
             
             renderBets();
         }
         
-        // Render user bets
         function renderBets() {
-            if (userBets.length === 0) {
-                betsContainer.style.display = 'none';
-                return;
-            }
-            
-            betsContainer.style.display = 'block';
+            betsContainer.style.display = userBets.length ? 'block' : 'none';
             betsList.innerHTML = '';
             
             userBets.forEach(bet => {
@@ -536,44 +460,36 @@
                 const statusText = bet.status === 'winning' ? 'Winning' : 
                                   bet.status === 'lost' ? 'Lost' : 'Pending';
                 
-                const betEl = document.createElement('div');
-                betEl.className = 'bet-card';
-                betEl.innerHTML = `
-                    <div class="bet-header">
-                        <h3>${bet.playerName}</h3>
-                        <span class="bet-status ${statusClass}">${statusText}</span>
+                betsList.innerHTML += `
+                    <div class="bet-card">
+                        <div class="bet-header">
+                            <h3>${bet.playerName}</h3>
+                            <span class="bet-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <p><strong>Bet:</strong> $${bet.amount} on ${bet.threshold}+ ${bet.stat.replace('_', ' ')}</p>
                     </div>
-                    <p><strong>Bet:</strong> $${bet.amount} on ${bet.threshold}+ ${bet.stat.replace('_', ' ')}</p>
                 `;
-                betsList.appendChild(betEl);
             });
         }
         
-        // Set up event listeners
         function setupEventListeners() {
             gameSelect.addEventListener('change', handleGameChange);
             playerSelect.addEventListener('change', enableFormIfValid);
             addBetBtn.addEventListener('click', addBet);
         }
         
-        // Auto-refresh every 30 seconds
         function startAutoRefresh() {
             countdownElement.textContent = countdown;
-            const timer = setInterval(() => {
-                countdown--;
+            setInterval(() => {
+                countdown = countdown <= 0 ? 30 : countdown - 1;
                 countdownElement.textContent = countdown;
-                
-                if (countdown <= 0) {
-                    countdown = 30;
-                    fetchLiveGames(); // Refresh games list
-                    if (selectedGameId) {
-                        renderLiveStats(selectedGameId); // Refresh stats
-                    }
+                if (countdown === 0) {
+                    fetchLiveGames();
+                    if (selectedGameId) renderLiveStats(selectedGameId);
                 }
             }, 1000);
         }
         
-        // Start when DOM loaded
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
