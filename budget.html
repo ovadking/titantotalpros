@@ -159,32 +159,14 @@
             color: white;
         }
 
-        .btn-primary:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
-        }
-
         .btn-success {
             background: var(--success);
             color: var(--dark);
         }
 
-        .btn-success:hover {
-            background: #2ecc71;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
-        }
-
         .btn-danger {
             background: var(--danger);
             color: white;
-        }
-
-        .btn-danger:hover {
-            background: #e11d74;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(247, 37, 133, 0.3);
         }
 
         .summary {
@@ -206,17 +188,8 @@
             border-bottom: 1px solid var(--light-gray);
         }
 
-        .summary-item:last-child {
-            border-bottom: none;
-        }
-
-        .positive {
-            color: var(--success);
-        }
-
-        .negative {
-            color: var(--danger);
-        }
+        .positive { color: var(--success); }
+        .negative { color: var(--danger); }
 
         .chart-container {
             height: 250px;
@@ -231,38 +204,12 @@
             border-left: 4px solid var(--warning);
         }
 
-        .suggestions h3 {
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        .suggestion-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .suggestion-item:last-child {
-            border-bottom: none;
-        }
-
-        .suggestion-amount {
-            font-weight: 600;
-            color: var(--warning);
-        }
-
         .paycheck-breakdown {
             margin-top: 30px;
             padding: 20px;
             background: var(--light);
             border-radius: 16px;
             border-left: 4px solid var(--primary);
-        }
-
-        .paycheck-breakdown h3 {
-            margin-bottom: 15px;
-            color: var(--secondary);
         }
 
         .person-section {
@@ -298,30 +245,8 @@
             color: var(--success);
         }
 
-        /* Print styles */
         @media print {
-            .btn, .btn-group, input, .actions, .navigation {
-                display: none !important;
-            }
-            .card {
-                box-shadow: none;
-                border-radius: 0;
-            }
-            .chart-container {
-                height: 200px !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navigation {
-                flex-direction: column;
-                align-items: center;
-            }
-            .nav-btn {
-                width: 80%;
-                max-width: 300px;
-                justify-content: center;
-            }
+            .btn, .btn-group, input, .actions, .navigation { display: none !important; }
         }
     </style>
 </head>
@@ -333,15 +258,9 @@
         </header>
         
         <div class="navigation">
-            <a href="#" class="nav-btn active">
-                <i class="fas fa-calculator"></i> Budget Planner
-            </a>
-            <a href="#" class="nav-btn">
-                <i class="fas fa-piggy-bank"></i> Savings Goal
-            </a>
-            <a href="#" class="nav-btn">
-                <i class="fas fa-chart-line"></i> Investment Planner
-            </a>
+            <a href="#" class="nav-btn active"><i class="fas fa-calculator"></i> Budget Planner</a>
+            <a href="#" class="nav-btn"><i class="fas fa-piggy-bank"></i> Savings Goal</a>
+            <a href="#" class="nav-btn"><i class="fas fa-chart-line"></i> Investment Planner</a>
         </div>
         
         <div class="card">
@@ -355,128 +274,57 @@
                     <input type="number" id="income" placeholder="0.00">
                 </div>
                 
-                <div class="form-group">
-                    <label for="rent">Rent ($)</label>
-                    <input type="number" id="rent" placeholder="0.00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="gas">Gas ($)</label>
-                    <input type="number" id="gas" placeholder="0.00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="power">Power ($)</label>
-                    <input type="number" id="power" placeholder="0.00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="water">Water ($)</label>
-                    <input type="number" id="water" placeholder="0.00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Phone ($)</label>
-                    <input type="number" id="phone" placeholder="0.00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="trash">Trash ($)</label>
-                    <input type="number" id="trash" placeholder="0.00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="carLoan">Car Loan ($)</label>
-                    <input type="number" id="carLoan" placeholder="0.00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="savings">Savings ($)</label>
-                    <input type="number" id="savings" placeholder="0.00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="investment">Investment ($)</label>
-                    <input type="number" id="investment" placeholder="0.00">
-                </div>
+                <div class="form-group"><label for="rent">Rent ($)</label><input type="number" id="rent" placeholder="0.00"></div>
+                <div class="form-group"><label for="gas">Gas ($)</label><input type="number" id="gas" placeholder="0.00"></div>
+                <div class="form-group"><label for="power">Power ($)</label><input type="number" id="power" placeholder="0.00"></div>
+                <div class="form-group"><label for="water">Water ($)</label><input type="number" id="water" placeholder="0.00"></div>
+                <div class="form-group"><label for="phone">Phone ($)</label><input type="number" id="phone" placeholder="0.00"></div>
+                <div class="form-group"><label for="trash">Trash ($)</label><input type="number" id="trash" placeholder="0.00"></div>
+                <div class="form-group"><label for="carLoan">Car Loan ($)</label><input type="number" id="carLoan" placeholder="0.00"></div>
+                <div class="form-group"><label for="savings">Savings ($)</label><input type="number" id="savings" placeholder="0.00"></div>
+                <div class="form-group"><label for="investment">Investment ($)</label><input type="number" id="investment" placeholder="0.00"></div>
                 
                 <div class="btn-group">
-                    <button id="resetBudgetBtn" class="btn btn-danger">
-                        <i class="fas fa-redo"></i> Reset
-                    </button>
+                    <button id="resetBudgetBtn" class="btn btn-danger"><i class="fas fa-redo"></i> Reset</button>
                 </div>
                 
                 <div class="summary">
-                    <h3>Budget Summary</h3>
-                    <div class="summary-item"><span>Monthly Income:</span> <span id="displayIncome">$0.00</span></div>
-                    <div class="summary-item"><span>Rent:</span> <span id="displayRent">$0.00</span></div>
-                    <div class="summary-item"><span>Gas:</span> <span id="displayGas">$0.00</span></div>
-                    <div class="summary-item"><span>Power:</span> <span id="displayPower">$0.00</span></div>
-                    <div class="summary-item"><span>Water:</span> <span id="displayWater">$0.00</span></div>
-                    <div class="summary-item"><span>Phone:</span> <span id="displayPhone">$0.00</span></div>
-                    <div class="summary-item"><span>Trash:</span> <span id="displayTrash">$0.00</span></div>
-                    <div class="summary-item"><span>Car Loan:</span> <span id="displayCarLoan">$0.00</span></div>
-                    <div class="summary-item"><span>Savings:</span> <span id="displaySavings">$0.00</span></div>
-                    <div class="summary-item"><span>Investment:</span> <span id="displayInvestment">$0.00</span></div>
-                    <div class="summary-item"><span>Total Expenses:</span> <span id="displayTotalExpenses">$0.00</span></div>
-                    <div class="summary-item"><span>Remaining Balance:</span> <span id="displayRemaining" class="positive">$0.00</span></div>
+                    <h3>Monthly Summary</h3>
+                    <div class="summary-item"><span>Monthly Total Income:</span> <span id="displayIncome">$0.00</span></div>
+                    <div class="summary-item"><span>Total Monthly Expenses:</span> <span id="displayTotalExpenses">$0.00</span></div>
+                    <div class="summary-item"><span>Monthly Remaining:</span> <span id="displayRemaining" class="positive">$0.00</span></div>
                 </div>
                 
                 <div class="chart-container">
                     <canvas id="budgetChart"></canvas>
                 </div>
                 
-                <div class="suggestions">
-                    <h3>How to Use Your Remaining Balance</h3>
-                    <div class="suggestion-item"><span>Entertainment & Dining (30%):</span> <span id="suggestion1" class="suggestion-amount">$0.00</span></div>
-                    <div class="suggestion-item"><span>Additional Savings (25%):</span> <span id="suggestion2" class="suggestion-amount">$0.00</span></div>
-                    <div class="suggestion-item"><span>Invest More (20%):</span> <span id="suggestion3" class="suggestion-amount">$0.00</span></div>
-                    <div class="suggestion-item"><span>Emergency Fund (15%):</span> <span id="suggestion4" class="suggestion-amount">$0.00</span></div>
-                    <div class="suggestion-item"><span>Personal Spending (10%):</span> <span id="suggestion5" class="suggestion-amount">$0.00</span></div>
-                </div>
-                
                 <div class="paycheck-breakdown">
                     <h3>Bi-Weekly Paycheck Breakdown</h3>
-                    <p style="font-size: 0.9rem; color: var(--gray); margin-bottom: 15px;">Amount to set aside from each bi-weekly paycheck:</p>
-                    
                     <div class="person-section">
-                        <div class="person-header">Jeffrey</div>
-                        <div class="paycheck-item"><span>Est. Bi-Weekly Income:</span> <span id="jeffreyIncome" class="income-highlight">$1,680.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Rent:</span> <span id="jeffreyRent">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Gas:</span> <span id="jeffreyGas">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Power:</span> <span id="jeffreyPower">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Water:</span> <span id="jeffreyWater">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Phone:</span> <span id="jeffreyPhone">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Trash:</span> <span id="jeffreyTrash">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Car Loan:</span> <span id="jeffreyCarLoan">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Savings:</span> <span id="jeffreySavings">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Investment:</span> <span id="jeffreyInvestment">$0.00</span></div>
-                        <div class="paycheck-item"><span><strong>Remaining Spending Money:</strong></span> <span id="jeffreyRemaining" class="positive">$1,680.00</span></div>
-                    </div>
-                    
-                    <div class="person-section">
-                        <div class="person-header">Lymer</div>
-                        <div class="paycheck-item"><span>Est. Bi-Weekly Income:</span> <span id="lymerIncome" class="income-highlight">$1,680.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Rent:</span> <span id="lymerRent">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Gas:</span> <span id="lymerGas">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Power:</span> <span id="lymerPower">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Water:</span> <span id="lymerWater">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Phone:</span> <span id="lymerPhone">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Trash:</span> <span id="lymerTrash">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Car Loan:</span> <span id="lymerCarLoan">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Savings:</span> <span id="lymerSavings">$0.00</span></div>
-                        <div class="paycheck-item"><span>Set aside for Investment:</span> <span id="lymerInvestment">$0.00</span></div>
-                        <div class="paycheck-item"><span><strong>Remaining Spending Money:</strong></span> <span id="lymerRemaining" class="positive">$1,680.00</span></div>
+                        <div class="person-header">Amount to Set Aside Per Paycheck</div>
+                        <div class="paycheck-item">
+                            <span>Bi-Weekly Paycheck:</span>
+                            <span id="biWeeklyIncomeDisplay" class="income-highlight">$0.00</span>
+                        </div>
+                        <div class="paycheck-item"><span>Rent (1/2):</span> <span id="bwRent">$0.00</span></div>
+                        <div class="paycheck-item"><span>Gas (1/2):</span> <span id="bwGas">$0.00</span></div>
+                        <div class="paycheck-item"><span>Power (1/2):</span> <span id="bwPower">$0.00</span></div>
+                        <div class="paycheck-item"><span>Water (1/2):</span> <span id="bwWater">$0.00</span></div>
+                        <div class="paycheck-item"><span>Phone (1/2):</span> <span id="bwPhone">$0.00</span></div>
+                        <div class="paycheck-item"><span>Trash (1/2):</span> <span id="bwTrash">$0.00</span></div>
+                        <div class="paycheck-item"><span>Car Loan (1/2):</span> <span id="bwCarLoan">$0.00</span></div>
+                        <div class="paycheck-item"><span>Savings (1/2):</span> <span id="bwSavings">$0.00</span></div>
+                        <div class="paycheck-item"><span>Investment (1/2):</span> <span id="bwInvestment">$0.00</span></div>
+                        <div class="paycheck-item">
+                            <span><strong>Remaining Spending Money:</strong></span>
+                            <span id="bwRemaining" class="positive">$0.00</span>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="actions" style="margin-top: 20px;">
-                    <button id="printBtn" class="btn btn-success">
-                        <i class="fas fa-print"></i> Print Budget Report
-                    </button>
-                    <button id="shareBtn" class="btn btn-primary">
-                        <i class="fas fa-share-alt"></i> Share Results
-                    </button>
+                    <button id="printBtn" class="btn btn-success"><i class="fas fa-print"></i> Print Budget Report</button>
                 </div>
             </div>
         </div>
@@ -484,120 +332,83 @@
 
     <script>
         function formatCurrency(amount) {
-            if (isNaN(amount) || amount === null || amount === undefined || amount === '') return '$0.00';
-            return '$' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            return '$' + parseFloat(amount || 0).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
-        function parseInput(value) {
-            if (value === '' || value === null || value === undefined) return 0;
-            const num = parseFloat(value);
-            return isNaN(num) ? 0 : num;
+        function parseInput(id) {
+            const val = document.getElementById(id).value;
+            return val === '' ? 0 : parseFloat(val);
         }
 
         function updateAll() {
-            const income = parseInput(document.getElementById('income').value);
-            const rent = parseInput(document.getElementById('rent').value);
-            const gas = parseInput(document.getElementById('gas').value);
-            const power = parseInput(document.getElementById('power').value);
-            const water = parseInput(document.getElementById('water').value);
-            const phone = parseInput(document.getElementById('phone').value);
-            const trash = parseInput(document.getElementById('trash').value);
-            const carLoan = parseInput(document.getElementById('carLoan').value);
-            const savings = parseInput(document.getElementById('savings').value);
-            const investment = parseInput(document.getElementById('investment').value);
+            const income = parseInput('income');
+            const rent = parseInput('rent');
+            const gas = parseInput('gas');
+            const power = parseInput('power');
+            const water = parseInput('water');
+            const phone = parseInput('phone');
+            const trash = parseInput('trash');
+            const carLoan = parseInput('carLoan');
+            const savings = parseInput('savings');
+            const investment = parseInput('investment');
             
-            const totalExpenses = rent + gas + power + water + phone + trash + carLoan + savings + investment;
-            const remaining = income - totalExpenses;
+            const totalMonthlyExpenses = rent + gas + power + water + phone + trash + carLoan + savings + investment;
+            const monthlyRemaining = income - totalMonthlyExpenses;
             
+            // Monthly Summary
             document.getElementById('displayIncome').textContent = formatCurrency(income);
-            document.getElementById('displayRent').textContent = formatCurrency(rent);
-            document.getElementById('displayGas').textContent = formatCurrency(gas);
-            document.getElementById('displayPower').textContent = formatCurrency(power);
-            document.getElementById('displayWater').textContent = formatCurrency(water);
-            document.getElementById('displayPhone').textContent = formatCurrency(phone);
-            document.getElementById('displayTrash').textContent = formatCurrency(trash);
-            document.getElementById('displayCarLoan').textContent = formatCurrency(carLoan);
-            document.getElementById('displaySavings').textContent = formatCurrency(savings);
-            document.getElementById('displayInvestment').textContent = formatCurrency(investment);
-            document.getElementById('displayTotalExpenses').textContent = formatCurrency(totalExpenses);
+            document.getElementById('displayTotalExpenses').textContent = formatCurrency(totalMonthlyExpenses);
+            document.getElementById('displayRemaining').textContent = formatCurrency(monthlyRemaining);
+            document.getElementById('displayRemaining').className = monthlyRemaining >= 0 ? 'positive' : 'negative';
+
+            // Bi-Weekly Calculations (Divided by 2)
+            const biWeeklyIncome = income / 2;
+            document.getElementById('biWeeklyIncomeDisplay').textContent = formatCurrency(biWeeklyIncome);
             
-            const remainingElement = document.getElementById('displayRemaining');
-            remainingElement.textContent = formatCurrency(remaining);
-            remainingElement.className = remaining >= 0 ? 'positive' : 'negative';
-            
-            if (remaining <= 0) {
-                ['suggestion1', 'suggestion2', 'suggestion3', 'suggestion4', 'suggestion5'].forEach(id => {
-                    document.getElementById(id).textContent = '$0.00';
-                });
-            } else {
-                document.getElementById('suggestion1').textContent = formatCurrency(remaining * 0.30);
-                document.getElementById('suggestion2').textContent = formatCurrency(remaining * 0.25);
-                document.getElementById('suggestion3').textContent = formatCurrency(remaining * 0.20);
-                document.getElementById('suggestion4').textContent = formatCurrency(remaining * 0.15);
-                document.getElementById('suggestion5').textContent = formatCurrency(remaining * 0.10);
+            const bwFields = {
+                'bwRent': rent/2, 'bwGas': gas/2, 'bwPower': power/2, 'bwWater': water/2, 
+                'bwPhone': phone/2, 'bwTrash': trash/2, 'bwCarLoan': carLoan/2, 
+                'bwSavings': savings/2, 'bwInvestment': investment/2
+            };
+
+            let totalBWSetAside = 0;
+            for (let id in bwFields) {
+                document.getElementById(id).textContent = formatCurrency(bwFields[id]);
+                totalBWSetAside += bwFields[id];
             }
-            
-            // Bi-Weekly Logic (Assuming 2 people, 2 paychecks per month)
-            const biWeeklyIncome = 21 * 40 * 2; 
-            const splitFactor = 4; // Divided by 2 people AND by 2 paychecks per month
 
-            const fields = ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'CarLoan', 'Savings', 'Investment'];
-            let totalBiWeeklySetAside = 0;
+            const bwRemaining = biWeeklyIncome - totalBWSetAside;
+            document.getElementById('bwRemaining').textContent = formatCurrency(bwRemaining);
+            document.getElementById('bwRemaining').className = bwRemaining >= 0 ? 'positive' : 'negative';
 
-            fields.forEach(field => {
-                const amount = parseInput(document.getElementById(field.charAt(0).toLowerCase() + field.slice(1)).value) / splitFactor;
-                totalBiWeeklySetAside += amount;
-                document.getElementById('jeffrey' + field).textContent = formatCurrency(amount);
-                document.getElementById('lymer' + field).textContent = formatCurrency(amount);
-            });
-
-            const biWeeklyRemaining = biWeeklyIncome - totalBiWeeklySetAside;
-            
-            document.getElementById('jeffreyIncome').textContent = formatCurrency(biWeeklyIncome);
-            document.getElementById('lymerIncome').textContent = formatCurrency(biWeeklyIncome);
-            
-            document.getElementById('jeffreyRemaining').textContent = formatCurrency(biWeeklyRemaining);
-            document.getElementById('jeffreyRemaining').className = biWeeklyRemaining >= 0 ? 'positive' : 'negative';
-            document.getElementById('lymerRemaining').textContent = formatCurrency(biWeeklyRemaining);
-            document.getElementById('lymerRemaining').className = biWeeklyRemaining >= 0 ? 'positive' : 'negative';
-
+            // Update Chart
             if (window.budgetChart) {
                 window.budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, carLoan, savings, investment];
                 window.budgetChart.update();
             }
         }
 
-        // Initialize
+        // Initialize Chart
         const ctx = document.getElementById('budgetChart').getContext('2d');
         window.budgetChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Car Loan', 'Savings', 'Investment'],
                 datasets: [{
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    data: [0,0,0,0,0,0,0,0,0],
                     backgroundColor: ['#4361ee', '#3a0ca3', '#4cc9f0', '#f72585', '#7209b7', '#4ade80', '#f8961e', '#9d4edd', '#00bbf9'],
-                    borderWidth: 0,
-                    borderRadius: 6,
-                    spacing: 8
+                    borderWidth: 0, spacing: 8
                 }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } }
-            }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
         });
 
-        // Add listeners to all inputs
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', updateAll);
-        });
-
+        // Event Listeners
+        document.querySelectorAll('input').forEach(input => input.addEventListener('input', updateAll));
         document.getElementById('resetBudgetBtn').addEventListener('click', () => {
             document.querySelectorAll('input').forEach(i => i.value = '');
             updateAll();
         });
-
         document.getElementById('printBtn').addEventListener('click', () => window.print());
     </script>
 </body>
