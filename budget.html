@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Planner</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4ade80;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7ff, #eef2ff);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+            background: var(--primary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--dark);
+        }
+
+        .btn-success:hover {
+            background: #2ecc71;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e11d74;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(247, 37, 133, 0.3);
+        }
+
+        .summary {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 16px;
+        }
+
+        .summary h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .positive {
+            color: var(--success);
+        }
+
+        .negative {
+            color: var(--danger);
+        }
+
+        .chart-container {
+            height: 250px;
+            margin-top: 20px;
+        }
+
+        .suggestions {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 16px;
+            border-left: 4px solid var(--warning);
+        }
+
+        .suggestions h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .suggestion-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-amount {
+            font-weight: 600;
+            color: var(--warning);
+        }
+
+        .paycheck-breakdown {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .paycheck-breakdown h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .person-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .person-header {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .paycheck-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .paycheck-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .income-highlight {
+            color: var(--success);
+        }
+
+        /* Print styles */
+        @media print {
+            .btn, .btn-group, input, .actions, .navigation {
+                display: none !important;
+            }
+            .card {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .chart-container {
+                height: 200px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav-btn {
+                width: 80%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Budget Planner</h1>
+            <p>Track your income and expenses to stay on top of your finances</p>
+        </header>
+        
+        <div class="navigation">
+            <a href="#" class="nav-btn active">
+                <i class="fas fa-calculator"></i> Budget Planner
+            </a>
+            <a href="#" class="nav-btn">
+                <i class="fas fa-piggy-bank"></i> Savings Goal
+            </a>
+            <a href="#" class="nav-btn">
+                <i class="fas fa-chart-line"></i> Investment Planner
+            </a>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-calculator"></i>
+                <h2>Monthly Budget</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="income">Monthly Income ($)</label>
+                    <input type="number" id="income" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="rent">Rent ($)</label>
+                    <input type="number" id="rent" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="gas">Gas ($)</label>
+                    <input type="number" id="gas" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="power">Power ($)</label>
+                    <input type="number" id="power" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="water">Water ($)</label>
+                    <input type="number" id="water" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone ($)</label>
+                    <input type="number" id="phone" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="trash">Trash ($)</label>
+                    <input type="number" id="trash" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="carLoan">Car Loan ($)</label>
+                    <input type="number" id="carLoan" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="savings">Savings ($)</label>
+                    <input type="number" id="savings" placeholder="0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="investment">Investment ($)</label>
+                    <input type="number" id="investment" placeholder="0.00">
+                </div>
+                
+                <div class="btn-group">
+                    <button id="resetBudgetBtn" class="btn btn-danger">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+                
+                <div class="summary">
+                    <h3>Budget Summary</h3>
+                    <div class="summary-item"><span>Monthly Income:</span> <span id="displayIncome">$0.00</span></div>
+                    <div class="summary-item"><span>Rent:</span> <span id="displayRent">$0.00</span></div>
+                    <div class="summary-item"><span>Gas:</span> <span id="displayGas">$0.00</span></div>
+                    <div class="summary-item"><span>Power:</span> <span id="displayPower">$0.00</span></div>
+                    <div class="summary-item"><span>Water:</span> <span id="displayWater">$0.00</span></div>
+                    <div class="summary-item"><span>Phone:</span> <span id="displayPhone">$0.00</span></div>
+                    <div class="summary-item"><span>Trash:</span> <span id="displayTrash">$0.00</span></div>
+                    <div class="summary-item"><span>Car Loan:</span> <span id="displayCarLoan">$0.00</span></div>
+                    <div class="summary-item"><span>Savings:</span> <span id="displaySavings">$0.00</span></div>
+                    <div class="summary-item"><span>Investment:</span> <span id="displayInvestment">$0.00</span></div>
+                    <div class="summary-item"><span>Total Expenses:</span> <span id="displayTotalExpenses">$0.00</span></div>
+                    <div class="summary-item"><span>Remaining Balance:</span> <span id="displayRemaining" class="positive">$0.00</span></div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="budgetChart"></canvas>
+                </div>
+                
+                <div class="suggestions">
+                    <h3>How to Use Your Remaining Balance</h3>
+                    <div class="suggestion-item"><span>Entertainment & Dining (30%):</span> <span id="suggestion1" class="suggestion-amount">$0.00</span></div>
+                    <div class="suggestion-item"><span>Additional Savings (25%):</span> <span id="suggestion2" class="suggestion-amount">$0.00</span></div>
+                    <div class="suggestion-item"><span>Invest More (20%):</span> <span id="suggestion3" class="suggestion-amount">$0.00</span></div>
+                    <div class="suggestion-item"><span>Emergency Fund (15%):</span> <span id="suggestion4" class="suggestion-amount">$0.00</span></div>
+                    <div class="suggestion-item"><span>Personal Spending (10%):</span> <span id="suggestion5" class="suggestion-amount">$0.00</span></div>
+                </div>
+                
+                <div class="paycheck-breakdown">
+                    <h3>Bi-Weekly Paycheck Breakdown</h3>
+                    <p style="font-size: 0.9rem; color: var(--gray); margin-bottom: 15px;">Amount to set aside from each bi-weekly paycheck:</p>
+                    
+                    <div class="person-section">
+                        <div class="person-header">Jeffrey</div>
+                        <div class="paycheck-item"><span>Est. Bi-Weekly Income:</span> <span id="jeffreyIncome" class="income-highlight">$1,680.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Rent:</span> <span id="jeffreyRent">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Gas:</span> <span id="jeffreyGas">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Power:</span> <span id="jeffreyPower">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Water:</span> <span id="jeffreyWater">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Phone:</span> <span id="jeffreyPhone">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Trash:</span> <span id="jeffreyTrash">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Car Loan:</span> <span id="jeffreyCarLoan">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Savings:</span> <span id="jeffreySavings">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Investment:</span> <span id="jeffreyInvestment">$0.00</span></div>
+                        <div class="paycheck-item"><span><strong>Remaining Spending Money:</strong></span> <span id="jeffreyRemaining" class="positive">$1,680.00</span></div>
+                    </div>
+                    
+                    <div class="person-section">
+                        <div class="person-header">Lymer</div>
+                        <div class="paycheck-item"><span>Est. Bi-Weekly Income:</span> <span id="lymerIncome" class="income-highlight">$1,680.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Rent:</span> <span id="lymerRent">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Gas:</span> <span id="lymerGas">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Power:</span> <span id="lymerPower">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Water:</span> <span id="lymerWater">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Phone:</span> <span id="lymerPhone">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Trash:</span> <span id="lymerTrash">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Car Loan:</span> <span id="lymerCarLoan">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Savings:</span> <span id="lymerSavings">$0.00</span></div>
+                        <div class="paycheck-item"><span>Set aside for Investment:</span> <span id="lymerInvestment">$0.00</span></div>
+                        <div class="paycheck-item"><span><strong>Remaining Spending Money:</strong></span> <span id="lymerRemaining" class="positive">$1,680.00</span></div>
+                    </div>
+                </div>
+                
+                <div class="actions" style="margin-top: 20px;">
+                    <button id="printBtn" class="btn btn-success">
+                        <i class="fas fa-print"></i> Print Budget Report
+                    </button>
+                    <button id="shareBtn" class="btn btn-primary">
+                        <i class="fas fa-share-alt"></i> Share Results
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatCurrency(amount) {
+            if (isNaN(amount) || amount === null || amount === undefined || amount === '') return '$0.00';
+            return '$' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        function parseInput(value) {
+            if (value === '' || value === null || value === undefined) return 0;
+            const num = parseFloat(value);
+            return isNaN(num) ? 0 : num;
+        }
+
+        function updateAll() {
+            const income = parseInput(document.getElementById('income').value);
+            const rent = parseInput(document.getElementById('rent').value);
+            const gas = parseInput(document.getElementById('gas').value);
+            const power = parseInput(document.getElementById('power').value);
+            const water = parseInput(document.getElementById('water').value);
+            const phone = parseInput(document.getElementById('phone').value);
+            const trash = parseInput(document.getElementById('trash').value);
+            const carLoan = parseInput(document.getElementById('carLoan').value);
+            const savings = parseInput(document.getElementById('savings').value);
+            const investment = parseInput(document.getElementById('investment').value);
+            
+            const totalExpenses = rent + gas + power + water + phone + trash + carLoan + savings + investment;
+            const remaining = income - totalExpenses;
+            
+            document.getElementById('displayIncome').textContent = formatCurrency(income);
+            document.getElementById('displayRent').textContent = formatCurrency(rent);
+            document.getElementById('displayGas').textContent = formatCurrency(gas);
+            document.getElementById('displayPower').textContent = formatCurrency(power);
+            document.getElementById('displayWater').textContent = formatCurrency(water);
+            document.getElementById('displayPhone').textContent = formatCurrency(phone);
+            document.getElementById('displayTrash').textContent = formatCurrency(trash);
+            document.getElementById('displayCarLoan').textContent = formatCurrency(carLoan);
+            document.getElementById('displaySavings').textContent = formatCurrency(savings);
+            document.getElementById('displayInvestment').textContent = formatCurrency(investment);
+            document.getElementById('displayTotalExpenses').textContent = formatCurrency(totalExpenses);
+            
+            const remainingElement = document.getElementById('displayRemaining');
+            remainingElement.textContent = formatCurrency(remaining);
+            remainingElement.className = remaining >= 0 ? 'positive' : 'negative';
+            
+            if (remaining <= 0) {
+                ['suggestion1', 'suggestion2', 'suggestion3', 'suggestion4', 'suggestion5'].forEach(id => {
+                    document.getElementById(id).textContent = '$0.00';
+                });
+            } else {
+                document.getElementById('suggestion1').textContent = formatCurrency(remaining * 0.30);
+                document.getElementById('suggestion2').textContent = formatCurrency(remaining * 0.25);
+                document.getElementById('suggestion3').textContent = formatCurrency(remaining * 0.20);
+                document.getElementById('suggestion4').textContent = formatCurrency(remaining * 0.15);
+                document.getElementById('suggestion5').textContent = formatCurrency(remaining * 0.10);
+            }
+            
+            // Bi-Weekly Logic (Assuming 2 people, 2 paychecks per month)
+            const biWeeklyIncome = 21 * 40 * 2; 
+            const splitFactor = 4; // Divided by 2 people AND by 2 paychecks per month
+
+            const fields = ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'CarLoan', 'Savings', 'Investment'];
+            let totalBiWeeklySetAside = 0;
+
+            fields.forEach(field => {
+                const amount = parseInput(document.getElementById(field.charAt(0).toLowerCase() + field.slice(1)).value) / splitFactor;
+                totalBiWeeklySetAside += amount;
+                document.getElementById('jeffrey' + field).textContent = formatCurrency(amount);
+                document.getElementById('lymer' + field).textContent = formatCurrency(amount);
+            });
+
+            const biWeeklyRemaining = biWeeklyIncome - totalBiWeeklySetAside;
+            
+            document.getElementById('jeffreyIncome').textContent = formatCurrency(biWeeklyIncome);
+            document.getElementById('lymerIncome').textContent = formatCurrency(biWeeklyIncome);
+            
+            document.getElementById('jeffreyRemaining').textContent = formatCurrency(biWeeklyRemaining);
+            document.getElementById('jeffreyRemaining').className = biWeeklyRemaining >= 0 ? 'positive' : 'negative';
+            document.getElementById('lymerRemaining').textContent = formatCurrency(biWeeklyRemaining);
+            document.getElementById('lymerRemaining').className = biWeeklyRemaining >= 0 ? 'positive' : 'negative';
+
+            if (window.budgetChart) {
+                window.budgetChart.data.datasets[0].data = [rent, gas, power, water, phone, trash, carLoan, savings, investment];
+                window.budgetChart.update();
+            }
+        }
+
+        // Initialize
+        const ctx = document.getElementById('budgetChart').getContext('2d');
+        window.budgetChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Rent', 'Gas', 'Power', 'Water', 'Phone', 'Trash', 'Car Loan', 'Savings', 'Investment'],
+                datasets: [{
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    backgroundColor: ['#4361ee', '#3a0ca3', '#4cc9f0', '#f72585', '#7209b7', '#4ade80', '#f8961e', '#9d4edd', '#00bbf9'],
+                    borderWidth: 0,
+                    borderRadius: 6,
+                    spacing: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } }
+            }
+        });
+
+        // Add listeners to all inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', updateAll);
+        });
+
+        document.getElementById('resetBudgetBtn').addEventListener('click', () => {
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            updateAll();
+        });
+
+        document.getElementById('printBtn').addEventListener('click', () => window.print());
+    </script>
+</body>
+</html>
