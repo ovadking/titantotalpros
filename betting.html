@@ -18,7 +18,7 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <h1 class="text-xl font-black text-blue-500 italic uppercase tracking-tighter">Intel<span class="text-white">Prob</span></h1>
             <div class="text-right">
-                <p class="text-[10px] font-bold text-slate-500 uppercase">Live Sunday Slate</p>
+                <p class="text-[10px] font-bold text-slate-500 uppercase">Updated Dec 28, 2025</p>
                 <p class="text-xs text-green-400 font-black tracking-widest">MIN 50% HIT PROBABILITY</p>
             </div>
         </div>
@@ -26,19 +26,16 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-8">
         <div class="mb-10 bg-slate-900/50 p-6 rounded-3xl border border-slate-800 shadow-2xl">
-            <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 ml-1">Today's Kickoffs (Dec 28, 2025)</label>
+            <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 ml-1">Today's Kickoffs (Week 17)</label>
             <select id="matchup-selector" onchange="loadMatchupData()" class="w-full bg-slate-950 border border-slate-700 text-white py-4 px-4 rounded-xl font-bold focus:ring-2 focus:ring-blue-600 outline-none cursor-pointer">
                 <option value="">-- Choose Game --</option>
                 <option value="PAT@JET">Patriots @ Jets (1:00 PM)</option>
                 <option value="SEA@PAN">Seahawks @ Panthers (1:00 PM)</option>
                 <option value="GIA@RAI">Giants @ Raiders (4:05 PM)</option>
-                <option value="CIN@ARZ">Bengals @ Cardinals (1:00 PM)</option>
-                <option value="PHI@BUF">Eagles @ Bills (4:25 PM)</option>
-                <option value="CHI@SF">Bears @ 49ers (8:20 PM)</option>
-                <option value="PIT@CLE">Steelers @ Browns (1:00 PM)</option>
                 <option value="TB@MIA">Bucs @ Dolphins (1:00 PM)</option>
                 <option value="NO@TEN">Saints @ Titans (1:00 PM)</option>
-                <option value="JAX@IND">Jaguars @ Colts (1:00 PM)</option>
+                <option value="CIN@ARZ">Bengals @ Cardinals (1:00 PM)</option>
+                <option value="PHI@BUF">Eagles @ Bills (4:25 PM)</option>
             </select>
         </div>
 
@@ -52,20 +49,29 @@
     <script>
         const fullDatabase = {
             "PAT@JET": [
-                { name: "Tyquan Thornton", type: "Pass Yds", line: 255.5, avg: 262.4, stdev: 30, note: "Jets rank 31st in pass defense; Patriots pass rate is up 12% in last 3.", history: [{wk:16, opp:"RAV", val:288}, {wk:15, opp:"BUF", val:215}, {wk:14, opp:"GIA", val:310}, {wk:13, opp:"CIN", val:255}, {wk:12, opp:"JET", val:268}] },
-                { name: "Ty Montgomery", type: "Anytime TD", line: 0.5, avg: 0.6, stdev: 0.1, note: "Goal line usage rising with injuries in the backfield.", history: [{wk:16, opp:"RAV", val:1}, {wk:15, opp:"BUF", val:0}, {wk:14, opp:"GIA", val:1}, {wk:13, opp:"CIN", val:1}, {wk:12, opp:"JET", val:1}] }
+                { name: "Drake Maye", type: "Pass Yds", line: 255.5, avg: 250.6, stdev: 35, note: "Cleared 255+ in 7 of last 8 games; Jets D allowing 6.8 yards per attempt.", history: [{wk:16, opp:"BAL", val:281}, {wk:15, opp:"BUF", val:258}, {wk:14, opp:"GIA", val:310}, {wk:13, opp:"CIN", val:245}, {wk:12, opp:"DET", val:268}] },
+                { name: "TreVeyon Henderson", type: "Rush Yds", line: 52.5, avg: 51.7, stdev: 12, note: "Cleared concussion protocol; Jets rank 31st against the run.", history: [{wk:16, opp:"BAL", val:42}, {wk:15, opp:"BUF", val:78}, {wk:14, opp:"GIA", val:65}, {wk:13, opp:"CIN", val:54}, {wk:12, opp:"DET", val:38}] },
+                { name: "Hunter Henry", type: "Anytime TD", line: 0.5, avg: 0.6, stdev: 0.2, note: "Drake Maye's favorite redzone target; already has 6 TDs in 2025.", history: [{wk:16, opp:"BAL", val:1}, {wk:15, opp:"BUF", val:0}, {wk:14, opp:"GIA", val:1}, {wk:13, opp:"CIN", val:1}, {wk:12, opp:"DET", val:0}] }
             ],
             "SEA@PAN": [
-                { name: "Zach Charbonnet", type: "Anytime TD", line: 0.5, avg: 0.7, stdev: 0.2, note: "Seattle's preferred goal-line back vs a Panthers D allowing 1.4 rush TDs per game.", history: [{wk:16, opp:"LAR", val:1}, {wk:15, opp:"IND", val:1}, {wk:14, opp:"ARI", val:0}, {wk:13, opp:"MIN", val:1}, {wk:12, opp:"SF", val:0}] },
-                { name: "Jaxon Smith-Njigba", type: "Rec Yds", line: 68.5, avg: 102.3, stdev: 25, note: "Has cleared 100+ yards in 3 of his last 5 games.", history: [{wk:16, opp:"LAR", val:115}, {wk:15, opp:"IND", val:92}, {wk:14, opp:"ARI", val:108}, {wk:13, opp:"MIN", val:75}, {wk:12, opp:"SF", val:110}] }
+                { name: "Jaxon Smith-Njigba", type: "Rec Yds", line: 88.5, avg: 102.3, stdev: 22, note: "Averaging 90+ yards since Cooper Kupp took over double teams.", history: [{wk:16, opp:"LAR", val:115}, {wk:15, opp:"IND", val:92}, {wk:14, opp:"ARI", val:108}, {wk:13, opp:"MIN", val:75}, {wk:12, opp:"SF", val:110}] },
+                { name: "Kenneth Walker III", type: "Rush Yds", line: 64.5, avg: 72.1, stdev: 14, note: "Panthers D allowing 140+ rush yards per game.", history: [{wk:16, opp:"LAR", val:58}, {wk:15, opp:"IND", val:82}, {wk:14, opp:"ARI", val:71}, {wk:13, opp:"MIN", val:65}, {wk:12, opp:"SF", val:0, dnp: true}] }
             ],
             "GIA@RAI": [
-                { name: "Tyrone Tracy Jr.", type: "Rush Yds", line: 58.5, avg: 64.2, stdev: 12, note: "Raiders run defense ranks 27th in EPA allowed per rush.", history: [{wk:16, opp:"DAL", val:72}, {wk:15, opp:"WAS", val:55}, {wk:14, opp:"PHI", val:68}, {wk:13, opp:"NE", val:48}, {wk:12, opp:"TB", val:81}] },
-                { name: "Wan'Dale Robinson", type: "Receptions", line: 5.5, avg: 6.8, stdev: 1.4, note: "Averages 9.2 targets per game over last month.", history: [{wk:16, opp:"DAL", val:8}, {wk:15, opp:"WAS", val:6}, {wk:14, opp:"PHI", val:9}, {wk:13, opp:"NE", val:7}, {wk:12, opp:"TB", val:5}] }
+                { name: "Wan'Dale Robinson", type: "Receptions", line: 5.4, avg: 6.8, stdev: 1.2, note: "10th in NFL for receptions; Raiders allow high volume to slot WRs.", history: [{wk:16, opp:"MIN", val:8}, {wk:15, opp:"PHI", val:6}, {wk:14, opp:"DAL", val:9}, {wk:13, opp:"NE", val:7}, {wk:12, opp:"TB", val:5}] },
+                { name: "Ashton Jeanty", type: "Anytime TD", line: 0.5, avg: 0.7, stdev: 0.2, note: "Leads Raiders with 5 rushing TDs; Giants allow most redzone entries.", history: [{wk:16, opp:"TEN", val:1}, {wk:15, opp:"LAC", val:1}, {wk:14, opp:"CLE", val:0}, {wk:13, opp:"DEN", val:1}, {wk:12, opp:"BAL", val:1}] }
             ],
-            // ... (Previous game data preserved)
+            "TB@MIA": [
+                { name: "Baker Mayfield", type: "Pass TDs", line: 1.5, avg: 1.7, stdev: 0.6, note: "Top 10 in Pass TDs in 2025.", history: [{wk:16, opp:"DAL", val:2}, {wk:15, opp:"LAC", val:1}, {wk:14, opp:"LV", val:2}, {wk:13, opp:"CAR", val:2}, {wk:12, opp:"LAR", val:1}] }
+            ],
+            "NO@TEN": [
+                { name: "Alvin Kamara", type: "Receptions", line: 4.5, avg: 5.4, stdev: 1.1, note: "Safety valve for Tyler Shough.", history: [{wk:16, opp:"NYJ", val:6}, {wk:15, opp:"CAR", val:4}, {wk:14, opp:"TB", val:7}, {wk:13, opp:"NYG", val:5}, {wk:12, opp:"LAR", val:6}] }
+            ],
+            "CIN@ARZ": [
+                { name: "Joe Burrow", type: "Pass Yds", line: 265.5, avg: 307.4, stdev: 42, note: "Cardinals rank 29th in Pass Defense.", history: [{wk:16, opp:"MIA", val:309}, {wk:15, opp:"BAL", val:225}, {wk:14, opp:"BUF", val:284}, {wk:13, opp:"BAL", val:261}, {wk:12, opp:"JAX", val:76}] }
+            ],
             "PHI@BUF": [
-                { name: "Saquon Barkley", type: "Rush Yds", line: 83.5, avg: 91.2, stdev: 18, note: "Bills allow 5.4 yards per carry (31st).", history: [{wk:16, opp:"WAS", val:112}, {wk:15, opp:"PIT", val:98}, {wk:14, opp:"CAR", val:145}, {wk:13, opp:"BAL", val:0, dnp:true}, {wk:12, opp:"DAL", val:88}] }
+                { name: "Saquon Barkley", type: "Rush Yds", line: 83.5, avg: 91.2, stdev: 18, note: "Bills allow 5.4 yards per carry.", history: [{wk:16, opp:"WAS", val:112}, {wk:15, opp:"PIT", val:98}, {wk:14, opp:"CAR", val:145}, {wk:13, opp:"BAL", val:0, dnp:true}, {wk:12, opp:"DAL", val:88}] }
             ]
         };
 
@@ -107,7 +113,7 @@
                         <div>
                             <div class="flex justify-between items-center mb-4">
                                 <span class="text-[9px] font-bold text-blue-400 uppercase tracking-widest">${p.type}</span>
-                                <span class="text-[9px] font-bold text-slate-500 uppercase">Caesars: ${p.line}</span>
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Caesars: ${p.line}</span>
                             </div>
                             <h3 class="text-2xl font-black text-white mb-2 leading-tight uppercase italic tracking-tighter">${p.name}</h3>
                             <div class="flex justify-between items-end mb-2">
