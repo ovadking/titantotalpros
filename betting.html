@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .game-log-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-        .expanded .game-log-details { max-height: 600px; padding-bottom: 20px; }
+        .expanded .game-log-details { max-height: 800px; padding-bottom: 20px; }
         .prob-bar { transition: width 1.2s ease-in-out; }
         .sharp-pick { border-top: 4px solid #10b981; background: rgba(16, 185, 129, 0.05); }
     </style>
@@ -16,9 +16,9 @@
 
     <nav class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 p-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-black text-blue-500 italic uppercase tracking-tighter">Intel<span class="text-white">Prob</span></h1>
+            <h1 class="text-xl font-black text-blue-500 italic uppercase">Intel<span class="text-white">Prob</span></h1>
             <div class="text-right">
-                <p class="text-[10px] font-bold text-slate-500 uppercase">Live Roster: Dec 28, 2025</p>
+                <p class="text-[10px] font-bold text-slate-500 uppercase">Live: Dec 28, 2025</p>
                 <p class="text-xs text-green-400 font-black">MIN 50% HIT RATE</p>
             </div>
         </div>
@@ -26,10 +26,10 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-8">
         <div class="mb-10 bg-slate-900/50 p-6 rounded-3xl border border-slate-800 shadow-2xl">
-            <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 ml-1">Choose Today or Tomorrow's Matchup</label>
+            <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 ml-1">Today & Tomorrow's Full Slate</label>
             <select id="matchup-selector" onchange="loadMatchupData()" class="w-full bg-slate-950 border border-slate-700 text-white py-4 px-4 rounded-xl font-bold focus:ring-2 focus:ring-blue-600 outline-none cursor-pointer">
-                <option value="">-- Select Game --</option>
-                <optgroup label="SUNDAY, DEC 28">
+                <option value="">-- Choose Game --</option>
+                <optgroup label="TODAY: SUNDAY, DEC 28">
                     <option value="PAT@JET">Patriots @ Jets (1:00 PM)</option>
                     <option value="SEA@PAN">Seahawks @ Panthers (1:00 PM)</option>
                     <option value="GIA@RAI">Giants @ Raiders (4:05 PM)</option>
@@ -37,8 +37,9 @@
                     <option value="NO@TEN">Saints @ Titans (1:00 PM)</option>
                     <option value="CIN@ARZ">Bengals @ Cardinals (1:00 PM)</option>
                     <option value="PHI@BUF">Eagles @ Bills (4:25 PM)</option>
+                    <option value="CHI@SF">Bears @ 49ers (8:20 PM)</option>
                 </optgroup>
-                <optgroup label="MONDAY NIGHT, DEC 29">
+                <optgroup label="TOMORROW: MONDAY, DEC 29">
                     <option value="RAM@ATL">Rams @ Falcons (8:15 PM)</option>
                 </optgroup>
             </select>
@@ -46,7 +47,7 @@
 
         <div id="prop-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="col-span-full py-20 text-center opacity-30 italic font-mono">
-                System online. Select a matchup to run 2025 seasonal simulations.
+                System online. Simulation results pending matchup selection.
             </div>
         </div>
     </main>
@@ -54,24 +55,34 @@
     <script>
         const fullDatabase = {
             "PAT@JET": [
-                { name: "Drake Maye", type: "Pass Yds", line: 245.5, avg: 263.1, stdev: 32, note: "Maye has cleared this in 71% of games; Jets pass D allows 245+ yds per game.", history: [{wk:16, opp:"BAL", val:281}, {wk:15, opp:"BUF", val:258}, {wk:14, opp:"GIA", val:310}, {wk:13, opp:"CIN", val:245}, {wk:12, opp:"JET", val:268}] },
-                { name: "TreVeyon Henderson", type: "Rush Yds", line: 52.5, avg: 58.7, stdev: 11, note: "Jets rank 31st against the run; Henderson averaging 5.2 YPC.", history: [{wk:16, opp:"BAL", val:42}, {wk:15, opp:"BUF", val:78}, {wk:14, opp:"GIA", val:65}, {wk:13, opp:"CIN", val:54}, {wk:12, opp:"DET", val:38}] },
-                { name: "Stefon Diggs", type: "Rec Yds", line: 68.5, avg: 72.4, stdev: 14, note: "Top 10 in targets in 2025.", history: [{wk:16, opp:"BAL", val:88}, {wk:15, opp:"BUF", val:62}, {wk:14, opp:"GIA", val:102}, {wk:13, opp:"CIN", val:75}, {wk:12, opp:"DET", val:81}] }
+                { name: "Drake Maye", type: "Pass Yds", line: 248.5, avg: 250.6, stdev: 30, history: [{wk:16, opp:"BAL", val:281}, {wk:15, opp:"BUF", val:258}, {wk:14, opp:"GIA", val:310}, {wk:13, opp:"CIN", val:245}, {wk:12, opp:"DET", val:268}] },
+                { name: "TreVeyon Henderson", type: "Rush Yds", line: 51.5, avg: 51.7, stdev: 12, history: [{wk:16, opp:"BAL", val:42}, {wk:15, opp:"BUF", val:78}, {wk:14, opp:"GIA", val:65}, {wk:13, opp:"CIN", val:54}, {wk:12, opp:"DET", val:38}] },
+                { name: "Stefon Diggs", type: "Rec Yds", line: 57.5, avg: 57.9, stdev: 14, history: [{wk:16, opp:"BAL", val:88}, {wk:15, opp:"BUF", val:62}, {wk:14, opp:"GIA", val:102}, {wk:13, opp:"CIN", val:75}, {wk:12, opp:"DET", val:81}] },
+                { name: "Hunter Henry", type: "Receptions", line: 3.5, avg: 3.5, stdev: 1.1, history: [{wk:16, opp:"BAL", val:4}, {wk:15, opp:"BUF", val:2}, {wk:14, opp:"GIA", val:5}, {wk:13, opp:"CIN", val:4}, {wk:12, opp:"DET", val:3}] },
+                { name: "Breece Hall", type: "Rush Yds", line: 62.5, avg: 63.6, stdev: 15, history: [{wk:16, opp:"NO", val:55}, {wk:15, opp:"JAX", val:68}, {wk:14, opp:"MIA", val:82}, {wk:13, opp:"SEA", val:41}, {wk:12, opp:"IND", val:72}] }
             ],
             "SEA@PAN": [
-                { name: "Jaxon Smith-Njigba", type: "Rec Yds", line: 88.5, avg: 109.1, stdev: 18, note: "Current NFL Rec Yardage Leader; Panthers D is bottom-5 in air yards allowed.", history: [{wk:16, opp:"LAR", val:115}, {wk:15, opp:"IND", val:92}, {wk:14, opp:"ARI", val:108}, {wk:13, opp:"MIN", val:75}, {wk:12, opp:"SF", val:110}] },
-                { name: "Zach Charbonnet", type: "Anytime TD", line: 0.5, avg: 0.8, stdev: 0.1, note: "Leads team in Goal-to-Go touches.", history: [{wk:16, opp:"LAR", val:1}, {wk:15, opp:"IND", val:1}, {wk:14, opp:"ARI", val:0}, {wk:13, opp:"MIN", val:1}, {wk:12, opp:"SF", val:1}] }
+                { name: "Jaxon Smith-Njigba", type: "Rec Yds", line: 88.5, avg: 102.3, stdev: 18, history: [{wk:16, opp:"LAR", val:115}, {wk:15, opp:"IND", val:92}, {wk:14, opp:"ARI", val:108}, {wk:13, opp:"MIN", val:75}, {wk:12, opp:"SF", val:110}] },
+                { name: "Kenneth Walker III", type: "Rush Yds", line: 64.5, avg: 72.1, stdev: 14, history: [{wk:16, opp:"LAR", val:58}, {wk:15, opp:"IND", val:82}, {wk:14, opp:"ARI", val:71}, {wk:13, opp:"MIN", val:65}, {wk:12, opp:"SF", val:0, dnp:true}] },
+                { name: "Tetairoa McMillan", type: "Rec Yds", line: 53.5, avg: 58.0, stdev: 12, history: [{wk:16, opp:"LAR", val:61}, {wk:15, opp:"IND", val:44}, {wk:14, opp:"ARI", val:72}, {wk:13, opp:"MIN", val:50}, {wk:12, opp:"SF", val:55}] },
+                { name: "Sam Darnold", type: "Pass Yds", line: 235.5, avg: 244.2, stdev: 31, history: [{wk:16, opp:"LAR", val:210}, {wk:15, opp:"IND", val:255}, {wk:14, opp:"ARI", val:288}, {wk:13, opp:"MIN", val:221}, {wk:12, opp:"SF", val:262}] },
+                { name: "Bryce Young", type: "Rush Yds", line: 14.5, avg: 18.2, stdev: 6, history: [{wk:16, opp:"ATL", val:22}, {wk:15, opp:"TB", val:11}, {wk:14, opp:"NO", val:19}, {wk:13, opp:"DAL", val:25}, {wk:12, opp:"PHI", val:14}] }
             ],
             "GIA@RAI": [
-                { name: "Wan'Dale Robinson", type: "Receptions", line: 5.5, avg: 6.9, stdev: 1.2, note: "Contract year; needs 99 yards for first 1,000 yd season.", history: [{wk:16, opp:"DAL", val:8}, {wk:15, opp:"WAS", val:6}, {wk:14, opp:"PHI", val:9}, {wk:13, opp:"NE", val:7}, {wk:12, opp:"TB", val:5}] },
-                { name: "Ashton Jeanty", type: "Rush + Rec Yds", line: 103.5, avg: 118.2, stdev: 20, note: "Rookie star; Giants allow 128 scrimmage yards per game to lead backs.", history: [{wk:16, opp:"HOU", val:124}, {wk:15, opp:"DEN", val:98}, {wk:14, opp:"CLE", val:110}, {wk:13, opp:"LAC", val:115}, {wk:12, opp:"BAL", val:105}] }
+                { name: "Ashton Jeanty", type: "Rush + Rec Yds", line: 101.5, avg: 118.2, stdev: 20, history: [{wk:16, opp:"TEN", val:124}, {wk:15, opp:"LAC", val:98}, {wk:14, opp:"CLE", val:110}, {wk:13, opp:"DEN", val:115}, {wk:12, opp:"BAL", val:105}] },
+                { name: "Wan'Dale Robinson", type: "Receptions", line: 5.5, avg: 6.8, stdev: 1.2, history: [{wk:16, opp:"DAL", val:8}, {wk:15, opp:"WAS", val:6}, {wk:14, opp:"PHI", val:9}, {wk:13, opp:"NE", val:7}, {wk:12, opp:"TB", val:5}] },
+                { name: "Jaxson Dart", type: "Anytime TD", line: 0.5, avg: 0.6, stdev: 0.2, history: [{wk:16, opp:"DAL", val:1}, {wk:15, opp:"WAS", val:0}, {wk:14, opp:"PHI", val:1}, {wk:13, opp:"NE", val:1}, {wk:12, opp:"TB", val:1}] },
+                { name: "Tyrone Tracy", type: "Rush Yds", line: 68.5, avg: 71.0, stdev: 14, history: [{wk:16, opp:"DAL", val:72}, {wk:15, opp:"WAS", val:55}, {wk:14, opp:"PHI", val:68}, {wk:13, opp:"NE", val:48}, {wk:12, opp:"TB", val:81}] }
             ],
             "RAM@ATL": [
-                { name: "Matthew Stafford", type: "Pass Yds", line: 249.5, avg: 278.6, stdev: 34, note: "Stafford averaging 324 yards over his last 5 games.", history: [{wk:16, opp:"SEA", val:457}, {wk:15, opp:"DET", val:368}, {wk:14, opp:"ARI", val:281}, {wk:13, opp:"CAR", val:243}, {wk:12, opp:"TB", val:273}] },
-                { name: "Puka Nacua", type: "Rec Yds", line: 85.5, avg: 108.4, stdev: 24, note: "Coming off a 225-yard performance; Falcons secondary ranks 19th.", history: [{wk:16, opp:"SEA", val:225}, {wk:15, opp:"DET", val:92}, {wk:14, opp:"ARI", val:118}, {wk:13, opp:"CAR", val:88}, {wk:12, opp:"TB", val:105}] }
+                { name: "Puka Nacua", type: "Rec Yds", line: 85.5, avg: 108.4, stdev: 24, history: [{wk:16, opp:"SEA", val:225}, {wk:15, opp:"DET", val:92}, {wk:14, opp:"ARI", val:118}, {wk:13, opp:"CAR", val:88}, {wk:12, opp:"TB", val:105}] },
+                { name: "Matthew Stafford", type: "Pass Yds", line: 249.5, avg: 278.6, stdev: 34, history: [{wk:16, opp:"SEA", val:457}, {wk:15, opp:"DET", val:368}, {wk:14, opp:"ARI", val:281}, {wk:13, opp:"CAR", val:243}, {wk:12, opp:"TB", val:273}] },
+                { name: "Kyren Williams", type: "Anytime TD", line: 0.5, avg: 0.8, stdev: 0.1, history: [{wk:16, opp:"SEA", val:1}, {wk:15, opp:"DET", val:1}, {wk:14, opp:"ARI", val:2}, {wk:13, opp:"CAR", val:1}, {wk:12, opp:"TB", val:0}] },
+                { name: "Drake London", type: "Rec Yds", line: 72.5, avg: 75.1, stdev: 12, history: [{wk:16, opp:"NO", val:88}, {wk:15, opp:"LV", val:62}, {wk:14, opp:"NYG", val:91}, {wk:13, opp:"MIN", val:77}, {wk:12, opp:"LAC", val:58}] }
             ],
-            "PHI@BUF": [
-                { name: "Saquon Barkley", type: "Rush Yds", line: 83.5, avg: 91.2, stdev: 18, note: "Bills allow 5.4 yards per carry (31st).", history: [{wk:16, opp:"WAS", val:112}, {wk:15, opp:"PIT", val:98}, {wk:14, opp:"CAR", val:145}, {wk:13, opp:"BAL", val:0, dnp:true}, {wk:12, opp:"DAL", val:88}] }
+            "CHI@SF": [
+                { name: "Caleb Williams", type: "Rush Yds", line: 20.5, avg: 26.5, stdev: 8, history: [{wk:16, opp:"GB", val:31}, {wk:15, opp:"CLE", val:25}, {wk:14, opp:"MIN", val:18}, {wk:13, opp:"DET", val:22}, {wk:12, opp:"SF", val:35}] },
+                { name: "Jauan Jennings", type: "Anytime TD", line: 0.5, avg: 0.8, stdev: 0.1, history: [{wk:16, opp:"TEN", val:1}, {wk:15, opp:"BUF", val:1}, {wk:14, opp:"CHI", val:0}, {wk:13, opp:"GB", val:1}, {wk:12, opp:"MIN", val:1}] }
             ]
         };
 
@@ -115,7 +126,7 @@
                                 <span class="text-[9px] font-bold text-blue-400 uppercase tracking-widest">${p.type}</span>
                                 <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Caesars: ${p.line}</span>
                             </div>
-                            <h3 class="text-2xl font-black text-white mb-2 uppercase italic tracking-tighter">${p.name}</h3>
+                            <h3 class="text-2xl font-black text-white mb-2 italic tracking-tighter uppercase">${p.name}</h3>
                             <div class="flex justify-between items-end mb-2">
                                 <p class="text-[10px] font-bold text-slate-500 uppercase">Hit Probability</p>
                                 <p class="text-3xl font-black italic text-green-400">${prob}%</p>
