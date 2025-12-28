@@ -31,11 +31,11 @@
                 <option value="">-- Choose Game --</option>
                 <option value="CIN@ARZ">Bengals @ Cardinals (1:00 PM)</option>
                 <option value="PIT@CLE">Steelers @ Browns (1:00 PM)</option>
+                <option value="TB@MIA">Bucs @ Dolphins (1:00 PM)</option>
+                <option value="NO@TEN">Saints @ Titans (1:00 PM)</option>
                 <option value="PHI@BUF">Eagles @ Bills (4:25 PM)</option>
                 <option value="JAX@IND">Jaguars @ Colts (1:00 PM)</option>
                 <option value="CHI@SF">Bears @ 49ers (8:20 PM)</option>
-                <option value="TB@MIA">Bucs @ Dolphins (1:00 PM)</option>
-                <option value="NO@TEN">Saints @ Titans (1:00 PM)</option>
             </select>
         </div>
 
@@ -48,14 +48,22 @@
 
     <script>
         const fullDatabase = {
+            "TB@MIA": [
+                { name: "Baker Mayfield", type: "Pass TDs", line: 1.5, avg: 1.7, stdev: 0.6, note: "Dolphins secondary allows 1.8 pass TDs per game over last 4.", history: [{wk:16, opp:"DAL", val:2}, {wk:15, opp:"LAC", val:1}, {wk:14, opp:"LV", val:2}, {wk:13, opp:"CAR", val:2}, {wk:12, opp:"LAR", val:1}] },
+                { name: "Rachaad White", type: "Rush Yds", line: 70.5, avg: 72.8, stdev: 14, note: "Miami defense vulnerable to lead backs; White averaging 18 carries.", history: [{wk:16, opp:"DAL", val:68}, {wk:15, opp:"LAC", val:82}, {wk:14, opp:"LV", val:75}, {wk:13, opp:"CAR", val:91}, {wk:12, opp:"LAR", val:55}] },
+                { name: "Mike Evans", type: "Anytime TD", line: 0.5, avg: 0.7, stdev: 0.2, note: "Red-zone target share remains league-leading at 34%.", history: [{wk:16, opp:"DAL", val:1}, {wk:15, opp:"LAC", val:0}, {wk:14, opp:"LV", val:1}, {wk:13, opp:"CAR", val:1}, {wk:12, opp:"LAR", val:1}] }
+            ],
+            "NO@TEN": [
+                { name: "Tony Pollard", type: "Rush Yds", line: 69.5, avg: 78.2, stdev: 15, note: "Pollard acting as bell-cow; Saints defense ranks bottom-tier in road rush D.", history: [{wk:16, opp:"IND", val:74}, {wk:15, opp:"CIN", val:88}, {wk:14, opp:"JAX", val:62}, {wk:13, opp:"WAS", val:91}, {wk:12, opp:"HOU", val:70}] },
+                { name: "Alvin Kamara", type: "Receptions", line: 4.5, avg: 5.4, stdev: 1.2, note: "Checkdown target for rookie Tyler Shough; Titans allow high target volume to RBs.", history: [{wk:16, opp:"NYJ", val:6}, {wk:15, opp:"CAR", val:4}, {wk:14, opp:"TB", val:7}, {wk:13, opp:"NYG", val:5}, {wk:12, opp:"LAR", val:6}] },
+                { name: "Chig Okonkwo", type: "Receptions", line: 3.5, avg: 4.2, stdev: 1.1, note: "Primary move-TE for Titans; Saints struggle defending intermediate TE routes.", history: [{wk:16, opp:"IND", val:5}, {wk:15, opp:"CIN", val:3}, {wk:14, opp:"JAX", val:6}, {wk:13, opp:"WAS", val:4}, {wk:12, opp:"HOU", val:5}] }
+            ],
             "CIN@ARZ": [
                 { name: "Joe Burrow", type: "Pass Yds", line: 265.5, avg: 307.4, stdev: 42, note: "Cardinals rank 29th in Pass Defense; Burrow averaging 310+ at home.", history: [{wk:16, opp:"MIA", val:309}, {wk:15, opp:"BAL", val:225}, {wk:14, opp:"BUF", val:284}, {wk:13, opp:"BAL", val:261}, {wk:12, opp:"JAX", val:76}] },
-                { name: "Trey McBride", type: "Receptions", line: 6.5, avg: 7.3, stdev: 1.4, note: "Lead volume target for Cardinals in catch-up scripts.", history: [{wk:16, opp:"LAR", val:8}, {wk:15, opp:"SEA", val:6}, {wk:14, opp:"MIN", val:9}, {wk:13, opp:"SF", val:7}, {wk:12, opp:"CHI", val:5}] },
-                { name: "Chase Brown", type: "Rush Yds", line: 54.5, avg: 56.4, stdev: 14, note: "Cincinnati leaning on run to close late halves.", history: [{wk:16, opp:"MIA", val:66}, {wk:15, opp:"BAL", val:53}, {wk:14, opp:"BUF", val:23}, {wk:13, opp:"BAL", val:78}, {wk:12, opp:"NE", val:107}] }
+                { name: "Trey McBride", type: "Receptions", line: 6.5, avg: 7.3, stdev: 1.4, note: "Lead volume target for Cardinals in catch-up scripts.", history: [{wk:16, opp:"LAR", val:8}, {wk:15, opp:"SEA", val:6}, {wk:14, opp:"MIN", val:9}, {wk:13, opp:"SF", val:7}, {wk:12, opp:"CHI", val:5}] }
             ],
             "PIT@CLE": [
                 { name: "Shedeur Sanders", type: "Pass Yds", line: 177.5, avg: 183.8, stdev: 30, note: "Pittsburgh pass D ranked 30th; Sanders averages 183 since start.", history: [{wk:16, opp:"BUF", val:157}, {wk:15, opp:"CHI", val:177}, {wk:14, opp:"TEN", val:364}, {wk:13, opp:"SF", val:149}, {wk:12, opp:"LV", val:209}] },
-                { name: "Aaron Rodgers", type: "Pass TDs", line: 1.5, avg: 1.27, stdev: 0.8, note: "Under 1.5 TDs in 3/4 games vs top-tier secondaries.", history: [{wk:16, opp:"LIO", val:1}, {wk:15, opp:"PHI", val:2}, {wk:14, opp:"CIN", val:1}, {wk:13, opp:"CLE", val:1}, {wk:12, opp:"BAL", val:2}] },
                 { name: "Jaylen Warren", type: "Rush Yds", line: 52.5, avg: 57.3, stdev: 12, note: "Consistent volume lately as Steelers lean on ground game.", history: [{wk:16, opp:"LIO", val:58}, {wk:15, opp:"PHI", val:48}, {wk:14, opp:"CIN", val:62}, {wk:13, opp:"CLE", val:51}, {wk:12, opp:"BAL", val:44}] }
             ],
             "PHI@BUF": [
