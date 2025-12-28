@@ -3,84 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFL Intel | 50%+ Probability Tracker</title>
+    <title>NFL Intel | Historical Stats Dropdown</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .prob-card { transition: all 0.3s ease; border: 1px solid #1e293b; }
-        .prob-card:hover { border-color: #c4a006; transform: scale(1.02); box-shadow: 0 10px 30px -10px rgba(196, 160, 6, 0.2); }
-        .high-value { border-top: 4px solid #10b981; }
-        .caesars-gold { color: #c4a006; }
+        .game-log-details { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .expanded .game-log-details { max-height: 300px; }
+        .prob-bar { transition: width 1.5s ease-in-out; }
     </style>
 </head>
-<body class="bg-[#020617] text-slate-100 font-sans min-h-screen">
+<body class="bg-[#020617] text-slate-100 font-sans min-h-screen pb-20">
 
-    <nav class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-xl border-b border-[#c4a006]/30 p-4">
+    <nav class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-xl border-b border-slate-800 p-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-black text-blue-500 italic uppercase tracking-tighter">Intel<span class="text-white">Prob</span></h1>
-            <div class="text-right">
-                <p class="text-[10px] font-bold text-slate-500 uppercase">Live Filter</p>
-                <p class="text-xs text-green-400 font-black tracking-widest">MIN 50% HIT RATE</p>
-            </div>
+            <h1 class="text-xl font-black text-blue-500 italic uppercase">Intel<span class="text-white">Prob</span></h1>
+            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Sunday, Dec 28, 2025</p>
         </div>
     </nav>
 
     <main class="max-w-7xl mx-auto p-4 md:p-8">
-        <div class="mb-10 bg-slate-900/40 p-6 rounded-3xl border border-slate-800">
-            <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 ml-1">Today's Selectable Matchups</label>
-            <select id="matchup-selector" onchange="loadMatchupData()" class="w-full bg-slate-950 border border-slate-700 text-white py-4 px-4 rounded-xl font-bold focus:ring-2 focus:ring-[#c4a006] outline-none cursor-pointer">
-                <option value="">-- Choose a Game --</option>
-                <option value="PHI@BUF">Eagles @ Bills (4:25 PM)</option>
-                <option value="CHI@SF">Bears @ 49ers (8:20 PM)</option>
-                <option value="CIN@ARZ">Bengals @ Cardinals (1:00 PM)</option>
-                <option value="JAX@IND">Jaguars @ Colts (1:00 PM)</option>
-                <option value="TB@MIA">Bucs @ Dolphins (1:00 PM)</option>
-                <option value="NO@TEN">Saints @ Titans (1:00 PM)</option>
-                <option value="PIT@CLE">Steelers @ Browns (1:00 PM)</option>
+        <div class="mb-8">
+            <select id="matchup-selector" onchange="loadMatchupData()" class="w-full bg-slate-900 border border-slate-700 text-white py-4 px-4 rounded-2xl font-bold focus:ring-2 focus:ring-blue-600 outline-none">
+                <option value="">-- Select Game to View 50%+ Hit Rates --</option>
+                <option value="PHI@BUF">Philadelphia Eagles @ Buffalo Bills</option>
+                <option value="CIN@ARZ">Cincinnati Bengals @ Arizona Cardinals</option>
+                <option value="CHI@SF">Chicago Bears @ San Francisco 49ers</option>
             </select>
         </div>
 
-        <div id="prop-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <div class="col-span-full py-20 text-center opacity-30 italic">
-                Scanning Week 17 lines... Select a matchup to filter 50%+ probabilities.
+        <div id="prop-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             </div>
-        </div>
     </main>
 
     <script>
-        // Expanded Database for Week 17 (Dec 28, 2025)
-        const fullDatabase = {
-            "PHI@BUF": [
-                { name: "Saquon Barkley", type: "Rush Yds", line: 83.5, avg: 91.2, stdev: 18, note: "Bills allow 5.1 YPC to lead backs." },
-                { name: "Josh Allen", type: "Rush Attempts", line: 6.5, avg: 7.8, stdev: 1.1, note: "Eagles pass rush forces high QB scramble rate." },
-                { name: "James Cook", type: "Rush Yds", line: 92.5, avg: 104.5, stdev: 22, note: "Cleared 95+ in 11 of 15 games this year." },
-                { name: "A.J. Brown", type: "Rec Yds", line: 71.5, avg: 74.0, stdev: 15, note: "Bills secondary missing CB1 Benford." }
+        const playerHistory = {
+            "Josh Allen": [
+                { week: 16, opp: "NYJ", stat: 210, result: "W", played: true },
+                { week: 15, opp: "LAR", stat: 285, result: "W", played: true },
+                { week: 14, opp: "DET", stat: 0, result: "L", played: false }, // DNP
+                { week: 13, opp: "SF", stat: 312, result: "W", played: true },
+                { week: 12, opp: "KC", stat: 262, result: "L", played: true }
             ],
-            "CHI@SF": [
-                { name: "Christian McCaffrey", type: "Rush Yds", line: 78.5, avg: 94.2, stdev: 20, note: "Primetime SNF usage typically spikes." },
-                { name: "Jauan Jennings", type: "Anytime TD", line: 0.5, avg: 0.8, stdev: 0.2, note: "Scored in 6 of last 7 games." },
-                { name: "Caleb Williams", type: "Rush Yds", line: 18.5, avg: 26.8, stdev: 10, note: "Designs runs up 15% in last 3 weeks." },
-                { name: "Brock Purdy", type: "Pass Comp", line: 20.5, avg: 22.1, stdev: 3, note: "Niners passing volume high vs Bears zone." }
+            "Saquon Barkley": [
+                { week: 16, opp: "WAS", stat: 112, result: "W", played: true },
+                { week: 15, opp: "PIT", stat: 98, result: "L", played: true },
+                { week: 14, opp: "CAR", stat: 145, result: "W", played: true },
+                { week: 13, opp: "BAL", stat: 0, result: "W", played: false }, // DNP
+                { week: 12, opp: "DAL", stat: 88, result: "W", played: true }
+            ],
+            "Joe Burrow": [
+                { week: 16, opp: "CLE", stat: 310, result: "W", played: true },
+                { week: 15, opp: "DEN", stat: 245, result: "W", played: true },
+                { week: 14, opp: "DAL", stat: 288, result: "L", played: true },
+                { week: 13, opp: "PIT", stat: 275, result: "W", played: true },
+                { week: 12, opp: "LAC", stat: 330, result: "L", played: true }
+            ]
+        };
+
+        const matchups = {
+            "PHI@BUF": [
+                { name: "Josh Allen", type: "Pass Yds", line: 242.5, avg: 256.4, stdev: 40 },
+                { name: "Saquon Barkley", type: "Rush Yds", line: 83.5, avg: 91.2, stdev: 22 }
             ],
             "CIN@ARZ": [
-                { name: "Joe Burrow", type: "Pass Yds", line: 263.5, avg: 283.4, stdev: 35, note: "Cards rank 30th in Pass Defense Efficiency." },
-                { name: "Trey McBride", type: "Receptions", line: 6.5, avg: 7.2, stdev: 1.2, note: "Bengals allow 7.1 catches per game to TEs." },
-                { name: "Chase Brown", type: "Rush Yds", line: 58.5, avg: 66.2, stdev: 14, note: "Arizona run funnel defense gives 115+ total." }
-            ],
-            "JAX@IND": [
-                { name: "Jakobi Meyers", type: "Receptions", line: 4.5, avg: 5.6, stdev: 1.1, note: "Hit 5+ catches in 6 straight games." },
-                { name: "Michael Pittman", type: "Receptions", line: 4.5, avg: 6.2, stdev: 1.4, note: "Jaguars allow most catches to outside WRs." },
-                { name: "Trevor Lawrence", type: "Pass Yds", line: 242.5, avg: 251.0, stdev: 28, note: "Colts are a pass funnel defense (Top 5 vs Run)." }
-            ],
-            "TB@MIA": [
-                { name: "Quinn Ewers", type: "Pass Att", line: 29.5, avg: 31.2, stdev: 4, note: "Bucs allow 3rd highest Pass Rate Over Expectation." },
-                { name: "Rachaad White", type: "Rec Yds", line: 24.5, avg: 29.8, stdev: 8, note: "Mayfield checkdown rate is 22% vs Miami blitz." }
-            ],
-            "NO@TEN": [
-                { name: "Tyler Shough", type: "Pass Comp", line: 19.5, avg: 21.2, stdev: 4, note: "Titans allow high completion % but low YPC." }
-            ],
-            "PIT@CLE": [
-                { name: "Shedeur Sanders", type: "Rush Yds", line: 13.5, avg: 17.2, stdev: 5, note: "Steelers' interior rush leaves escape lanes." },
-                { name: "Jaylen Warren", type: "Rush + Rec Yds", line: 62.5, avg: 68.0, stdev: 12, note: "Browns struggle with pass-catching backs." }
+                { name: "Joe Burrow", type: "Pass Yds", line: 263.5, avg: 283.4, stdev: 38 }
             ]
         };
 
@@ -99,54 +84,53 @@
             return sign * y;
         }
 
+        function toggleHistory(btn) {
+            btn.parentElement.parentElement.classList.toggle('expanded');
+        }
+
         function loadMatchupData() {
             const matchId = document.getElementById('matchup-selector').value;
             const grid = document.getElementById('prop-grid');
+            grid.innerHTML = '';
             if (!matchId) return;
 
-            grid.innerHTML = '';
-            const players = fullDatabase[matchId] || [];
-
-            // FILTER: Only show players with 50% or higher probability
-            const filteredPlayers = players.filter(p => {
+            matchups[matchId].forEach(p => {
                 const prob = getProbability(p.avg, p.stdev, p.line);
-                return prob >= 50.0;
-            });
+                if (prob < 50) return; // Only show 50%+
 
-            // SORT: Highest probability first
-            filteredPlayers.sort((a,b) => getProbability(b.avg, b.stdev, b.line) - getProbability(a.avg, a.stdev, a.line));
-
-            if (filteredPlayers.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center py-20 text-slate-500">No high-probability props found for this matchup.</p>';
-                return;
-            }
-
-            filteredPlayers.forEach(p => {
-                const prob = getProbability(p.avg, p.stdev, p.line);
-                const color = prob > 60 ? '#10b981' : '#c4a006';
+                const history = playerHistory[p.name] || [];
+                let historyHtml = history.map(h => `
+                    <div class="flex justify-between py-2 border-b border-slate-800 text-[10px] ${!h.played ? 'opacity-40' : ''}">
+                        <span>WK ${h.week} vs ${h.opp}</span>
+                        <span class="font-mono font-bold">${h.played ? h.stat + ' ' + p.type.split(' ')[1] : 'DNP (Did Not Play)'}</span>
+                        <span class="${h.result === 'W' ? 'text-green-500' : 'text-red-500'} font-bold">${h.result}</span>
+                    </div>
+                `).join('');
 
                 grid.innerHTML += `
-                    <div class="prob-card bg-slate-900/60 rounded-3xl p-6 flex flex-col justify-between high-value">
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-center mb-4">
-                                <span class="text-[9px] font-black text-blue-500 uppercase tracking-widest">${p.type}</span>
-                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Caesars: ${p.line}</span>
+                                <span class="text-[9px] font-bold text-blue-400 uppercase tracking-widest">${p.type}</span>
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Caesars Line: ${p.line}</span>
                             </div>
-                            <h3 class="text-xl font-black text-white leading-tight mb-2 italic">${p.name}</h3>
-                            <p class="text-[10px] text-slate-400 font-medium mb-4 leading-relaxed italic opacity-80">"${p.note}"</p>
+                            <h3 class="text-2xl font-black text-white mb-2">${p.name}</h3>
+                            
+                            <div class="flex justify-between items-end mb-2">
+                                <p class="text-[10px] font-bold text-slate-500 uppercase">Hit Probability</p>
+                                <p class="text-3xl font-black italic text-green-400">${prob}%</p>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="prob-bar h-full bg-blue-600" style="width: ${prob}%"></div>
+                            </div>
                         </div>
 
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-end">
-                                <p class="text-[9px] font-bold text-slate-600 uppercase">Hit Likelihood</p>
-                                <p class="text-3xl font-black italic tracking-tighter" style="color: ${color}">${prob}%</p>
-                            </div>
-                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                                <div class="h-full rounded-full" style="width: ${prob}%; background: ${color}"></div>
-                            </div>
-                            <div class="flex justify-between text-[10px] font-bold text-slate-600">
-                                <span>Season Avg: ${p.avg}</span>
-                                <span class="text-white">${prob > 52.4 ? 'EXPECTED WIN' : 'COIN FLIP'}</span>
+                        <div class="mt-4 pt-4 border-t border-slate-800">
+                            <button onclick="toggleHistory(this)" class="w-full text-[10px] font-black uppercase text-slate-500 hover:text-white transition flex justify-between items-center">
+                                View Past Performance History <span>▼</span>
+                            </button>
+                            <div class="game-log-details mt-4">
+                                ${historyHtml}
                             </div>
                         </div>
                     </div>
