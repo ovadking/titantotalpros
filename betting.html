@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IntelProb | Parlay Hub</title>
+    <title>IntelProb | 2025 Sharp Picks</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .game-log-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
         .expanded .game-log-details { max-height: 800px; padding-bottom: 20px; }
         .prob-bar { transition: width 1.2s ease-in-out; }
-        .sharp-pick { border-top: 4px solid #10b981; cursor: pointer; transition: transform 0.2s; }
-        .sharp-pick:hover { transform: translateY(-2px); }
-        #bet-slip { position: sticky; top: 100px; }
+        .sharp-pick { border-top: 4px solid #10b981; background: rgba(16, 185, 129, 0.05); }
     </style>
 </head>
 <body class="bg-[#020617] text-slate-100 font-sans min-h-screen pb-10">
@@ -21,44 +19,27 @@
             <h1 class="text-xl font-black text-blue-500 italic uppercase">Intel<span class="text-white">Prob</span></h1>
             <div class="text-right">
                 <p class="text-[10px] font-bold text-slate-500 uppercase">Live: Dec 28, 2025</p>
-                <p class="text-xs text-green-400 font-black">PARLAY OPTIMIZER ACTIVE</p>
+                <p class="text-xs text-green-400 font-black tracking-widest">MIN 50% HIT RATE</p>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <div class="lg:col-span-3">
-            <div class="mb-10 bg-slate-900/50 p-6 rounded-3xl border border-slate-800">
-                <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 ml-1">Select Matchup</label>
-                <select id="matchup-selector" onchange="loadMatchupData()" class="w-full bg-slate-950 border border-slate-700 text-white py-4 px-4 rounded-xl font-bold outline-none cursor-pointer">
-                    <option value="">-- Choose Game --</option>
-                    <option value="PHI@BUF">Eagles @ Bills (4:25 PM)</option>
-                    <option value="CHI@SF">Bears @ 49ers (8:20 PM)</option>
-                    <option value="RAM@ATL">Rams @ Falcons (8:15 PM)</option>
-                </select>
-            </div>
-
-            <div id="prop-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                </div>
+    <main class="max-w-7xl mx-auto p-4 md:p-8">
+        <div class="mb-10 bg-slate-900/50 p-6 rounded-3xl border border-slate-800 shadow-2xl">
+            <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 ml-1">Today's High-Prob Slate</label>
+            <select id="matchup-selector" onchange="loadMatchupData()" class="w-full bg-slate-950 border border-slate-700 text-white py-4 px-4 rounded-xl font-bold focus:ring-2 focus:ring-blue-600 outline-none cursor-pointer">
+                <option value="">-- Choose Game --</option>
+                <option value="PHI@BUF">Eagles @ Bills (4:25 PM) - TOP PICK</option>
+                <option value="CHI@SF">Bears @ 49ers (8:20 PM)</option>
+                <option value="CIN@ARZ">Bengals @ Cardinals (1:00 PM)</option>
+                <option value="TB@MIA">Bucs @ Dolphins (1:00 PM)</option>
+                <option value="SEA@PAN">Seahawks @ Panthers (1:00 PM)</option>
+            </select>
         </div>
 
-        <div class="lg:col-span-1">
-            <div id="bet-slip" class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
-                <h2 class="text-lg font-black italic uppercase mb-4 text-blue-500">Your Parlay Slip</h2>
-                <div id="slip-items" class="space-y-4 mb-6">
-                    <p class="text-xs text-slate-500 italic">Select a prop to start building your slip...</p>
-                </div>
-                <div id="slip-totals" class="hidden pt-4 border-t border-slate-800">
-                    <div class="flex justify-between mb-2">
-                        <span class="text-xs font-bold text-slate-400">Combined Prob:</span>
-                        <span id="total-prob" class="text-sm font-black text-green-400">0%</span>
-                    </div>
-                    <div class="flex justify-between mb-4">
-                        <span class="text-xs font-bold text-slate-400">Parlay Odds:</span>
-                        <span id="total-odds" class="text-sm font-black text-white">+000</span>
-                    </div>
-                    <button class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3 rounded-xl uppercase transition">Lock In Slip</button>
-                </div>
+        <div id="prop-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="col-span-full py-20 text-center opacity-30 italic font-mono">
+                System online. Select a game to view props with >50% hit probability.
             </div>
         </div>
     </main>
@@ -66,16 +47,25 @@
     <script>
         const fullDatabase = {
             "PHI@BUF": [
-                { id: "sb1", name: "Saquon Barkley", type: "Rush Yds", line: 83.5, avg: 104.2, stdev: 22, history: [{wk:16, opp:"WAS", val:122}, {wk:15, opp:"PIT", val:95}] },
-                { id: "ja1", name: "Josh Allen", type: "Rush Yds", line: 31.5, avg: 38.4, stdev: 12, history: [{wk:16, opp:"NE", val:45}, {wk:15, opp:"DET", val:28}] }
+                { name: "Saquon Barkley", type: "Rush Yds", line: 83.5, avg: 104.2, stdev: 22, history: [{wk:16, opp:"WAS", val:122}, {wk:15, opp:"PIT", val:95}, {wk:14, opp:"CAR", val:145}, {wk:13, opp:"BAL", val:82}, {wk:12, opp:"LAR", val:78}] },
+                { name: "Josh Allen", type: "Pass TDs", line: 1.5, avg: 2.1, stdev: 0.8, history: [{wk:16, opp:"NE", val:2}, {wk:15, opp:"DET", val:3}, {wk:14, opp:"LAR", val:2}, {wk:13, opp:"SF", val:1}, {wk:12, opp:"LAC", val:2}] }
             ],
             "CHI@SF": [
-                { id: "cw1", name: "Caleb Williams", type: "Rush Yds", line: 16.5, avg: 26.5, stdev: 8, history: [{wk:16, opp:"GB", val:31}, {wk:15, opp:"CLE", val:25}] },
-                { id: "jj1", name: "Jauan Jennings", type: "Anytime TD", line: 0.5, avg: 0.7, stdev: 0.2, history: [{wk:16, opp:"TEN", val:1}] }
+                { name: "Caleb Williams", type: "Rush Yds", line: 16.5, avg: 26.5, stdev: 8, history: [{wk:16, opp:"GB", val:31}, {wk:15, opp:"CLE", val:25}, {wk:14, opp:"MIN", val:18}, {wk:13, opp:"DET", val:22}, {wk:12, opp:"SF", val:35}] },
+                { name: "D'Andre Swift", type: "Rush Yds", line: 56.5, avg: 64.8, stdev: 14, history: [{wk:16, opp:"GB", val:72}, {wk:15, opp:"CLE", val:51}, {wk:14, opp:"MIN", val:88}, {wk:13, opp:"DET", val:63}, {wk:12, opp:"SF", val:59}] },
+                { name: "Jauan Jennings", type: "Anytime TD", line: 0.5, avg: 0.7, stdev: 0.2, history: [{wk:16, opp:"TEN", val:1}, {wk:15, opp:"BUF", val:1}, {wk:14, opp:"CHI", val:0}, {wk:13, opp:"GB", val:1}, {wk:12, opp:"MIN", val:1}] }
+            ],
+            "CIN@ARZ": [
+                { name: "Joe Burrow", type: "Pass Yds", line: 263.5, avg: 288.5, stdev: 32, history: [{wk:16, opp:"TEN", val:315}, {wk:15, opp:"CLE", val:265}, {wk:14, opp:"DEN", val:330}, {wk:13, opp:"PIT", val:252}, {wk:12, opp:"DAL", val:280}] },
+                { name: "Ja'Marr Chase", type: "Rec Yds", line: 85.5, avg: 94.2, stdev: 20, history: [{wk:16, opp:"TEN", val:112}, {wk:15, opp:"CLE", val:78}, {wk:14, opp:"DEN", val:125}, {wk:13, opp:"PIT", val:82}, {wk:12, opp:"DAL", val:74}] }
+            ],
+            "TB@MIA": [
+                { name: "Baker Mayfield", type: "Pass Attempts", line: 32.5, avg: 31.2, stdev: 4, history: [{wk:16, opp:"DAL", val:29}, {wk:15, opp:"LAC", val:31}, {wk:14, opp:"LV", val:28}, {wk:13, opp:"CAR", val:30}, {wk:12, opp:"LAR", val:35}], isUnder: true }
+            ],
+            "SEA@PAN": [
+                { name: "Jaxon Smith-Njigba", type: "Rec Yds", line: 88.5, avg: 102.3, stdev: 18, history: [{wk:16, opp:"LAR", val:115}, {wk:15, opp:"IND", val:92}, {wk:14, opp:"ARI", val:108}, {wk:13, opp:"MIN", val:75}, {wk:12, opp:"SF", val:110}] }
             ]
         };
-
-        let selectedLegs = [];
 
         function erf(x) {
             const a = [0.254829592, -0.284496736, 1.421413741, -1.453152027, 1.061405429];
@@ -85,9 +75,11 @@
             return sign * (1.0 - (((((a[4] * t + a[3]) * t) + a[2]) * t + a[1]) * t + a[0]) * t * Math.exp(-x * x));
         }
 
-        function getProbability(mean, stdev, line) {
+        function getProbability(mean, stdev, line, isUnder = false) {
             const z = (line - mean) / stdev;
-            return (0.5 * (1 + erf(-z / Math.sqrt(2))));
+            let prob = 0.5 * (1 + erf(-z / Math.sqrt(2)));
+            if (isUnder) prob = 1 - prob;
+            return (prob * 100).toFixed(1);
         }
 
         function loadMatchupData() {
@@ -96,53 +88,43 @@
             grid.innerHTML = '';
             if (!matchId) return;
 
-            fullDatabase[matchId].forEach(p => {
-                const prob = (getProbability(p.avg, p.stdev, p.line) * 100).toFixed(1);
-                grid.innerHTML += `
-                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sharp-pick" onclick="addToSlip('${p.id}', '${p.name}', '${p.type}', ${prob})">
-                        <div class="flex justify-between mb-4">
-                            <span class="text-[9px] font-bold text-blue-400 uppercase tracking-widest">${p.type}</span>
-                            <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">${p.line}</span>
-                        </div>
-                        <h3 class="text-xl font-black text-white italic uppercase">${p.name}</h3>
-                        <p class="text-2xl font-black text-green-400">${prob}%</p>
-                    </div>`;
-            });
-        }
+            const players = fullDatabase[matchId] || [];
+            players.forEach(p => {
+                const prob = getProbability(p.avg, p.stdev, p.line, p.isUnder);
+                if (prob < 50) return;
 
-        function addToSlip(id, name, type, prob) {
-            if (selectedLegs.find(leg => leg.id === id)) return;
-            selectedLegs.push({ id, name, type, prob: prob / 100 });
-            updateSlipUI();
-        }
-
-        function updateSlipUI() {
-            const container = document.getElementById('slip-items');
-            const totals = document.getElementById('slip-totals');
-            if (selectedLegs.length === 0) {
-                container.innerHTML = '<p class="text-xs text-slate-500 italic">Select a prop...</p>';
-                totals.classList.add('hidden');
-                return;
-            }
-            totals.classList.remove('hidden');
-            container.innerHTML = selectedLegs.map((leg, idx) => `
-                <div class="flex justify-between items-center bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <div>
-                        <p class="text-[10px] font-black text-white uppercase">${leg.name}</p>
-                        <p class="text-[9px] text-blue-400">${leg.type}</p>
+                let logHtml = p.history.map(h => `
+                    <div class="flex justify-between py-2 border-b border-slate-800 text-[10px]">
+                        <span>WK ${h.wk} vs ${h.opp}</span>
+                        <span class="font-mono font-bold">${h.val} ${p.type.split(' ')[1] || 'TD'}</span>
                     </div>
-                    <button onclick="selectedLegs.splice(${idx},1); updateSlipUI()" class="text-slate-600 hover:text-red-500">✕</button>
-                </div>
-            `).join('');
+                `).join('');
 
-            // Probability Math: P(A and B) = P(A) * P(B)
-            const combinedProb = selectedLegs.reduce((acc, leg) => acc * leg.prob, 1);
-            document.getElementById('total-prob').innerText = (combinedProb * 100).toFixed(2) + '%';
-            
-            // Basic Parlay Payout Math (Approximate +100 per leg for simplicity)
-            const oddsTable = [0, 0, 264, 595, 1228, 2435]; // Standard -110 parlay odds
-            const parlayOdds = oddsTable[selectedLegs.length] || "OFF";
-            document.getElementById('total-odds').innerText = '+' + parlayOdds;
+                grid.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sharp-pick flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-[9px] font-bold text-blue-400 uppercase tracking-widest">${p.isUnder ? 'UNDER' : 'OVER'} ${p.type}</span>
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">LINE: ${p.line}</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-white mb-2 uppercase italic tracking-tighter">${p.name}</h3>
+                            <div class="flex justify-between items-end mb-2">
+                                <p class="text-[10px] font-bold text-slate-500 uppercase">Hit Probability</p>
+                                <p class="text-3xl font-black italic text-green-400">${prob}%</p>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="prob-bar h-full bg-blue-600" style="width: ${prob}%"></div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-800">
+                            <button onclick="this.parentElement.parentElement.classList.toggle('expanded')" class="w-full text-[10px] font-black uppercase text-slate-500 hover:text-white transition flex justify-between items-center">
+                                Log History <span>▼</span>
+                            </button>
+                            <div class="game-log-details mt-4">${logHtml}</div>
+                        </div>
+                    </div>
+                `;
+            });
         }
     </script>
 </body>
