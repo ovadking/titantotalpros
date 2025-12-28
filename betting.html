@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IntelProb | 2025 Week 17 Hub</title>
+    <title>IntelProb | 2025 Week 17 Official Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .sharp-pick { border-top: 4px solid #10b981; background: rgba(16, 185, 129, 0.05); cursor: pointer; transition: 0.2s; position: relative; }
+        .sharp-pick:hover { transform: translateY(-3px); }
         .selected-leg { border: 2px solid #3b82f6 !important; background: rgba(59, 130, 246, 0.1) !important; }
-        .script-badge { font-size: 8px; font-weight: 900; padding: 1px 4px; border-radius: 4px; margin-right: 4px; }
-        .blowout { background: #ef4444; color: white; }
-        .competitive { background: #10b981; color: white; }
+        .elite-ping { position: absolute; top: -10px; right: 10px; background: #ef4444; color: white; padding: 2px 10px; border-radius: 20px; font-size: 10px; font-weight: 900; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.95); } }
     </style>
 </head>
 <body class="bg-[#020617] text-slate-100 font-sans min-h-screen pb-10">
@@ -19,8 +19,8 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <h1 class="text-xl font-black text-blue-500 italic uppercase">Intel<span class="text-white">Prob</span></h1>
             <div class="text-right">
-                <p class="text-[10px] font-bold text-slate-500 uppercase">Live: Dec 28, 2025</p>
-                <p class="text-xs text-green-400 font-black tracking-widest uppercase">Full Sunday Slate Active</p>
+                <p class="text-[10px] font-bold text-slate-500 uppercase">Live Roster: Dec 28, 2025</p>
+                <p class="text-xs text-red-500 font-black animate-pulse uppercase tracking-tighter">● Real-Time Inactives Sync: ON</p>
             </div>
         </div>
     </nav>
@@ -29,43 +29,55 @@
         
         <div class="lg:col-span-3">
             <div class="mb-10 bg-slate-900/50 p-6 rounded-3xl border border-slate-800 shadow-2xl">
-                <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 ml-1">Select Game Script</label>
+                <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 ml-1">Today's Final Slate (Sunday)</label>
                 <select id="matchup-selector" onchange="loadMatchupData()" class="w-full bg-slate-950 border border-slate-700 text-white py-4 px-4 rounded-xl font-bold outline-none cursor-pointer">
                     <option value="">-- Choose Matchup --</option>
                     <optgroup label="EARLY WINDOW (1:00 PM ET)">
-                        <option value="SEA@PAN">Seahawks @ Panthers (CBS)</option>
-                        <option value="ARI@CIN">Cardinals @ Bengals (FOX)</option>
-                        <option value="PIT@CLE">Steelers @ Browns (CBS)</option>
-                        <option value="JAX@IND">Jaguars @ Colts (FOX)</option>
-                        <option value="TB@MIA">Bucs @ Dolphins (FOX)</option>
-                        <option value="PAT@JET">Patriots @ Jets (FOX) - BLOWOUT</option>
-                        <option value="NO@TEN">Saints @ Titans (CBS)</option>
+                        <option value="TB@MIA">Bucs @ Dolphins (No Tyreek Hill)</option>
+                        <option value="JAX@IND">Jaguars @ Colts (Rivers Era)</option>
+                        <option value="ARI@CIN">Cardinals @ Bengals</option>
+                        <option value="PIT@CLE">Steelers @ Browns (No T.J. Watt)</option>
+                        <option value="SEA@PAN">Seahawks @ Panthers</option>
+                        <option value="PAT@JET">Patriots @ Jets</option>
+                        <option value="NO@TEN">Saints @ Titans (No Kamara)</option>
                     </optgroup>
-                    <optgroup label="LATE AFTERNOON (4:05/4:25 PM ET)">
+                    <optgroup label="LATE AFTERNOON (4:00 PM ET)">
+                        <option value="PHI@BUF">Eagles @ Bills (4:25 PM)</option>
                         <option value="GIA@RAI">Giants @ Raiders (4:05 PM)</option>
-                        <option value="PHI@BUF">Eagles @ Bills (4:25 PM) - TOP PICK</option>
                     </optgroup>
-                    <optgroup label="NIGHT GAME (8:20 PM ET)">
-                        <option value="CHI@SF">Bears @ 49ers (NBC/Peacock)</option>
+                    <optgroup label="SUNDAY NIGHT (8:20 PM ET)">
+                        <option value="CHI@SF">Bears @ 49ers</option>
                     </optgroup>
                 </select>
             </div>
 
             <div id="prop-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="col-span-full py-20 text-center opacity-30 italic font-mono uppercase tracking-widest">
+                    Select a matchup to view active player edges.
                 </div>
+            </div>
         </div>
 
         <div class="lg:col-span-1">
-            <div class="sticky top-24 bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
-                <h2 class="text-lg font-black italic uppercase mb-4 text-blue-500">Banker Slip</h2>
-                <div id="parlay-list" class="space-y-3 mb-6">
-                    <p class="text-[10px] text-slate-500 italic text-center uppercase">Add legs to view projections...</p>
-                </div>
-                
-                <div id="parlay-stats" class="hidden border-t border-slate-800 pt-4">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Combined Hit Prob</p>
-                    <p id="combined-prob" class="text-4xl font-black italic text-white mb-6">0%</p>
-                    <button class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-xl uppercase text-xs transition">Lock In Slip</button>
+            <div class="sticky top-24 space-y-6">
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+                    <h2 class="text-lg font-black italic uppercase mb-4 text-blue-500">Banker Slip</h2>
+                    <div id="parlay-list" class="space-y-3 mb-6">
+                        <p class="text-[10px] text-slate-500 italic text-center uppercase">Add legs to view projections...</p>
+                    </div>
+                    
+                    <div id="parlay-stats" class="hidden border-t border-slate-800 pt-4">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Combined Hit Prob</p>
+                        <p id="combined-prob" class="text-4xl font-black italic text-white mb-6">0%</p>
+                        
+                        <div id="hedge-container" class="mt-4 p-4 bg-blue-900/20 border border-blue-800 rounded-2xl">
+                            <p class="text-[10px] font-black text-blue-400 uppercase mb-2">Hedge Calculator</p>
+                            <div class="flex justify-between items-center bg-slate-950 p-3 rounded-xl">
+                                <span class="text-[9px] font-bold text-slate-400">Guaranteed Hedge:</span>
+                                <span id="hedge-calc" class="text-md font-black text-green-400">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,45 +85,30 @@
 
     <script>
         const fullDatabase = {
-            "SEA@PAN": { script: "Competitive", props: [
-                { id: "kw1", name: "Kenneth Walker III", type: "Rush Yds", line: 68.5, avg: 74.2, stdev: 14 },
-                { id: "tm1", name: "Tetairoa McMillan", type: "Rec Yds", line: 52.5, avg: 58.1, stdev: 10 }
+            "TB@MIA": { props: [
+                { id: "jw1", name: "Jaylen Waddle", type: "Rec Yds", line: 68.5, avg: 75.1, stdev: 14, note: "Top target with Hill out." },
+                { id: "bi1", name: "Bucky Irving", type: "Anytime TD", line: 0.5, avg: 0.6, stdev: 0.1, isElite: true },
+                { id: "da1", name: "De'Von Achane", type: "Rush + Rec Yds", line: 102.5, avg: 114.2, stdev: 20 }
             ]},
-            "ARI@CIN": { script: "Competitive", props: [
-                { id: "jb1", name: "Joe Burrow", type: "Pass Yds", line: 268.5, avg: 284.1, stdev: 30 },
-                { id: "km1", name: "Kyler Murray", type: "Rush Yds", line: 32.5, avg: 38.6, stdev: 11 }
+            "PHI@BUF": { props: [
+                { id: "sb1", name: "Saquon Barkley", type: "Rush Yds", line: 83.5, avg: 104.2, stdev: 22, isElite: true },
+                { id: "dg1", name: "Dallas Goedert", type: "Anytime TD", line: 0.5, avg: 0.55, stdev: 0.1 }
             ]},
-            "PIT@CLE": { script: "Competitive", props: [
-                { id: "jw1", name: "Jaylen Warren", type: "Rec Yds", line: 24.5, avg: 31.4, stdev: 9 },
-                { id: "nj1", name: "Najee Harris", type: "Rush Yds", line: 62.5, avg: 65.8, stdev: 14 }
+            "JAX@IND": { props: [
+                { id: "pr1", name: "Philip Rivers", type: "Pass Yds", line: 205.5, avg: 232.4, stdev: 31, isElite: true },
+                { id: "pw1", name: "P. Washington", type: "Anytime TD", line: 0.5, avg: 0.65, stdev: 0.2 }
             ]},
-            "JAX@IND": { script: "Competitive", props: [
-                { id: "jt1", name: "Jonathan Taylor", type: "Rush Yds", line: 72.5, avg: 85.1, stdev: 15 },
-                { id: "tl1", name: "Trevor Lawrence", type: "Pass Yds", line: 245.5, avg: 251.4, stdev: 32 }
+            "ARI@CIN": { props: [
+                { id: "mhj1", name: "M. Harrison Jr.", type: "Rec Yds", line: 36.5, avg: 61.4, stdev: 15, isElite: true },
+                { id: "jb1", name: "Joe Burrow", type: "Pass Yds", line: 263.5, avg: 288.1, stdev: 32 }
             ]},
-            "TB@MIA": { script: "Competitive", props: [
-                { id: "th1", name: "Tyreek Hill", type: "Rec Yds", line: 82.5, avg: 94.2, stdev: 18 },
-                { id: "me1", name: "Mike Evans", type: "Rec Yds", line: 64.5, avg: 69.8, stdev: 14 }
+            "NO@TEN": { props: [
+                { id: "co1", name: "Chris Olave", type: "Receptions", line: 5.5, avg: 7.1, stdev: 1.2, isElite: true },
+                { id: "ts1", name: "Tyler Shough", type: "Pass Yds", line: 220.5, avg: 248.0, stdev: 31 }
             ]},
-            "PAT@JET": { script: "Blowout", props: [
-                { id: "dm1", name: "Drake Maye", type: "Pass Yds", line: 248.5, avg: 271.4, stdev: 31, note: "Trailing teams pass 14% more." },
-                { id: "bh1", name: "Breece Hall", type: "Rush Yds", line: 65.5, avg: 52.1, stdev: 12, isUnder: true, note: "Likely limited 4Q usage." }
-            ]},
-            "NO@TEN": { script: "Competitive", props: [
-                { id: "co1", name: "Chris Olave", type: "Rec Yds", line: 68.5, avg: 74.2, stdev: 12 },
-                { id: "tp1", name: "Tony Pollard", type: "Rush Yds", line: 61.5, avg: 65.4, stdev: 14 }
-            ]},
-            "GIA@RAI": { script: "Competitive", props: [
-                { id: "aj1", name: "Ashton Jeanty", type: "Rush Yds", line: 81.5, avg: 94.2, stdev: 18 },
-                { id: "bb1", name: "Brock Bowers", type: "Rec Yds", line: 62.5, avg: 71.4, stdev: 15 }
-            ]},
-            "PHI@BUF": { script: "Competitive", props: [
-                { id: "sb1", name: "Saquon Barkley", type: "Rush Yds", line: 83.5, avg: 104.2, stdev: 22 },
-                { id: "ja1", name: "Josh Allen", type: "Rush Yds", line: 31.5, avg: 38.2, stdev: 12 }
-            ]},
-            "CHI@SF": { script: "Competitive", props: [
-                { id: "cmc1", name: "C. McCaffrey", type: "Rush Yds", line: 72.5, avg: 81.4, stdev: 14 },
-                { id: "cw1", name: "Caleb Williams", type: "Rush Yds", line: 16.5, avg: 24.2, stdev: 8 }
+            "CHI@SF": { props: [
+                { id: "cw1", name: "Caleb Williams", type: "Rush Yds", line: 16.5, avg: 26.5, stdev: 8 },
+                { id: "ds1", name: "D'Andre Swift", type: "Anytime TD", line: 0.5, avg: 0.6, stdev: 0.1 }
             ]}
         };
 
@@ -125,10 +122,9 @@
             return sign * (1.0 - (((((a[4] * t + a[3]) * t) + a[2]) * t + a[1]) * t + a[0]) * t * Math.exp(-x * x));
         }
 
-        function getProbability(mean, stdev, line, isUnder = false) {
+        function getProbability(mean, stdev, line) {
             const z = (line - mean) / stdev;
-            let prob = 0.5 * (1 + erf(-z / Math.sqrt(2)));
-            return isUnder ? (1 - prob) : prob;
+            return (0.5 * (1 + erf(-z / Math.sqrt(2))));
         }
 
         function loadMatchupData() {
@@ -137,21 +133,20 @@
             grid.innerHTML = '';
             if (!matchId) return;
 
-            const data = fullDatabase[matchId];
-            data.props.forEach(p => {
-                const probVal = getProbability(p.avg, p.stdev, p.line, p.isUnder);
+            fullDatabase[matchId].props.forEach(p => {
+                const probVal = getProbability(p.avg, p.stdev, p.line);
                 const probPct = (probVal * 100).toFixed(1);
                 const isSelected = selectedLegs.some(leg => leg.id === p.id);
                 grid.innerHTML += `
                     <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sharp-pick ${isSelected ? 'selected-leg' : ''}" 
                          onclick="toggleParlay('${p.id}', '${p.name}', '${p.type}', ${probPct})">
-                        <div class="flex justify-between items-center mb-4 text-[9px] font-bold uppercase tracking-widest text-slate-500">
-                            <span><span class="script-badge ${data.script === 'Blowout' ? 'blowout' : 'competitive'}">${data.script.toUpperCase()}</span> ${p.type}</span>
-                            <span>LINE: ${p.line}</span>
+                        ${p.isElite ? '<div class="elite-ping">SMART BET</div>' : ''}
+                        <div class="flex justify-between items-center mb-4 text-[9px] font-black uppercase tracking-widest text-slate-500">
+                            <span>OVER ${p.type}</span><span>LINE: ${p.line}</span>
                         </div>
-                        <h3 class="text-2xl font-black text-white italic uppercase tracking-tighter">${p.name}</h3>
+                        <h3 class="text-2xl font-black text-white italic uppercase">${p.name}</h3>
                         <p class="text-3xl font-black text-green-400">${probPct}%</p>
-                        ${p.note ? `<p class="text-[9px] text-blue-400 mt-2 font-bold uppercase">${p.note}</p>` : ''}
+                        ${p.note ? `<p class="text-[9px] text-blue-400 mt-2 font-black uppercase">${p.note}</p>` : ''}
                     </div>`;
             });
         }
@@ -159,7 +154,7 @@
         function toggleParlay(id, name, type, prob) {
             const idx = selectedLegs.findIndex(l => l.id === id);
             if (idx > -1) selectedLegs.splice(idx, 1);
-            else if (selectedLegs.length < 5) selectedLegs.push({ id, name, type, prob: prob/100 });
+            else if (selectedLegs.length < 4) selectedLegs.push({ id, name, type, prob: prob/100 });
             updateUI();
             loadMatchupData();
         }
@@ -169,9 +164,14 @@
             const list = document.getElementById('parlay-list');
             if (selectedLegs.length === 0) { list.innerHTML = '<p class="text-[10px] text-slate-500 italic text-center uppercase">Add legs...</p>'; stats.classList.add('hidden'); return; }
             stats.classList.remove('hidden');
-            list.innerHTML = selectedLegs.map(l => `<div class="bg-slate-950 p-2 border border-slate-800 rounded-lg flex justify-between items-center text-[10px] font-bold uppercase"><span>${l.name}</span><span class="text-green-400">${(l.prob*100).toFixed(0)}%</span></div>`).join('');
+            list.innerHTML = selectedLegs.map(l => `<div class="bg-slate-950 p-2 border border-slate-800 rounded-lg flex justify-between items-center text-[10px] font-bold"><span>${l.name}</span><span class="text-green-400">${(l.prob*100).toFixed(0)}%</span></div>`).join('');
             const finalProb = (selectedLegs.reduce((acc, l) => acc * l.prob, 1) * 100).toFixed(1);
             document.getElementById('combined-prob').innerText = finalProb + '%';
+            
+            // Hedge Calc for $10 base bet
+            const oddsMap = [0, 0, 36.4, 69.5, 132.8];
+            const payout = oddsMap[selectedLegs.length] || 0;
+            document.getElementById('hedge-calc').innerText = `$${(payout / 1.91).toFixed(2)}`;
         }
     </script>
 </body>
