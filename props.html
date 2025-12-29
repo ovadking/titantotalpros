@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>49ers vs Bears Prop Tracker</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #1a1a1a; color: white; margin: 0; display: flex; flex-direction: column; height: 100-vh; overflow: hidden; }
+        header { background: #aa0000; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #b3995d; }
+        .main-container { display: flex; flex: 1; height: calc(100vh - 60px); }
+        
+        /* Left Side: Live Stats Embed */
+        .stats-frame { flex: 2; border-right: 2px solid #444; background: #fff; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* Right Side: Manual Prop Tracker */
+        .prop-tracker { flex: 1; padding: 20px; overflow-y: auto; background: #222; }
+        h2 { color: #b3995d; margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th { text-align: left; border-bottom: 2px solid #444; padding: 10px; font-size: 12px; text-transform: uppercase; color: #888; }
+        td { padding: 12px 10px; border-bottom: 1px solid #333; }
+        input { background: #333; border: 1px solid #444; color: white; padding: 5px; width: 60px; border-radius: 4px; }
+        .player-input { width: 100px; }
+        .win { color: #4caf50; font-weight: bold; }
+        .loss { color: #f44336; font-weight: bold; }
+        button { background: #b3995d; border: none; padding: 10px; color: black; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%; }
+        button:hover { background: #d4bc8d; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div><strong>LIVE PROP TRACKER:</strong> SF 49ers vs CHI Bears</div>
+    <div id="clock">Kickoff 5:20 PM PT</div>
+</header>
+
+<div class="main-container">
+    <div class="stats-frame">
+        <iframe src="https://www.nfl.com/games/bears-at-49ers-2025-reg-17"></iframe>
+    </div>
+
+    <div class="prop-tracker">
+        <h2>My Live Sweats</h2>
+        <table id="propTable">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Prop/Line</th>
+                    <th>Current</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="player-input" value="Purdy"></td>
+                    <td><input type="text" value="248.5 Yds"></td>
+                    <td><input type="number" value="0"></td>
+                    <td class="loss">UNDER</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="player-input" value="McCaffrey"></td>
+                    <td><input type="text" value="72.5 Rush"></td>
+                    <td><input type="number" value="0"></td>
+                    <td class="loss">UNDER</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="player-input" value="Jennings"></td>
+                    <td><input type="text" value="4.5 Rec"></td>
+                    <td><input type="number" value="0"></td>
+                    <td class="loss">UNDER</td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="addRow()">+ Add New Prop</button>
+        <p style="font-size: 11px; color: #777; margin-top: 20px;">
+            Note: Use the left panel to see live stats, and update your "Current" numbers here to track your progress toward the green.
+        </p>
+    </div>
+</div>
+
+<script>
+    function addRow() {
+        var table = document.getElementById("propTable").getElementsByTagName('tbody')[0];
+        var row = table.insertRow(-1);
+        row.innerHTML = '<td><input type="text" class="player-input" placeholder="Player"></td>' +
+                        '<td><input type="text" placeholder="Line"></td>' +
+                        '<td><input type="number" value="0"></td>' +
+                        '<td class="loss">UNDER</td>';
+    }
+    
+    // Auto-status logic can be added here if you want to compare the two inputs!
+</script>
+
+</body>
+</html>
