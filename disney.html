@@ -3,80 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disney World Birthday Trip Tracker</title>
+    <title>Disney Birthday Planner & Tracker</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f0f2f5; color: #333; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #111; border-bottom: 2px solid #ffcc00; padding-bottom: 10px; text-align: center; }
-        .section { margin-bottom: 30px; padding: 15px; border: 1px solid #eee; border-radius: 8px; }
-        h2 { color: #007bff; font-size: 1.5em; margin-top: 0; }
-        .tracker-box { background: #e7f3ff; padding: 20px; border-radius: 10px; text-align: center; }
-        input { padding: 10px; width: 150px; border-radius: 5px; border: 1px solid #ccc; font-size: 1em; }
-        .progress-container { background: #ddd; border-radius: 20px; height: 30px; margin: 20px 0; overflow: hidden; }
-        #progress-bar { background: #28a745; width: 0%; height: 100%; text-align: center; color: white; line-height: 30px; transition: width 0.5s; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #ddd; }
-        th { background-color: #f8f9fa; }
-        .highlight { color: #d9534f; font-weight: bold; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f9; color: #333; line-height: 1.6; padding: 10px; }
+        .dashboard { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #0056b3; text-align: center; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .highlight { background: #e7f3ff; border-left: 5px solid #0056b3; }
+        
+        /* Savings Tracker */
+        .progress-container { background: #eee; border-radius: 20px; height: 25px; margin: 15px 0; position: relative; }
+        #progress-bar { background: #28a745; width: 0%; height: 100%; border-radius: 20px; transition: width 0.5s; text-align: center; color: white; font-size: 14px; line-height: 25px; }
+        
+        input[type="number"], select { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; }
+
+        .checklist { list-style: none; padding: 0; }
+        .checklist li { margin-bottom: 8px; }
+        input[type="checkbox"] { margin-right: 10px; }
+
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Disney Birthday Celebration 2026</h1>
+<div class="dashboard">
+    <h1>Disney 1st Birthday Tracker</h1>
+    <p style="text-align:center;"><strong>Target Date:</strong> Sept 4, 2026 | <strong>Days to Save:</strong> ~250</p>
 
-    <div class="section tracker-box">
-        <h2>Savings Tracker</h2>
-        <p>Target Goal: <strong>$4,000</strong> (Includes $1k Tax Refund)</p>
-        <p>Enter Current Savings Amount ($):</p>
-        <input type="number" id="savedAmount" value="1000" oninput="updateProgress()">
-        <div class="progress-container">
-            <div id="progress-bar">0%</div>
+    <div class="card highlight">
+        <h2>Paycheck Savings Planner</h2>
+        <p>Total Trip Cost: <strong>$4,140</strong><br>Tax Refund Used: <strong>-$1,000</strong></p>
+        <label>How often do you get paid?</label>
+        <select id="payCycle" onchange="calculatePaycheck()">
+            <option value="36">Weekly (36 checks left)</option>
+            <option value="18">Bi-Weekly (18 checks left)</option>
+            <option value="9">Monthly (9 checks left)</option>
+        </select>
+        <div style="background: white; padding: 10px; border-radius: 5px; border: 1px solid #0056b3; text-align: center;">
+            <p style="margin:0;">Amount to set aside per check:</p>
+            <h2 id="perCheckAmount" style="margin:5px 0; color: #28a745;">$88.00</h2>
         </div>
-        <p id="remainingText">Remaining to save: $3,000</p>
-        <p><small>Weekly Goal: <strong>$84</strong> (Starting from Dec 2025)</small></p>
     </div>
 
-    <div class="section">
-        <h2>The 2-Day Birthday Itinerary</h2>
-        <table>
-            <tr><th>Date</th><th>Activity</th><th>Location</th></tr>
-            <tr><td>Sept 3, 2026</td><td>Drive from Clarksville to Orlando</td><td>12-Passenger Van</td></tr>
-            <tr><td><strong>Sept 4, 2026</strong></td><td><strong>1st Birthday Celebration</strong></td><td><strong>Magic Kingdom & Chef Mickey's</strong></td></tr>
-            <tr><td>Sept 5, 2026</td><td>Park Day 2 (Toddler Friendly)</td><td>EPCOT</td></tr>
-            <tr><td>Sept 6, 2026</td><td>Check out & Drive Home</td><td>Clarksville, TN</td></tr>
-        </table>
+    <div class="card">
+        <h2>Current Savings Progress</h2>
+        <label>Total Saved So Far ($):</label>
+        <input type="number" id="totalSaved" value="1000" oninput="updateTracker()">
+        <div class="progress-container">
+            <div id="progress-bar">24%</div>
+        </div>
+        <p id="remText" style="font-weight: bold; text-align: center;"></p>
     </div>
 
-    <div class="section">
-        <h2>Travel & Lodging Details</h2>
-        <ul>
-            <li><strong>Lodging:</strong> Home2 Suites by Hilton Flamingo Crossings (Kitchenette + Free Breakfast)</li>
-            <li><strong>Transportation:</strong> Enterprise Rent-A-Car (Pea Ridge Rd, Clarksville) - 12 Passenger Van</li>
-            <li><strong>Birthday Meal:</strong> Chef Mickey's Character Dining (Reserve 60 days out)</li>
-            <li><strong>Family Count:</strong> 3 Adults, 4 Children (9, 5, 3, Infant)</li>
-        </ul>
+    <div class="grid">
+        <div class="card">
+            <h2>Expense Estimate</h2>
+            <table>
+                <tr><td>Enterprise 12-Pax Van</td><td>$950</td></tr>
+                <tr><td>Home2 Suites (3 Nts)</td><td>$850</td></tr>
+                <tr><td>Tickets (2-Day)</td><td>$1,600</td></tr>
+                <tr><td>Birthday Meal</td><td>$380</td></tr>
+                <tr><td>Grocery/Misc</td><td>$360</td></tr>
+                <tr style="font-weight:bold; color:#d9534f;"><td>TOTAL</td><td>$4,140</td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Grocery Order Checklist</h2>
+            <ul class="checklist">
+                <li><input type="checkbox"> Cases of Water (2x)</li>
+                <li><input type="checkbox"> Bread & Peanut Butter</li>
+                <li><input type="checkbox"> Fruit (Bananas/Apples)</li>
+                <li><input type="checkbox"> Baby Food/Pouches</li>
+                <li><input type="checkbox"> Diapers/Wipes</li>
+                <li><input type="checkbox"> Individual Chip Bags</li>
+                <li><input type="checkbox"> 1st Birthday Smash Cake</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Quick Itinerary</h2>
+        <p><strong>Sept 3:</strong> Drive Clarksville to Orlando (11 hrs).</p>
+        <p><strong>Sept 4:</strong> 🎂 1st Birthday! Magic Kingdom & Chef Mickey's.</p>
+        <p><strong>Sept 5:</strong> Epcot - Low crowds, stroller friendly.</p>
+        <p><strong>Sept 6:</strong> Check out and Drive Home.</p>
     </div>
 </div>
 
 <script>
-    function updateProgress() {
-        const goal = 4000;
-        const saved = document.getElementById('savedAmount').value;
-        const progressBar = document.getElementById('progress-bar');
-        const remainingText = document.getElementById('remainingText');
-        
-        let percentage = (saved / goal) * 100;
-        if (percentage > 100) percentage = 100;
-        
-        progressBar.style.width = percentage + '%';
-        progressBar.innerHTML = Math.round(percentage) + '%';
-        
-        const remaining = goal - saved;
-        remainingText.innerHTML = remaining > 0 ? "Remaining to save: $" + remaining : "Goal Reached! Time for Disney!";
+    function calculatePaycheck() {
+        const remainingBalance = 3140; 
+        const cycle = document.getElementById('payCycle').value;
+        const perCheck = (remainingBalance / cycle).toFixed(2);
+        document.getElementById('perCheckAmount').innerHTML = "$" + perCheck;
     }
-    // Run once on load
-    updateProgress();
+
+    function updateTracker() {
+        const goal = 4140;
+        const current = document.getElementById('totalSaved').value;
+        const progress = document.getElementById('progress-bar');
+        const remText = document.getElementById('remText');
+        
+        let percent = (current / goal) * 100;
+        if(percent > 100) percent = 100;
+        
+        progress.style.width = percent + "%";
+        progress.innerHTML = Math.round(percent) + "%";
+        
+        let remaining = goal - current;
+        if(remaining < 0) remaining = 0;
+        remText.innerHTML = "Remaining: $" + remaining;
+    }
+    
+    // Initialize
+    updateTracker();
+    calculatePaycheck();
 </script>
 
 </body>
