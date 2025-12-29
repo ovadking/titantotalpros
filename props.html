@@ -3,95 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>49ers vs Bears Prop Tracker - Fullscreen</title>
+    <title>49ers vs Bears Master Tracker</title>
     <style>
-        /* This ensures the page takes up 100% of the browser window */
-        html, body { 
-            margin: 0; 
-            padding: 0; 
-            height: 100vh; 
-            width: 100vw; 
-            overflow: hidden; 
-            background: #1a1a1a; 
-            color: white;
-            font-family: sans-serif;
-        }
-
-        header { 
-            background: #aa0000; 
-            height: 50px; 
-            display: flex; 
-            align-items: center; 
-            padding: 0 20px; 
-            border-bottom: 3px solid #b3995d; 
-        }
-
-        .main-container { 
-            display: flex; 
-            height: calc(100vh - 53px); /* Full height minus the header */
-            width: 100vw;
-        }
-
-        /* Stats side takes 65% of screen */
-        .stats-frame { flex: 0 0 65%; background: #fff; }
-        iframe { width: 100%; height: 100%; border: none; }
-
-        /* Tracker side takes 35% of screen */
-        .prop-tracker { 
-            flex: 1; 
-            padding: 20px; 
-            background: #222; 
-            overflow-y: auto; 
-            border-left: 1px solid #444;
-        }
-
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; font-size: 11px; color: #888; padding: 10px; border-bottom: 2px solid #444; }
-        td { padding: 10px; border-bottom: 1px solid #333; }
-        input { background: #333; border: 1px solid #444; color: white; padding: 5px; width: 50px; border-radius: 4px; }
-        .player-name { width: 80px; }
-        .needed { font-weight: bold; color: #b3995d; }
+        body { margin: 0; padding: 0; height: 100vh; width: 100vw; overflow: hidden; background: #121212; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; }
+        header { background: #aa0000; height: 60px; display: flex; align-items: center; padding: 0 20px; border-bottom: 3px solid #b3995d; justify-content: space-between; }
+        .main-container { display: flex; flex: 1; height: calc(100vh - 63px); }
+        
+        /* Stats Panel */
+        .stats-panel { flex: 0 0 40%; background: #1a1a1a; padding: 20px; border-right: 2px solid #333; display: flex; flex-direction: column; gap: 15px; }
+        .live-btn { background: #b3995d; color: black; padding: 15px; text-decoration: none; text-align: center; font-weight: bold; border-radius: 8px; font-size: 1.1em; transition: 0.3s; }
+        .live-btn:hover { background: #d4bc8d; transform: scale(1.02); }
+        
+        /* Tracker Panel */
+        .prop-tracker { flex: 1; padding: 20px; background: #222; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; background: #2a2a2a; border-radius: 8px; overflow: hidden; }
+        th { background: #333; text-align: left; padding: 15px; font-size: 12px; color: #b3995d; text-transform: uppercase; }
+        td { padding: 12px 15px; border-bottom: 1px solid #333; }
+        
+        /* Inputs & Dropdowns */
+        input, select { background: #333; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px; width: 90%; }
+        .needed { font-weight: bold; font-size: 1.1em; }
+        .add-btn { width: 100%; padding: 15px; margin-top: 20px; background: #444; color: white; border: none; cursor: pointer; border-radius: 8px; font-weight: bold; }
+        .add-btn:hover { background: #555; }
     </style>
 </head>
 <body>
 
 <header>
-    <strong>LIVE TRACKER:</strong> &nbsp; CHI @ SF (8:20 PM ET)
+    <div><strong>49ERS LIVE PROP COMMAND CENTER</strong></div>
+    <div style="font-size: 0.9em;">Kickoff: 5:20 PM PT | NBC</div>
 </header>
 
 <div class="main-container">
-    <div class="stats-frame">
-        <iframe src="https://www.foxsports.com/nfl/week-17-chicago-bears-vs-san-francisco-49ers-dec-28-2025-game-boxscore-10918"></iframe>
+    <div class="stats-panel">
+        <h3 style="margin-top:0">1. Open Live Stats</h3>
+        <p style="color:#888; font-size: 0.9em;">Websites block "embedding." Click these to open the live feeds in a new window to snap next to this tracker:</p>
+        <a href="https://www.foxsports.com/nfl/week-17-chicago-bears-vs-san-francisco-49ers-dec-28-2025-game-boxscore-10918" target="_blank" class="live-btn">🚀 OPEN FOX LIVE STATS (Fastest)</a>
+        <a href="https://www.espn.com/nfl/game/_/gameId/401671853/bears-49ers" target="_blank" class="live-btn" style="background:#cc0000; color:white;">📺 OPEN ESPN GAMECAST</a>
+        <hr style="border:0; border-top:1px solid #333; margin: 10px 0;">
+        <h3 style="margin-bottom:5px">Quick Reference Lines:</h3>
+        <ul style="font-size:0.85em; color:#bbb; line-height:1.6">
+            <li><strong>Purdy:</strong> 266.0 Pass Yds</li>
+            <li><strong>McCaffrey:</strong> 66.5 Rush Yds</li>
+            <li><strong>Jennings:</strong> Anytime TD (+145)</li>
+        </ul>
     </div>
 
     <div class="prop-tracker">
-        <h2>My Live Sweats</h2>
+        <h3 style="margin-top:0">2. Track Your Sweats</h3>
         <table>
             <thead>
                 <tr>
                     <th>Player</th>
+                    <th>Stat Type</th>
                     <th>Line</th>
                     <th>Live</th>
-                    <th>Left</th>
+                    <th>Need</th>
                 </tr>
             </thead>
             <tbody id="propBody">
                 <tr oninput="calculate()">
-                    <td><input type="text" class="player-name" value="Purdy"></td>
-                    <td><input type="number" class="line" value="248.5"></td>
+                    <td><input type="text" value="Purdy"></td>
+                    <td>
+                        <select>
+                            <option>Pass Yards</option>
+                            <option>Rush Yards</option>
+                            <option>Touchdowns</option>
+                            <option>Completions</option>
+                        </select>
+                    </td>
+                    <td><input type="number" class="line" value="266"></td>
                     <td><input type="number" class="current" value="0"></td>
-                    <td class="needed">248.5</td>
+                    <td class="needed" style="color:#b3995d">266</td>
                 </tr>
                 <tr oninput="calculate()">
-                    <td><input type="text" class="player-name" value="CMC"></td>
-                    <td><input type="number" class="line" value="72.5"></td>
+                    <td><input type="text" value="CMC"></td>
+                    <td>
+                        <select>
+                            <option selected>Rush Yards</option>
+                            <option>Pass Yards</option>
+                            <option>Touchdowns</option>
+                            <option>Receptions</option>
+                        </select>
+                    </td>
+                    <td><input type="number" class="line" value="66.5"></td>
                     <td><input type="number" class="current" value="0"></td>
-                    <td class="needed">72.5</td>
+                    <td class="needed" style="color:#b3995d">66.5</td>
                 </tr>
             </tbody>
         </table>
-        <br>
-        <button onclick="addRow()" style="width:100%; padding:10px; cursor:pointer;">+ Add Row</button>
+        <button class="add-btn" onclick="addRow()">+ ADD NEW PLAYER PROP</button>
     </div>
 </div>
 
@@ -105,7 +106,7 @@
             const diff = (line - current).toFixed(1);
             
             if (diff <= 0) {
-                neededCell.innerText = "✅ HIT";
+                neededCell.innerText = "🔥 CASHED";
                 neededCell.style.color = "#4caf50";
             } else {
                 neededCell.innerText = diff;
@@ -119,7 +120,15 @@
         const newRow = document.createElement('tr');
         newRow.setAttribute('oninput', 'calculate()');
         newRow.innerHTML = `
-            <td><input type="text" class="player-name" placeholder="Name"></td>
+            <td><input type="text" placeholder="Name"></td>
+            <td>
+                <select>
+                    <option>Pass Yards</option>
+                    <option>Rush Yards</option>
+                    <option>Touchdowns</option>
+                    <option>Receptions</option>
+                </select>
+            </td>
             <td><input type="number" class="line" value="0"></td>
             <td><input type="number" class="current" value="0"></td>
             <td class="needed">0</td>
