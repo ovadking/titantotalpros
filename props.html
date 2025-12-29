@@ -3,92 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>49ers vs Bears Prop Tracker</title>
+    <title>49ers vs Bears Prop Tracker - Fullscreen</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #1a1a1a; color: white; margin: 0; display: flex; flex-direction: column; height: 100-vh; overflow: hidden; }
-        header { background: #aa0000; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #b3995d; }
-        .main-container { display: flex; flex: 1; height: calc(100vh - 60px); }
-        
-        /* Left Side: Live Stats Embed */
-        .stats-frame { flex: 2; border-right: 2px solid #444; background: #fff; }
+        /* This ensures the page takes up 100% of the browser window */
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            height: 100vh; 
+            width: 100vw; 
+            overflow: hidden; 
+            background: #1a1a1a; 
+            color: white;
+            font-family: sans-serif;
+        }
+
+        header { 
+            background: #aa0000; 
+            height: 50px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 20px; 
+            border-bottom: 3px solid #b3995d; 
+        }
+
+        .main-container { 
+            display: flex; 
+            height: calc(100vh - 53px); /* Full height minus the header */
+            width: 100vw;
+        }
+
+        /* Stats side takes 65% of screen */
+        .stats-frame { flex: 0 0 65%; background: #fff; }
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* Right Side: Manual Prop Tracker */
-        .prop-tracker { flex: 1; padding: 20px; overflow-y: auto; background: #222; }
-        h2 { color: #b3995d; margin-top: 0; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th { text-align: left; border-bottom: 2px solid #444; padding: 10px; font-size: 12px; text-transform: uppercase; color: #888; }
-        td { padding: 12px 10px; border-bottom: 1px solid #333; }
-        input { background: #333; border: 1px solid #444; color: white; padding: 5px; width: 60px; border-radius: 4px; }
-        .player-input { width: 100px; }
-        .win { color: #4caf50; font-weight: bold; }
-        .loss { color: #f44336; font-weight: bold; }
-        button { background: #b3995d; border: none; padding: 10px; color: black; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%; }
-        button:hover { background: #d4bc8d; }
+        /* Tracker side takes 35% of screen */
+        .prop-tracker { 
+            flex: 1; 
+            padding: 20px; 
+            background: #222; 
+            overflow-y: auto; 
+            border-left: 1px solid #444;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; font-size: 11px; color: #888; padding: 10px; border-bottom: 2px solid #444; }
+        td { padding: 10px; border-bottom: 1px solid #333; }
+        input { background: #333; border: 1px solid #444; color: white; padding: 5px; width: 50px; border-radius: 4px; }
+        .player-name { width: 80px; }
+        .needed { font-weight: bold; color: #b3995d; }
     </style>
 </head>
 <body>
 
 <header>
-    <div><strong>LIVE PROP TRACKER:</strong> SF 49ers vs CHI Bears</div>
-    <div id="clock">Kickoff 5:20 PM PT</div>
+    <strong>LIVE TRACKER:</strong> &nbsp; CHI @ SF (8:20 PM ET)
 </header>
 
 <div class="main-container">
     <div class="stats-frame">
-        <iframe src="https://www.nfl.com/games/bears-at-49ers-2025-reg-17"></iframe>
+        <iframe src="https://www.foxsports.com/nfl/week-17-chicago-bears-vs-san-francisco-49ers-dec-28-2025-game-boxscore-10918"></iframe>
     </div>
 
     <div class="prop-tracker">
         <h2>My Live Sweats</h2>
-        <table id="propTable">
+        <table>
             <thead>
                 <tr>
                     <th>Player</th>
-                    <th>Prop/Line</th>
-                    <th>Current</th>
-                    <th>Status</th>
+                    <th>Line</th>
+                    <th>Live</th>
+                    <th>Left</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" class="player-input" value="Purdy"></td>
-                    <td><input type="text" value="248.5 Yds"></td>
-                    <td><input type="number" value="0"></td>
-                    <td class="loss">UNDER</td>
+            <tbody id="propBody">
+                <tr oninput="calculate()">
+                    <td><input type="text" class="player-name" value="Purdy"></td>
+                    <td><input type="number" class="line" value="248.5"></td>
+                    <td><input type="number" class="current" value="0"></td>
+                    <td class="needed">248.5</td>
                 </tr>
-                <tr>
-                    <td><input type="text" class="player-input" value="McCaffrey"></td>
-                    <td><input type="text" value="72.5 Rush"></td>
-                    <td><input type="number" value="0"></td>
-                    <td class="loss">UNDER</td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="player-input" value="Jennings"></td>
-                    <td><input type="text" value="4.5 Rec"></td>
-                    <td><input type="number" value="0"></td>
-                    <td class="loss">UNDER</td>
+                <tr oninput="calculate()">
+                    <td><input type="text" class="player-name" value="CMC"></td>
+                    <td><input type="number" class="line" value="72.5"></td>
+                    <td><input type="number" class="current" value="0"></td>
+                    <td class="needed">72.5</td>
                 </tr>
             </tbody>
         </table>
-        <button onclick="addRow()">+ Add New Prop</button>
-        <p style="font-size: 11px; color: #777; margin-top: 20px;">
-            Note: Use the left panel to see live stats, and update your "Current" numbers here to track your progress toward the green.
-        </p>
+        <br>
+        <button onclick="addRow()" style="width:100%; padding:10px; cursor:pointer;">+ Add Row</button>
     </div>
 </div>
 
 <script>
-    function addRow() {
-        var table = document.getElementById("propTable").getElementsByTagName('tbody')[0];
-        var row = table.insertRow(-1);
-        row.innerHTML = '<td><input type="text" class="player-input" placeholder="Player"></td>' +
-                        '<td><input type="text" placeholder="Line"></td>' +
-                        '<td><input type="number" value="0"></td>' +
-                        '<td class="loss">UNDER</td>';
+    function calculate() {
+        const rows = document.querySelectorAll('#propBody tr');
+        rows.forEach(row => {
+            const line = parseFloat(row.querySelector('.line').value) || 0;
+            const current = parseFloat(row.querySelector('.current').value) || 0;
+            const neededCell = row.querySelector('.needed');
+            const diff = (line - current).toFixed(1);
+            
+            if (diff <= 0) {
+                neededCell.innerText = "✅ HIT";
+                neededCell.style.color = "#4caf50";
+            } else {
+                neededCell.innerText = diff;
+                neededCell.style.color = "#b3995d";
+            }
+        });
     }
-    
-    // Auto-status logic can be added here if you want to compare the two inputs!
+
+    function addRow() {
+        const body = document.getElementById('propBody');
+        const newRow = document.createElement('tr');
+        newRow.setAttribute('oninput', 'calculate()');
+        newRow.innerHTML = `
+            <td><input type="text" class="player-name" placeholder="Name"></td>
+            <td><input type="number" class="line" value="0"></td>
+            <td><input type="number" class="current" value="0"></td>
+            <td class="needed">0</td>
+        `;
+        body.appendChild(newRow);
+    }
 </script>
 
 </body>
