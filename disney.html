@@ -27,6 +27,8 @@
         input[type="checkbox"] { margin-right: 10px; }
 
         .expense-tag { font-size: 0.85em; color: #666; font-style: italic; }
+        .itin-item { margin-bottom: 15px; border-left: 3px solid #ffcc00; padding-left: 10px; }
+        .itin-time { font-weight: bold; color: #0056b3; font-size: 0.9em; }
 
         @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
     </style>
@@ -67,40 +69,40 @@
         <table>
             <tr>
                 <th>Day</th>
-                <th>Activity</th>
+                <th>Activity Summary</th>
                 <th>Estimated Cost</th>
             </tr>
             <tr>
                 <td><strong>Sept 3</strong></td>
-                <td>Travel: Clarksville to Orlando (11 hrs)
-                    <br><span class="expense-tag">Van Rental & Fuel</span>
+                <td>Drive Clarksville to Orlando
+                    <br><span class="expense-tag">Van Rental, Gas & Road Snacks</span>
                 </td>
                 <td>$1,130</td>
             </tr>
             <tr>
                 <td><strong>Sept 4</strong></td>
-                <td>🎂 Magic Kingdom Day + Chef Mickey's Dinner
-                    <br><span class="expense-tag">Tickets, Parking & Birthday Meal</span>
+                <td>🎂 <strong>Magic Kingdom (The Birthday)</strong>
+                    <br><span class="expense-tag">Tickets, Parking & Chef Mickey's</span>
                 </td>
                 <td>$1,210</td>
             </tr>
             <tr>
                 <td><strong>Sept 5</strong></td>
-                <td>EPCOT - Stroller friendly & Low crowds
-                    <br><span class="expense-tag">Tickets, Parking & Snacks</span>
+                <td><strong>EPCOT Day</strong>
+                    <br><span class="expense-tag">Tickets & Quick Service Meals</span>
                 </td>
                 <td>$850</td>
             </tr>
             <tr>
                 <td><strong>Sept 3-6</strong></td>
-                <td><strong>Lodging Total:</strong> Home2 Suites (3 Nights)
+                <td><strong>Lodging:</strong> Home2 Suites (3 Nights)
                     <br><span class="expense-tag">Large Suite + Free Breakfast</span>
                 </td>
                 <td>$850</td>
             </tr>
             <tr>
-                <td><strong>Stock-up</strong></td>
-                <td>Grocery Order (Walmart Delivery)</td>
+                <td><strong>Misc</strong></td>
+                <td>Walmart Grocery Delivery</td>
                 <td>$100</td>
             </tr>
             <tr style="font-weight:bold; background-color: #f1f3f4;">
@@ -108,6 +110,29 @@
                 <td style="color:#d9534f;">$4,140</td>
             </tr>
         </table>
+    </div>
+
+    <div class="card">
+        <h2>Detailed Activity Itinerary</h2>
+        
+        <div class="itin-item">
+            <span class="itin-time">Sept 4: Magic Kingdom (The Big Day)</span>
+            <p style="margin: 5px 0; font-size: 0.9em;">
+                • <strong>Morning:</strong> Fantasyland! (Dumbo, Small World, Peter Pan). Great for all kids.<br>
+                • <strong>Lunch/Nap:</strong> Head to <strong>Chef Mickey's</strong> for 1st Birthday celebration.<br>
+                • <strong>Afternoon:</strong> Parade & Mickey's PhilharMagic (AC break).<br>
+                • <strong>Evening:</strong> Fireworks & Birthday Cupcake.
+            </p>
+        </div>
+
+        <div class="itin-item" style="border-left-color: #0056b3;">
+            <span class="itin-time">Sept 5: EPCOT (Stroller Friendly)</span>
+            <p style="margin: 5px 0; font-size: 0.9em;">
+                • <strong>Morning:</strong> Frozen Ever After (Norway) & Remy's Ratatouille Adventure.<br>
+                • <strong>Afternoon:</strong> The Seas with Nemo & Friends (Huge aquarium for the baby).<br>
+                • <strong>Evening:</strong> Journey of Water (Moana walk-through) & Luminous Fireworks.
+            </p>
+        </div>
     </div>
 
     <div class="grid">
@@ -119,16 +144,15 @@
                 <li><input type="checkbox"> Fruit (Bananas/Apples)</li>
                 <li><input type="checkbox"> Baby Food/Pouches</li>
                 <li><input type="checkbox"> Diapers/Wipes</li>
-                <li><input type="checkbox"> Individual Chip Bags</li>
                 <li><input type="checkbox"> 1st Birthday Smash Cake</li>
             </ul>
         </div>
 
         <div class="card">
             <h2>Key Contacts</h2>
-            <p><strong>Enterprise Clarksville:</strong><br>(931) 648-4100 (Pea Ridge)</p>
-            <p><strong>Disney Dining:</strong><br>Reserve Chef Mickey's 60 days out!</p>
-            <p><strong>Hotel:</strong><br>Home2 Suites Flamingo Crossings</p>
+            <p><strong>Enterprise:</strong> (931) 648-4100</p>
+            <p><strong>Disney:</strong> (407) 939-5277</p>
+            <p><strong>Hotel:</strong> Home2 Suites Flamingo X-ing</p>
         </div>
     </div>
 </div>
@@ -159,11 +183,9 @@
         if(remaining < 0) remaining = 0;
         remText.innerHTML = "Remaining: $" + remaining;
         
-        // Also update the paycheck planner when savings change
         calculatePaycheck();
     }
     
-    // Initialize
     updateTracker();
     calculatePaycheck();
 </script>
