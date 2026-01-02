@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pohnpeian Learning Portal</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; text-align: center; padding: 20px; }
+        .card-container { display: flex; flex-wrap: wrap; justify-content: center; }
+        .word-card { 
+            background: white; border: 3px solid #00704a; border-radius: 15px; 
+            margin: 10px; padding: 20px; width: 200px; cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .word-card:hover { transform: scale(1.05); background: #eafff5; }
+        .pohnpeian { font-size: 24px; font-weight: bold; color: #00704a; }
+        .english { font-size: 16px; color: #666; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+
+    <h1>Pohnpeian Survival Phrases</h1>
+    <p>Click a card to hear the word (Once you record your audio!)</p>
+
+    <div class="card-container">
+        <div class="word-card" onclick="document.getElementById('audio1').play()">
+            <div class="pohnpeian">Kaselehlie</div>
+            <div class="english">Hello</div>
+            <audio id="audio1" src="audio/hello.mp3"></audio>
+        </div>
+
+        <div class="word-card" onclick="document.getElementById('audio2').play()">
+            <div class="pohnpeian">Kalahngan</div>
+            <div class="english">Thank you</div>
+            <audio id="audio2" src="audio/thanks.mp3"></audio>
+        </div>
+
+        </div>
+
+</body>
+</html>
